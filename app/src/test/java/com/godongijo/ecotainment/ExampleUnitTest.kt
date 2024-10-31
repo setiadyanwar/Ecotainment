@@ -1,4 +1,4 @@
-package com.example.ecotainment
+package com.godongijo.ecotainment
 
 import org.junit.Test
 

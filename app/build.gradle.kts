@@ -4,16 +4,16 @@ plugins {
 }
 
 android {
-    namespace = "com.example.ecotainment"
+    namespace = "com.godongijo.ecotainment"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.ecotainment"
-        minSdk = 26
+        applicationId = "com.godongijo.ecotainment"
+        minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+        multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -33,10 +33,24 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
+    // Scalable sdp & ssp
+    implementation(libs.ssp.android)
+    implementation(libs.sdp.android)
 
+    // Multidex
+    implementation(libs.androidx.multidex)
+
+    // Splash Screen
+    implementation(libs.androidx.core.splashscreen)
+
+    // View Model Scope
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
