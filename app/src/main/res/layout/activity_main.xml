@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterPage">
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:gravity="center">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+
+                android:layout_marginHorizontal="16px"
+                android:layout_marginTop="24px"
+                >
+                <ImageButton
+                    android:id="@+id/btn_back"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="left"
+                    android:src="@drawable/arrow"
+                    android:background="@color/transparent"/>
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Daftar"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#2B2B2B"
+                    android:layout_marginStart="8dp"
+                    android:textAlignment="center"/>
+
+        </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/login_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                app:srcCompat="@drawable/daftar" />
+
+            <EditText
+                android:id="@+id/identifier"
+                android:layout_width="379dp"
+                android:layout_height="48dp"
+                android:ems="10"
+                android:layout_marginTop="29dp"
+                android:textColor="@color/black"
+                android:inputType="textPersonName"
+                android:hint="No. Handphone/Email"
+                android:importantForAutofill="no"
+                android:textSize="14sp"
+                android:textColorHint="#999999"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:background="@drawable/edit_text"/>
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="379dp"
+                android:layout_height="48dp"
+                android:ems="10"
+                android:layout_marginTop="22dp"
+                android:hint="Password"
+                android:importantForAutofill="no"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:textColorHint="#999999"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:background="@drawable/edit_text"
+                android:inputType="textPassword"
+                android:maxLength="8"/>
+            <EditText
+                android:id="@+id/password_confirm"
+                android:layout_width="379dp"
+                android:layout_height="48dp"
+                android:ems="10"
+                android:layout_marginTop="22dp"
+                android:hint="Confirm Password"
+                android:importantForAutofill="no"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:textColorHint="#999999"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:background="@drawable/edit_text"
+                android:inputType="textPassword"
+                android:maxLength="8"/>
+
+            <Button
+                android:id="@+id/btn_next_registrasi"
+                android:layout_width="379dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:text="Daftar"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                style="@style/btn_primary"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:layout_marginTop="6dp"
+                    android:text="Sudah punya akun? "
+                    android:textColor="#787878"/>
+                <TextView
+                    android:id="@+id/daftardulu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:layout_marginTop="6dp"
+                    android:text="Masuk "
+                    android:textColor="@color/primary"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:layout_marginTop="6dp"
+                    android:text="aja langsung."
+                    android:textColor="#787878"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="29dp">
+
+                <ImageView
+                    android:id="@+id/line_1"
+                    android:layout_width="161dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/line"/>
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="Atau"
+                    android:textColor="#CCCCCC"/>
+                <ImageView
+                    android:id="@+id/line_2"
+                    android:layout_width="161dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/line"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="26dp">
+                <ImageButton
+                    android:id="@+id/daftar_google"
+                    android:layout_width="379dp"
+                    android:layout_height="48dp"
+                    android:ems="10"
+                    android:layout_marginTop="26dp"
+                    android:paddingStart="-160dp"
+                    android:src="@drawable/logo_google"
+                    android:background="@drawable/edit_text"/>
+
+                <TextView
+                    android:id="@+id/btn_masuk_google"
+                    android:layout_width="379dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="26dp"
+                    android:paddingStart="25dp"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:text="Daftar Dengan Google" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
