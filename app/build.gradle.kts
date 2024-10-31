@@ -14,7 +14,6 @@ android {
         versionCode = 1
         versionName = "1.0"
         multiDexEnabled = true
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -52,7 +51,6 @@ dependencies {
 
     // View Model Scope
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
