@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:overScrollMode="never"
+    tools:context=".ui.activities.SignUpActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16sdp"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hai! Daftar Dulu Ya"
+            android:textSize="@dimen/_18ssp"
+            android:textStyle="bold"
+            android:textColor="#2b2b2b"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_32sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_launcher_foreground"/>
+
+        <!-- Input Email -->
+        <LinearLayout
+            android:id="@+id/layoutInputEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:padding="@dimen/_12sdp"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_outline_grey"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/inputEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:hint="No. Handphone/Email"
+                android:inputType="text"/>
+
+        </LinearLayout>
+        <!-- Error Input Email -->
+        <TextView
+            android:id="@+id/errorInputEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:visibility="gone"
+            android:text="Error sia"
+            android:textSize="@dimen/_10ssp"
+            android:textColor="@color/red"/>
+
+        <!-- Input Password -->
+        <LinearLayout
+            android:id="@+id/layoutInputPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:padding="@dimen/_12sdp"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_outline_grey"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/inputPassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:hint="Password"
+                android:inputType="textPassword"/>
+
+            <ImageButton
+                android:id="@+id/togglePassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_visibility_off"
+                android:background="@color/transparent"
+                app:tint="@color/black" />
+
+        </LinearLayout>
+        <!-- Error Input Password -->
+        <TextView
+            android:id="@+id/errorInputPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:visibility="gone"
+            android:text="Error sia"
+            android:textSize="@dimen/_10ssp"
+            android:textColor="@color/red"/>
+
+        <!-- Input Confirm Password -->
+        <LinearLayout
+            android:id="@+id/layoutInputConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:padding="@dimen/_12sdp"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_outline_grey"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/inputConfirmPassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"/>
+
+            <ImageButton
+                android:id="@+id/toggleConfirmPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_visibility_off"
+                android:background="@color/transparent"
+                app:tint="@color/black" />
+
+        </LinearLayout>
+        <!-- Error Input Confirm Password -->
+        <TextView
+            android:id="@+id/errorInputConfirmPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:visibility="gone"
+            android:text="Error sia"
+            android:textSize="@dimen/_10ssp"
+            android:textColor="@color/red"/>
+
+        <!-- Button Daftar -->
+        <LinearLayout
+            android:id="@+id/buttonSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_7sdp"
+            android:padding="@dimen/_12sdp"
+            android:gravity="center"
+            android:background="@drawable/bg_button_500"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Daftar"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+        <!-- Text to Login -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_7sdp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Udah punya akun?"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="#787878"/>
+
+            <TextView
+                android:id="@+id/gotoSignIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Masuk "
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/primary_500"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="aja langsung."
+                android:textSize="@dimen/_12ssp"
+                android:textColor="#787878"/>
+
+        </LinearLayout>
+
+        <!-- Divider -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_7sdp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_weight="1"
+                android:background="#787878"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintWidth_percent="0.4"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:text="Atau"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="#787878"/>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_weight="1"
+                android:background="#787878"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintWidth_percent="0.4"/>
+
+        </LinearLayout>
+
+        <!-- Button Daftar Google -->
+        <LinearLayout
+            android:id="@+id/buttonSignUpGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_7sdp"
+            android:padding="@dimen/_12sdp"
+            android:gravity="center"
+            android:background="@drawable/bg_outline_grey"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:src="@drawable/ic_google"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:text="Daftar dengan Google"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
