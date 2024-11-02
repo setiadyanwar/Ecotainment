@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:overScrollMode="never"
-    tools:context=".ui.activities.SignIpActivity">
+    tools:context=".ui.activities.SignInActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_32sdp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_launcher_foreground"/>
+            android:src="@drawable/daftar"/>
 
         <!-- Input Email -->
         <LinearLayout

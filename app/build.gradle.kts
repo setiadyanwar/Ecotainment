@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+
     // Scalable sdp & ssp
     implementation(libs.ssp.android)
     implementation(libs.sdp.android)
