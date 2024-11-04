@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.MainActivity">
+
+    <!-- Kontainer utama untuk fragmen atau konten di atas BottomAppBar -->
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- BottomAppBar di bagian bawah tanpa efek scroll -->
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:backgroundTint="@color/white"
+        app:fabCradleMargin="10dp"
+        app:fabCradleRoundedCornerRadius="28dp"
+        app:fabCradleVerticalOffset="12dp"
+        app:hideOnScroll="false">
+
+        <!-- Container untuk navigasi ikon -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Home Navigation -->
+
+            <!-- Wishlist Navigation -->
+            <LinearLayout
+                android:id="@+id/nav_home"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/nav_wishlist"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/nav_home_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_home_fill"
+                    />
+
+                <TextView
+                    android:id="@+id/nav_home_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Home"
+                    android:textColor="@color/primary_300"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/nav_wishlist"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/nav_home"
+                app:layout_constraintEnd_toStartOf="@+id/space_left"
+                app:layout_constraintHorizontal_weight="1">
+
+                <ImageView
+                    android:id="@+id/nav_wishlist_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_love_not_fill"
+                     />
+                <TextView
+                    android:id="@+id/nav_wishlist_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wishlist"
+                    android:textSize="12sp"
+                    android:textColor="@color/grey" />
+            </LinearLayout>
+
+            <!-- Space to the left of the FloatingActionButton -->
+            <Space
+                android:id="@+id/space_left"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/nav_wishlist"
+                app:layout_constraintEnd_toStartOf="@+id/space_right"
+                app:layout_constraintHorizontal_weight="0.5" />
+
+            <!-- Space to the right of the FloatingActionButton -->
+            <Space
+                android:id="@+id/space_right"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/space_left"
+                app:layout_constraintEnd_toStartOf="@+id/nav_history"
+                app:layout_constraintHorizontal_weight="0.5" />
+
+            <!-- History Navigation -->
+            <LinearLayout
+                android:id="@+id/nav_history"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:gravity="center"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/space_right"
+                app:layout_constraintEnd_toStartOf="@+id/nav_profile"
+                app:layout_constraintHorizontal_weight="1">
+
+                <ImageView
+                    android:id="@+id/nav_history_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_history_not_fill"
+                     />
+                <TextView
+                    android:id="@+id/nav_history_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="History"
+                    android:textSize="12sp"
+                    android:textColor="@color/grey" />
+            </LinearLayout>
+
+            <!-- Profile Navigation -->
+            <LinearLayout
+                android:id="@+id/nav_profile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/nav_history"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1">
+
+                <ImageView
+                    android:id="@+id/nav_profile_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_profile_not_fill"
+                     />
+                <TextView
+                    android:id="@+id/nav_profile_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profile"
+                    android:textSize="12sp"
+                    android:textColor="@color/grey" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <!-- FloatingActionButton di cradle BottomAppBar -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/navShop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="28dp"
+        android:src="@drawable/ic_shop"
+        android:background="@drawable/bg_round"
+        app:backgroundTint="@color/primary_300"
+        app:tint="@android:color/white" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

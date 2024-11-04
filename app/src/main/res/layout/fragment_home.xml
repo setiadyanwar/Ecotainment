@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.activities.HomepageNotLoginActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/white">
+
+
+        <TextView
+            android:id="@+id/textDaftar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_17sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:text="Ayo Daftar\nSekarang Juga!!"
+            android:textSize="@dimen/_15sdp"
+            android:textColor="@color/primary_500"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/roundedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_50sdp"
+            android:text="Masuk"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:background="@drawable/bg_round_button"
+            app:backgroundTint="@color/primary_500"
+            android:gravity="center"
+            android:layout_toLeftOf="@+id/ic_bell"
+            android:layout_alignParentEnd="true"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            />
+
+
+
+
+
+
+        <!--            light 10, poppins-->
+
+        <ImageButton
+            android:id="@+id/ic_bell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_19sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_alignParentEnd="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_bell"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    </RelativeLayout>
+
+
+
+    <EditText
+        android:id="@+id/search_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/bg_outline_grey"
+        android:drawableStart="@drawable/ic_search"
+        android:drawableEnd="@drawable/ic_control"
+        android:paddingStart="@dimen/_10sdp"
+        android:drawablePadding="@dimen/_10sdp"
+        android:padding="@dimen/_5sdp"
+        android:hint="Tanaman Hias"
+        app:iconifiedByDefault="false"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingTop="@dimen/_2sdp"
+        android:paddingEnd="@dimen/_15sdp"
+        android:singleLine="true"
+        android:textColor="@color/primary_600"
+        android:textColorHint="@color/grey"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintTop_toBottomOf="@id/header"
+
+        />
+
+    <RelativeLayout
+        android:id="@+id/Alamat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_container"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/ic_maps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:src="@drawable/ic_maps"/>
+
+        <TextView
+            android:id="@+id/DeliverText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:text="Deliver :"
+            android:layout_toEndOf="@id/ic_maps"
+            />
+
+        <TextView
+            android:id="@+id/tambahAlamat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/DeliverText"
+            android:textColor="@color/primary_400"
+            android:text="Tambahkan Alamatmu"/>
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/sc_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Alamat"
+        android:scrollbars="none">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="210dp">
+
+
+            <LinearLayout
+                android:id="@+id/mainNavbar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:padding="@dimen/_8sdp"
+                android:elevation="@dimen/_6sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/RaiseFund"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:src="@drawable/ic_camera" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_1sdp"
+                        android:text="Virtual Trip"
+                        android:singleLine="true"
+                        android:gravity="center"
+                        android:textSize="@dimen/_10ssp"
+                        android:textColor="@color/black"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/SwiftbotAI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_75sdp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:src="@drawable/ic_bag" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Goes To School"
+                        android:layout_marginTop="@dimen/_1sdp"
+                        android:gravity="center"
+                        android:textSize="@dimen/_10ssp"
+                        android:textColor="@color/black"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/OfflineTrip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_75sdp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:src="@drawable/ic_tour" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Offline Trip"
+                        android:layout_marginTop="@dimen/_1sdp"
+                        android:gravity="center"
+                        android:textSize="@dimen/_10ssp"
+                        android:textColor="@color/black"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/Community"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/skedul"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:src="@drawable/ic_news" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_1sdp"
+                        android:text="News"
+                        android:singleLine="true"
+                        android:gravity="center"
+                        android:textSize="@dimen/_10ssp"
+                        android:textColor="@color/black"
+                        />
+                </LinearLayout>
+
+
+
+
+
+            </LinearLayout>
+
+
+
+
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/imageSlider"
+                android:layout_width="354dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mainNavbar"
+                app:iss_auto_cycle="true"
+                app:iss_corner_radius="10"
+                app:iss_delay="0"
+                app:iss_period="3000"
+                app:iss_placeholder="@color/black"
+                app:iss_error_image="@color/primary_100">
+            </com.denzcoskun.imageslider.ImageSlider>
+
+            <!--            <RelativeLayout-->
+            <!--                android:id="@+id/flashsale"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                android:layout_marginHorizontal="@dimen/_8sdp"-->
+            <!--                android:layout_marginTop="@dimen/_8sdp"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/imageSlider"-->
+
+            <!--                android:background="@color/white">-->
+
+            <!--                <ImageView-->
+            <!--                    android:id="@+id/flashsaleImage"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:src="@drawable/flashsale"-->
+            <!--                    app:layout_constraintStart_toStartOf="parent"-->
+            <!--                    android:layout_marginStart="21dp"-->
+
+            <!--                    />-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/SelesaiText"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginTop="@dimen/_1sdp"-->
+            <!--                    android:layout_marginHorizontal="@dimen/_8sdp"-->
+            <!--                    android:text="selesai :"-->
+            <!--                    android:layout_toEndOf="@id/flashsaleImage"-->
+            <!--                    />-->
+
+            <!--                <LinearLayout-->
+            <!--                    android:id="@+id/countdownTimer"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginEnd="@dimen/_10sdp"-->
+            <!--                    android:gravity="center"-->
+            <!--                    android:background="@drawable/bg_round_countdowntimer"-->
+            <!--                    android:orientation="horizontal"-->
+            <!--                    android:layout_marginTop="@dimen/_1sdp"-->
+            <!--                    android:layout_toEndOf="@id/SelesaiText"-->
+            <!--                    >-->
+
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/days"-->
+            <!--                        android:layout_width="@dimen/_15sdp"-->
+            <!--                        android:layout_height="@dimen/_15sdp"-->
+            <!--                        android:textSize="@dimen/_7sdp"-->
+            <!--                        android:textColor="@color/white"-->
+            <!--                        android:text="   00"-->
+            <!--                        android:gravity="center"-->
+            <!--                        android:background="@color/transparent"/>-->
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:text=":"-->
+            <!--                        android:textColor="@color/grey"-->
+            <!--                        android:textStyle="bold"-->
+            <!--                        android:textSize="@dimen/_10sdp"-->
+            <!--                        android:layout_marginHorizontal="@dimen/_5sdp"/>-->
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/hours"-->
+            <!--                        android:layout_width="@dimen/_15sdp"-->
+            <!--                        android:layout_height="@dimen/_15sdp"-->
+            <!--                        android:textSize="@dimen/_7sdp"-->
+            <!--                        android:text="20"-->
+            <!--                        android:textColor="@color/white"-->
+            <!--                        android:gravity="center"-->
+            <!--                        android:background="@color/transparent"/>-->
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:text=":"-->
+            <!--                        android:textColor="@color/grey"-->
+            <!--                        android:textStyle="bold"-->
+            <!--                        android:textSize="@dimen/_10sdp"-->
+            <!--                        android:layout_marginHorizontal="@dimen/_5sdp"/>-->
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/minutes"-->
+            <!--                        android:layout_width="@dimen/_15sdp"-->
+            <!--                        android:layout_height="@dimen/_15sdp"-->
+            <!--                        android:textSize="@dimen/_7sdp"-->
+            <!--                        android:textColor="@color/white"-->
+            <!--                        android:text="45"-->
+            <!--                        android:gravity="center"-->
+            <!--                        android:background="@color/transparent"/>-->
+
+            <!--                </LinearLayout>-->
+
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/seeAll"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:textSize="@dimen/_10sdp"-->
+            <!--                    android:textColor="@color/primary_500"-->
+            <!--                    android:text="Lihat semua"-->
+            <!--                    android:layout_marginEnd="@dimen/_10sdp"-->
+            <!--                    android:gravity="center"-->
+            <!--                    android:layout_alignParentEnd="true"-->
+            <!--                    android:background="@color/transparent"/>-->
+
+
+
+            <!--            </RelativeLayout>-->
+
+
+            <!--&lt;!&ndash;            <RelativeLayout&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:id="@+id/relativeLayout2"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:layout_marginTop="15dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                app:layout_constraintTop_toBottomOf="@id/flashsale">&ndash;&gt;-->
+
+            <!--&lt;!&ndash;                <ImageView&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:id="@+id/bg_diskonred"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_width="4000dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_height="190dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_marginStart="21dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_marginEnd="21dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:src="@drawable/bg_diskon" />&ndash;&gt;-->
+
+            <!--&lt;!&ndash;                <androidx.recyclerview.widget.RecyclerView&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:id="@+id/recyclerView"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_width="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_marginStart="21dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_marginEnd="21dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:orientation="horizontal"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:overScrollMode="never"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:scrollbars="none"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />&ndash;&gt;-->
+
+
+
+
+            <!--&lt;!&ndash;                <TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_width="100dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_height="190dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_marginStart="21dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_marginEnd="21dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:background="@drawable/bg_diskon"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:paddingTop="40dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:paddingLeft="10dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:text="Diskon\nBesar\nSetiap Hari!"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:textAlignment="textStart"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:textColor="@color/white"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:textSize="14sp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:textStyle="bold"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    tools:ignore="RtlCompat" />&ndash;&gt;-->
+            <!--&lt;!&ndash;                <TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_width="100dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_height="190dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_marginStart="21dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:layout_marginEnd="21dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:gravity="bottom"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:paddingLeft="10dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:paddingBottom="50dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:text="Dapatkan harga\nspesial dengan\nwaktu terbatas"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:textSize="12sp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                    android:textColor="@color/white"/>&ndash;&gt;-->
+
+            <!--&lt;!&ndash;            </RelativeLayout>&ndash;&gt;-->
+
+            <TextView
+                android:id="@+id/ProdukTerlaris"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:textStyle="bold"
+                android:text="Produk Terlaris"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/imageSlider"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <HorizontalScrollView
+                android:id="@+id/category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:scrollbars="none"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ProdukTerlaris">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_25sdp"
+                        android:orientation="horizontal"
+                        android:layout_marginEnd="@dimen/_10sdp">
+
+                        <RadioButton
+                            android:layout_width="@dimen/_80sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="4dp"
+                            android:background="@drawable/radio_selector"
+                            android:button="@drawable/null_radio_button"
+                            android:gravity="center"
+                            android:drawableTint="@color/radio_button_icon_text_selector"
+                            android:paddingHorizontal="16dp"
+                            android:drawableStart="@drawable/ic_all"
+                            android:text="Semua"
+                            android:textColor="@color/radio_button_icon_text_selector" />
+
+                        <RadioButton
+                            android:layout_width="@dimen/_110sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="4dp"
+                            android:drawableTint="@color/radio_button_icon_text_selector"
+                            android:background="@drawable/radio_selector"
+                            android:button="@drawable/null_radio_button"
+                            android:gravity="center"
+                            android:paddingHorizontal="30dp"
+                            android:drawableStart="@drawable/ic_tanaman"
+                            android:text="Tanaman"
+                            android:textColor="@color/radio_button_icon_text_selector" />
+
+                        <RadioButton
+                            android:layout_width="@dimen/_80sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="4dp"
+                            android:background="@drawable/radio_selector"
+                            android:button="@drawable/null_radio_button"
+                            android:drawableTint="@color/radio_button_icon_text_selector"
+                            android:gravity="center"
+                            android:paddingHorizontal="20dp"
+                            android:drawableStart="@drawable/ic_sayur"
+                            android:text="Sayur"
+                            android:textColor="@color/radio_button_icon_text_selector" />
+
+                        <RadioButton
+                            android:layout_width="@dimen/_120sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="8dp"
+                            android:background="@drawable/radio_selector"
+                            android:button="@drawable/null_radio_button"
+                            android:gravity="center"
+                            android:paddingHorizontal="16dp"
+                            android:text="Environment"
+                            android:textColor="@color/radio_button_icon_text_selector" />
+
+<!--                        <RadioButton-->
+<!--                            android:layout_width="@dimen/_80sdp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginHorizontal="8dp"-->
+<!--                            android:background="@drawable/radio_selector"-->
+<!--                            android:button="@drawable/null_radio_button"-->
+<!--                            android:gravity="center"-->
+<!--                            android:paddingHorizontal="16dp"-->
+<!--                            android:text="Others"-->
+<!--                            android:textColor="@color/radio_button_icon_text_selector" />-->
+
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewProduct"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="@dimen/_15sdp"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            app:layout_constraintTop_toBottomOf="@id/category"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_default="wrap" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

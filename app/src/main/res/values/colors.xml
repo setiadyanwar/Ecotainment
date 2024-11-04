@@ -30,4 +30,17 @@
     <color name="white">#FFFFFF</color>
 
     <color name="transparent">#00FFFFFF</color>
+
+    <color name="primary_10">#FA4742</color>
+    <color name="dark_70">#2B2B2B</color>
+    <color name="dark_50">#454545</color>
+    <color name="dark_30">#5E5E5E</color>
+    <color name="dark_10">#AEAEAE</color>
+    <color name="bg_color">#FEF0F0</color>
+<!--    <color name="transparent">#00000000</color>-->
+    <color name="custom_shadow_color">#E7716D</color>
+    <color name="btn_secondaryy">#FEBFBD</color>
+    <color name="stroke_color">#FFFFFF</color>
+
+
 </resources>

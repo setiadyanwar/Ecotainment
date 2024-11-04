@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:padding="@dimen/_10sdp"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.activities.SearchActivity">
+
+    <ImageView
+        android:id="@+id/back_button"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/ic_back"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:contentDescription="Back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/search_container"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/_11sdp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/bg_outline_grey"
+        android:drawableStart="@drawable/ic_search"
+        android:paddingStart="10dp"
+        android:drawablePadding="8dp"
+        android:paddingEnd="16dp"
+        android:hint="Pohon Lidah Mertua"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/primary_600"
+        android:textColorHint="@color/grey"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/back_button"
+        app:layout_constraintEnd_toStartOf="@id/filter_button"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/filter_button"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:src="@drawable/ic_filter"
+        app:tint="#717680"
+        android:contentDescription="Filter"
+        app:layout_constraintStart_toEndOf="@id/search_container"
+        app:layout_constraintEnd_toStartOf="@id/cart_button"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/cart_button"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        app:layout_goneMarginEnd="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:src="@drawable/ic_shop"
+        app:tint="#717680"
+        android:contentDescription="Cart"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
