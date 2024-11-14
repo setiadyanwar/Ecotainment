@@ -8,6 +8,6 @@
 
     <!-- Optional: Add a border/stroke around the button -->
     <stroke
-        android:width="5dp"
+        android:width="10dp"
     android:color="@color/white" />
 </shape>

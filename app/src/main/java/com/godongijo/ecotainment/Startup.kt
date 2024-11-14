@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.godongijo.ecotainment.ui.activities.DetailProductActivity
 import com.godongijo.ecotainment.ui.activities.MainActivity
+import com.godongijo.ecotainment.ui.activities.PaymentActivity
 import com.godongijo.ecotainment.viewModels.SplashViewModel
 
 class Startup : AppCompatActivity() {
@@ -22,7 +24,7 @@ class Startup : AppCompatActivity() {
         }
         super.onCreate(savedInstanceState)
 
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, PaymentActivity::class.java)
         startActivity(intent)
         finish()
 

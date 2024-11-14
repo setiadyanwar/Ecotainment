@@ -1,10 +1,369 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.DetailProductActivity">
+    android:background="@color/white">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- AppBarLayout with Back Button and Icons -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_12sdp">
+
+            <!-- Back Button -->
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/ic_back"
+                android:contentDescription="Back Button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="?attr/selectableItemBackgroundBorderless" />
+
+            <!-- Notification Icon -->
+            <ImageView
+                android:id="@+id/notificationIcon"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:src="@drawable/ic_bell"
+                android:contentDescription="Notification Icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="?attr/selectableItemBackgroundBorderless" />
+
+            <!-- Cart Icon with Badge -->
+            <RelativeLayout
+                android:id="@+id/cartContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_9sdp"
+                app:layout_constraintEnd_toStartOf="@+id/notificationIcon"
+                app:layout_constraintTop_toTopOf="parent">
+                <ImageView
+                    android:id="@+id/cartIcon"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/ic_cart"
+                    android:contentDescription="Cart Icon" />
+
+                <!-- Badge on Cart Icon -->
+                <TextView
+                    android:id="@+id/cartBadge"
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:background="@drawable/badge_background"
+                    android:text="+10"
+                    android:textSize="@dimen/_4sdp"
+                    android:textColor="@android:color/white"
+                    android:padding="@dimen/_1sdp"
+                    android:gravity="center"
+                    android:layout_alignTop="@id/cartIcon"
+                    android:layout_alignEnd="@id/cartIcon"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:layout_marginEnd="@dimen/_1sdp" />
+            </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Scrollable Content -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_12sdp">
+
+            <!-- Product Image Section -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"
+                android:layout_marginVertical="@dimen/_12sdp"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardElevation="@dimen/_3sdp">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPagerProductImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- Product Details Layout -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_12sdp">
+
+                <!-- Product Title -->
+                <TextView
+                    android:id="@+id/productTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_toStartOf="@id/favoriteIcon"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Hiasan Tanaman lidah mertua asal makasar"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <!-- Favorite Icon -->
+                <ImageView
+                    android:id="@+id/favoriteIcon"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_alignTop="@id/productTitle"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:contentDescription="Favorite Icon"
+                    android:src="@drawable/ic_love" />
+
+                <!-- Product Price -->
+                <TextView
+                    android:id="@+id/productPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/productTitle"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Rp99.000"
+                    android:textColor="@color/primary_500"
+                    android:textSize="@dimen/_18sdp" />
+            </RelativeLayout>
+
+
+            <!-- Ratings, Sales Info, and Tags in a Horizontal Row -->
+            <LinearLayout
+                android:id="@+id/linear1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20sdp"
+                android:orientation="horizontal">
+
+                <!-- Star Rating -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_star"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:text="4.9"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_12sdp" />
+
+                <!-- Sales Count -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:text="| 20 terjual"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/_12sdp" />
+
+                <!-- Space between Sales Info and Tags -->
+                <View
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="wrap_content" />
+
+                <!-- HorizontalScrollView for Tags -->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_12sdp"
+                        android:orientation="horizontal">
+
+                        <!-- Photo Count Tag -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_6sdp"
+                            android:background="@drawable/tag_background"
+                            android:paddingHorizontal="@dimen/_8sdp"
+                            android:paddingVertical="@dimen/_3sdp"
+                            android:text="(100) Foto Pembeli"
+                            android:textColor="@color/primary_500"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <!-- Reviews Count Tag -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_6sdp"
+                            android:background="@drawable/tag_background"
+                            android:paddingHorizontal="@dimen/_8sdp"
+                            android:paddingVertical="@dimen/_3sdp"
+                            android:text="(89) Ulasan"
+                            android:textColor="@color/primary_500"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <!-- Discussion Count Tag -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/tag_background"
+                            android:paddingHorizontal="@dimen/_8sdp"
+                            android:paddingVertical="@dimen/_3sdp"
+                            android:text="(4) Diskusi"
+                            android:textColor="@color/primary_500"
+                            android:textSize="@dimen/_10sdp" />
+                    </LinearLayout>
+
+
+
+                </HorizontalScrollView>
+
+            </LinearLayout>
+
+            <!-- Varian Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pilih Varian:"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_medium"/>
+
+            <!-- Variants Radio Group -->
+            <RadioGroup
+                android:id="@+id/variantGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <!-- Variant 1 -->
+                <RadioButton
+                    android:id="@+id/variant1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
+                    android:button="@null"
+                    android:background="@drawable/radio_selector"
+                    android:text="small"
+                    android:textColor="@drawable/radio_text_selector"
+                    android:textSize="12sp"/>
+
+                <!-- Variant 2 -->
+                <RadioButton
+                    android:id="@+id/variant2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:text="Medium"
+                    android:textColor="@drawable/radio_text_selector"
+                    android:textSize="12sp"/>
+
+                <!-- Variant 3 -->
+                <RadioButton
+                    android:id="@+id/variant3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:text="Large"
+                    android:textColor="@drawable/radio_text_selector"
+                    android:textSize="12sp"/>
+            </RadioGroup>
+
+
+            <!-- TabLayout and ViewPager2 -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/primary_700"
+                app:tabMode="fixed"
+                app:tabTextColor="@color/primary_700" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vP2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Action Bar -->
+    <LinearLayout
+        android:id="@+id/bottom_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:padding="@dimen/_12sdp"
+        android:gravity="center_vertical"
+        android:layout_gravity="bottom">
+
+        <!-- Messaging Button -->
+        <ImageButton
+            android:id="@+id/message_button"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:background="@drawable/rounded_border_button"
+            android:src="@drawable/ic_chat"
+            android:contentDescription="Message"
+            android:padding="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_8sdp" />
+
+        <!-- Buy Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buy_button"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_weight="1"
+            android:text="Beli"
+            android:textColor="@color/secondary_500"
+            app:backgroundTint="@android:color/white"
+            app:cornerRadius="@dimen/_8sdp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/secondary_500"
+            app:strokeWidth="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_6sdp" />
+
+        <!-- Add to Cart Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_to_cart_button"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_weight="1"
+            android:text="+ Keranjang"
+            android:textColor="@android:color/white"
+            app:backgroundTint="@color/secondary_500"
+            style="@style/Widget.MaterialComponents.Button"
+            app:cornerRadius="@dimen/_8sdp" />
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,11 @@
+<!-- res/drawable/bg_round_donate_button.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background color for the button -->
+    <solid android:color="@color/secondary_500" /> <!-- Replace with your desired color -->
+
+    <!-- Corner radius for rounded corners -->
+    <corners android:radius="100dp" /> <!-- Adjust the radius to make it more or less rounded -->
+
+    <!-- Optional: Add a border/stroke around the button -->
+
+</shape>

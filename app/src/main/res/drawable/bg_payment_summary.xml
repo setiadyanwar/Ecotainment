@@ -1,0 +1,12 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Border dengan warna hijau atau warna lainnya -->
+    <solid android:color="@color/primary_50" /> <!-- Isi transparan -->
+
+    <!-- Border di sekitar -->
+    <stroke
+        android:width="3dp"
+    android:color="@color/white"/>
+
+    <!-- Sudut membulat di semua sisi -->
+    <corners android:radius="12dp"/>
+</shape>

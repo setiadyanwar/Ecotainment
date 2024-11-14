@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_8sdp"
+    android:layout_marginVertical="@dimen/_4sdp"
+    app:cardCornerRadius="@dimen/_8sdp"
+    app:cardElevation="@dimen/_1sdp"
+    android:background="@android:color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_8sdp">
+
+        <!-- User Profile Image -->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageViewProfile"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:src="@drawable/fs1"
+            app:civ_border_width="@dimen/_1sdp"
+            app:civ_border_color="#EEEEEE"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"/>
+
+        <!-- Timestamp -->
+        <TextView
+            android:id="@+id/textViewTimestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2 min ago"
+            android:textColor="#999999"
+            android:textSize="@dimen/_8sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"/>
+
+        <!-- Content Container -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_toEndOf="@id/imageViewProfile"
+            android:layout_toStartOf="@id/textViewTimestamp">
+
+            <!-- Username -->
+            <TextView
+                android:id="@+id/textViewUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Freya Jayawardana"
+                android:textColor="#000000"
+                android:textSize="@dimen/_11sdp"
+                android:textStyle="bold"/>
+
+            <!-- Rating Stars -->
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                style="?android:attr/ratingBarStyleSmall"
+                android:numStars="5"
+                android:rating="5"
+                android:stepSize="1"
+                android:progressTint="#FFC107"
+                android:secondaryProgressTint="#FFC107"
+                android:isIndicator="true"/>
+
+            <!-- Review Text -->
+            <TextView
+                android:id="@+id/textViewReview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:text="Pesanan selama langganan &amp; datang sesuai jadwal, terima kasih."
+                android:textColor="#666666"
+                android:textSize="@dimen/_9sdp"/>
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
