@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/nav_pembayaran"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="@dimen/_40sdp"
         android:background="@color/white"
         android:elevation="4dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,11 +20,11 @@
         <!-- Back Button -->
         <ImageButton
             android:id="@+id/back_button"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_back"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="@dimen/_12sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -38,7 +37,7 @@
             android:layout_height="wrap_content"
             android:text="Checkout"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="@dimen/_12ssp"
             android:fontFamily="@font/poppins_medium"
             app:layout_constraintStart_toEndOf="@id/back_button"
             app:layout_constraintTop_toTopOf="parent"
@@ -48,11 +47,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Scrollable Content -->
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/sc_1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/nav_pembayaran"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,13 +60,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="@dimen/_16sdp">
 
             <!-- Payment Amount Section with Timer Icon -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="@dimen/_15sdp">
 
                 <!-- Payment Title -->
                 <TextView
@@ -76,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Menunggu Pembayaran"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/_15ssp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/poppins_semibold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rp398.000"
-                    android:textSize="24sp"
+                    android:textSize="@dimen/_18ssp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/poppins_bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +110,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="8dp"
-                    android:gravity="center"
                     app:layout_constraintTop_toBottomOf="@id/tv_payment_amount">
 
                     <!-- Timer Segments -->
@@ -121,7 +118,7 @@
                         android:id="@+id/tv_timer_hint"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_34sdp"
+                        android:layout_marginEnd="@dimen/_12sdp"
                         android:gravity="start"
                         android:text="Lakukan pembayaran sebelum"
                         android:textColor="#757575"
@@ -133,10 +130,10 @@
                         android:layout_height="wrap_content"
                         android:text="02"
                         android:textColor="@color/white"
-                        android:background="@drawable/bg_diskon"
+                        android:background="@drawable/bg_red"
                         android:paddingHorizontal="4dp"
-                        android:paddingVertical="4dp"
-                        android:textSize="14sp"
+                        android:paddingVertical="2dp"
+                        android:textSize="@dimen/_11sdp"
                         android:fontFamily="@font/poppins_medium"/>
 
                     <TextView
@@ -153,10 +150,10 @@
                         android:layout_height="wrap_content"
                         android:text="00"
                         android:textColor="@color/white"
-                        android:background="@drawable/bg_diskon"
-                        android:paddingHorizontal="6dp"
-                        android:paddingVertical="4dp"
-                        android:textSize="14sp"
+                        android:background="@drawable/bg_red"
+                        android:paddingHorizontal="4dp"
+                        android:paddingVertical="2dp"
+                        android:textSize="@dimen/_11sdp"
                         android:fontFamily="@font/poppins_medium"/>
 
                     <TextView
@@ -173,10 +170,10 @@
                         android:layout_height="wrap_content"
                         android:text="30"
                         android:textColor="@color/white"
-                        android:background="@drawable/bg_diskon"
-                        android:paddingHorizontal="6dp"
-                        android:paddingVertical="4dp"
-                        android:textSize="14sp"
+                        android:background="@drawable/bg_red"
+                        android:paddingHorizontal="4dp"
+                        android:paddingVertical="2dp"
+                        android:textSize="@dimen/_11sdp"
                         android:fontFamily="@font/poppins_medium"/>
 
 
@@ -204,7 +201,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="12dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -216,8 +213,8 @@
                         <!-- QRIS Logo -->
                         <ImageView
                             android:id="@+id/logo_qris"
-                            android:layout_width="80dp"
-                            android:layout_height="40dp"
+                            android:layout_width="@dimen/_70sdp"
+                            android:layout_height="@dimen/_40sdp"
                             android:src="@drawable/ic_qris"
                             android:contentDescription="QRIS Logo"/>
 
@@ -246,8 +243,8 @@
                         <!-- QR Code Image -->
                         <ImageView
                             android:id="@+id/iv_qr_code"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="@dimen/_100sdp"
                             android:src="@drawable/ic_qr_code"
                             android:layout_marginEnd="16dp"
                             android:contentDescription="QR Code"/>
@@ -264,7 +261,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Merchant:"
                                 android:textColor="#212121"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/_11sdp"
                                 android:fontFamily="@font/poppins_bold"/>
 
                             <TextView
@@ -272,7 +269,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Ecotainment"
                                 android:textColor="#212121"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/_11sdp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:layout_marginTop="2dp"/>
 
@@ -281,7 +278,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="NMID:"
                                 android:textColor="#212121"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/_11sdp"
                                 android:fontFamily="@font/poppins_bold"
                                 android:layout_marginTop="8dp"/>
 
@@ -290,7 +287,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="XXXXXXXXXX"
                                 android:textColor="#212121"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/_11sdp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:layout_marginTop="2dp"/>
                         </LinearLayout>
@@ -301,7 +298,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Satu QRIS Untuk Semua, cek aplikasi penyelenggara di:"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/_9sdp"
                         android:textColor="#757575"
                         android:fontFamily="@font/poppins_medium"
                         android:layout_marginTop="16dp"/>
@@ -310,7 +307,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="www.aspi-qris.id"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/_9sdp"
                         android:textColor="#757575"
                         android:fontFamily="@font/poppins_medium"/>
                 </LinearLayout>
@@ -340,7 +337,7 @@
                     android:text="Upload Bukti Pembayaran"
                     android:textColor="@color/primary_500"
                     android:fontFamily="@font/poppins_medium"
-                    android:textSize="14sp"/>
+                    android:textSize="@dimen/_12sdp"/>
             </LinearLayout>
 
             <!-- Other Payment Methods Section -->
@@ -349,7 +346,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pilihan pembayaran lainnya"
-                android:textSize="16sp"
+                android:textSize="@dimen/_12sdp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_medium"
                 android:layout_marginTop="16dp"/>
@@ -359,8 +356,10 @@
                 android:id="@+id/rvBanks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:overScrollMode="never"
+                android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

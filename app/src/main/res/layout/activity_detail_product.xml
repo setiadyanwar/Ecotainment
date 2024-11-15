@@ -245,56 +245,6 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins_medium"/>
 
-            <!-- Variants Radio Group -->
-            <RadioGroup
-                android:id="@+id/variantGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp">
-
-                <!-- Variant 1 -->
-                <RadioButton
-                    android:id="@+id/variant1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="8dp"
-                    android:button="@null"
-                    android:background="@drawable/radio_selector"
-                    android:text="small"
-                    android:textColor="@drawable/radio_text_selector"
-                    android:textSize="12sp"/>
-
-                <!-- Variant 2 -->
-                <RadioButton
-                    android:id="@+id/variant2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="8dp"
-                    android:background="@drawable/radio_selector"
-                    android:button="@null"
-                    android:text="Medium"
-                    android:textColor="@drawable/radio_text_selector"
-                    android:textSize="12sp"/>
-
-                <!-- Variant 3 -->
-                <RadioButton
-                    android:id="@+id/variant3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="8dp"
-                    android:background="@drawable/radio_selector"
-                    android:button="@null"
-                    android:text="Large"
-                    android:textColor="@drawable/radio_text_selector"
-                    android:textSize="12sp"/>
-            </RadioGroup>
 
 
             <!-- TabLayout and ViewPager2 -->
