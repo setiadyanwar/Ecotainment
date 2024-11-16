@@ -37,30 +37,18 @@
         android:layout_marginTop="8dp">
 
         <!-- Bintang Rating -->
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_star" />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_star" />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_star" />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_star" />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_star" />
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            style="?android:attr/ratingBarStyleSmall"
+            android:numStars="5"
+            android:rating="5"
+            android:stepSize="1"
+            android:progressTint="#FFC107"
+            android:secondaryProgressTint="#FFC107"
+            android:isIndicator="true"/>
 
         <!-- Rating Value dan Jumlah Ulasan -->
         <TextView
