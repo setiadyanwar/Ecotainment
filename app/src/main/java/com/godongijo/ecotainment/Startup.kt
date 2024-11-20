@@ -24,24 +24,8 @@ class Startup : AppCompatActivity() {
         }
         super.onCreate(savedInstanceState)
 
-        val intent = Intent(this, PaymentActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
-
-        // Get the current user from Firebase Authentication
-//        val currentUser = FirebaseAuth.getInstance().currentUser
-//
-//        // Check if the user is signed in (currentUser is null if not signed in)
-//        if (currentUser == null) {
-//            // If no user is signed in, navigate to the SignInActivity
-//            val intent = Intent(this, SignInActivity::class.java)
-//            startActivity(intent)
-//            finish()
-//        } else {
-//            // If a user is signed in, navigate to the MainActivity
-//            val intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent)
-//            finish()
-//        }
     }
 }

@@ -1,5 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.Ecotainment" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Mengatur warna status bar menjadi putih -->
+        <item name="android:statusBarColor">@android:color/white</item>
+        <!-- Mengatur teks status bar menjadi hitam -->
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>

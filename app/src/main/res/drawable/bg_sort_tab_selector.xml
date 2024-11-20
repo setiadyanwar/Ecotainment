@@ -1,0 +1,26 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Warna ketika dipilih -->
+    <item android:state_checked="true">
+        <layer-list>
+            <item
+                android:top="-6dp"
+                android:left="-6dp"
+                android:right="-6dp"
+                android:bottom="0dp">
+
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/transparent"/>
+                    <stroke
+                        android:width="@dimen/_1sdp"
+                        android:color="@color/primary_500"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <!-- Warna ketika tidak dipilih -->
+    <item android:state_checked="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/transparent" />
+        </shape>
+    </item>
+</selector>

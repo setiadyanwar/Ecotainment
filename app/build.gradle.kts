@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.google.gms.google.services)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -50,8 +52,31 @@ dependencies {
     // Splash Screen
     implementation(libs.androidx.core.splashscreen)
 
+    // Image Slider
+    implementation(libs.imageslideshow)
+
     // View Model Scope
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    // Glide
+    implementation (libs.glide)
+
+    // Circle Image
+    implementation (libs.circleimageview)
+
+    // Volley
+    implementation(libs.volley)
+
+    // Swipe Refresh Layout
+    implementation(libs.androidx.swiperefreshlayout)
+
+    // Facebook Shimmer
+    implementation (libs.shimmer)
+
+    // Firebase
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -61,14 +86,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation ("de.hdodenhof:circleimageview:3.1.0")
-
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.google.android.material:material:1.10.0")
-    implementation("com.google.android.material:material:1.9.0")
-    implementation("androidx.cardview:cardview:1.0.0")
+    implementation(libs.androidx.constraintlayout.v220)
+    implementation(libs.material.v1100)
+    implementation(libs.material)
 
 
-    // Image Slider
-    implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
 }

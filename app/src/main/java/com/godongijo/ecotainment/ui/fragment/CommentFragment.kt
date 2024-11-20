@@ -5,33 +5,57 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.godongijo.ecotainment.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.godongijo.ecotainment.adapters.ReviewsAdapter
 import com.godongijo.ecotainment.databinding.FragmentCommentBinding
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+import com.godongijo.ecotainment.models.Review
 
 
 class CommentFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var _binding: FragmentCommentBinding? = null
-    private val binding get() = _binding!!
+
+    private lateinit var binding: FragmentCommentBinding
+
+    private var reviews: List<Review> = emptyList()
+
+    private var rating: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
+            reviews = it.getParcelableArrayList("reviews") ?: emptyList()
+            rating = it.getDouble("rating")
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentCommentBinding.inflate(inflater, container, false)
+        binding = FragmentCommentBinding.inflate(layoutInflater)
+
+        if(reviews.isNotEmpty()) {
+            // Setup RecyclerView
+            val adapter = ReviewsAdapter()
+            binding.recyclerViewReviews.layoutManager = LinearLayoutManager(context)
+            binding.recyclerViewReviews.adapter = adapter
+
+            // Set reviews data to RecyclerView
+            adapter.submitList(reviews)
+
+            binding.ratingBar.rating = rating.toFloat()
+            binding.textRating.text = rating.toString()
+            binding.countReviews.text = "(${reviews.size.toString()} Ulasan)"
+
+            binding.layoutRating.visibility = View.VISIBLE
+            binding.emptyReviews.visibility = View.GONE
+        } else {
+            binding.layoutRating.visibility = View.GONE
+            binding.emptyReviews.visibility = View.VISIBLE
+        }
+
+
         return binding.root
     }
-
 
 }

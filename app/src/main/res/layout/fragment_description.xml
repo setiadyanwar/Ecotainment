@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/_100sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.DescriptionFragment">
 
@@ -13,12 +14,11 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/_10sdp"
         android:text="Desc 1"
-        android:textColor="#666666"
-        android:textSize="@dimen/_11ssp"
+        android:textColor="@color/text_300"
+        android:textSize="@dimen/_12ssp"
         android:fontFamily="@font/poppins_regular"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
-
 
     <View
         android:id="@+id/gradientWhite"

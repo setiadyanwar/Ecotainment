@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">Ecotainment</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="base_url">https://admin.botanicabeautysalon.my.id</string>
+    <string name="api_sign_in">https://admin.botanicabeautysalon.my.id/api/auth/signin</string>
+    <string name="api_sign_up">https://admin.botanicabeautysalon.my.id/api/auth/signup</string>
+    <string name="api_logout">https://admin.botanicabeautysalon.my.id/api/auth/logout</string>
+    <string name="api_user">https://admin.botanicabeautysalon.my.id/api/auth/user</string>
+
+    <string name="api_products">https://admin.botanicabeautysalon.my.id/api/products</string>
+
+    <string name="api_wishlist">https://admin.botanicabeautysalon.my.id/api/wishlist</string>
+
+    <string name="api_cart">https://admin.botanicabeautysalon.my.id/api/cart</string>
+
+    <string name="api_transactions">https://admin.botanicabeautysalon.my.id/api/transactions</string>
+
+    <string name="api_search_history">https://admin.botanicabeautysalon.my.id/api/search-history</string>
 </resources>

@@ -8,14 +8,22 @@ import android.text.InputType
 import android.text.TextWatcher
 import android.util.Patterns
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.godongijo.ecotainment.R
 import com.godongijo.ecotainment.databinding.ActivitySignUpBinding
+import com.godongijo.ecotainment.services.auth.AuthService
+import kotlinx.coroutines.launch
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
+
+    // Instance of AuthService for handling authentication
+    private val authService = AuthService()
+
+    // Boolean to keep track of whether progress bar is visible
+    private var isProgressVisible = false
 
     // Drawable resources for input fields (normal state and error state)
     private lateinit var normalInput: Drawable
@@ -44,10 +52,16 @@ class SignUpActivity : AppCompatActivity() {
 
         binding.gotoSignIn.setOnClickListener{ signIn() }
 
+        binding.backButton.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
         listenInput()
     }
 
     private fun signUp() {
+        setProgressBar()
+
         // Reset input fields and error messages
         binding.layoutInputEmail.background = normalInput
         binding.layoutInputPassword.background = normalInput
@@ -61,8 +75,38 @@ class SignUpActivity : AppCompatActivity() {
         val confirmPassword = binding.inputConfirmPassword.text.toString().trim()
 
         if(isValidData(email, password, confirmPassword)) {
-            val toast = Toast.makeText(this, "Berhasil Daftar", Toast.LENGTH_SHORT) // in Activity
-            toast.show()
+            // If data is valid, attempt to sign up using AuthService
+            lifecycleScope.launch {
+                try {
+                    // Email not registered
+                    authService.signUpWithEmailAndPassword(this@SignUpActivity, email, password,
+                        onResult = {
+                            // Navigate to MainActivity after successful sign-up
+                            val intent = Intent(this@SignUpActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        },
+                        onError = { error ->
+                            binding.errorInputEmail.text = error.toString()
+                            binding.errorInputEmail.visibility = View.VISIBLE
+                        }
+                    )
+
+                    // Show or hide progress bar
+                    setProgressBar()
+                } catch (e:Exception) {
+                    // Display error message if sign-up fails
+//                    binding.errorInputEmail.text = "Terjadi kesalahan saat mendaftarkan akun"
+                    binding.errorInputEmail.text = e.message
+                    binding.errorInputEmail.visibility = View.VISIBLE
+
+                    // Hide progress bar
+                    setProgressBar()
+                }
+            }
+        } else {
+            // Hide progress bar if validation fails
+            setProgressBar()
         }
 
     }
@@ -107,6 +151,10 @@ class SignUpActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 binding.layoutInputEmail.background = normalInput
                 binding.errorInputEmail.visibility = View.GONE
+                binding.layoutInputPassword.background = normalInput
+                binding.errorInputPassword.visibility = View.GONE
+                binding.layoutInputConfirmPassword.background = normalInput
+                binding.errorInputConfirmPassword.visibility = View.GONE
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -115,8 +163,12 @@ class SignUpActivity : AppCompatActivity() {
         // Set listener for password input field to reset error state when user starts typing
         binding.inputPassword.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
+                binding.layoutInputEmail.background = normalInput
+                binding.errorInputEmail.visibility = View.GONE
                 binding.layoutInputPassword.background = normalInput
                 binding.errorInputPassword.visibility = View.GONE
+                binding.layoutInputConfirmPassword.background = normalInput
+                binding.errorInputConfirmPassword.visibility = View.GONE
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -125,12 +177,47 @@ class SignUpActivity : AppCompatActivity() {
         // Set listener for confirmPassword input field to reset error state when user starts typing
         binding.inputConfirmPassword.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
+                binding.layoutInputEmail.background = normalInput
+                binding.errorInputEmail.visibility = View.GONE
+                binding.layoutInputPassword.background = normalInput
+                binding.errorInputPassword.visibility = View.GONE
                 binding.layoutInputConfirmPassword.background = normalInput
                 binding.errorInputConfirmPassword.visibility = View.GONE
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
+    }
+
+    // Method to toggle the visibility of the progress bar and enable/disable input fields
+    private fun setProgressBar() {
+        if (isProgressVisible) {
+            // Hide progress bar and enable inputs/buttons
+            binding.progressBar.visibility = View.INVISIBLE
+            binding.textButton.visibility = View.VISIBLE
+
+            binding.inputEmail.isEnabled = true
+            binding.inputPassword.isEnabled = true
+            binding.inputConfirmPassword.isEnabled = true
+            binding.buttonSignUp.isEnabled = true
+            binding.buttonSignUpGoogle.isEnabled = true
+            binding.gotoSignIn.isEnabled = true
+
+            isProgressVisible = false
+        } else {
+            // Show progress bar and disable inputs/buttons
+            binding.progressBar.visibility = View.VISIBLE
+            binding.textButton.visibility = View.INVISIBLE
+
+            binding.inputEmail.isEnabled = false
+            binding.inputPassword.isEnabled = false
+            binding.inputConfirmPassword.isEnabled = false
+            binding.buttonSignUp.isEnabled = false
+            binding.buttonSignUpGoogle.isEnabled = false
+            binding.gotoSignIn.isEnabled = false
+
+            isProgressVisible = true
+        }
     }
 
     // Method to validate the data input
@@ -151,6 +238,12 @@ class SignUpActivity : AppCompatActivity() {
         else if (password.isEmpty()) {
             binding.layoutInputPassword.background = errorInput
             binding.errorInputPassword.text = "Harap isi kata sandi!"
+            binding.errorInputPassword.visibility = View.VISIBLE
+            return false
+        } // Check if password has at least 6 characters
+        else if (password.length < 6) {
+            binding.layoutInputPassword.background = errorInput
+            binding.errorInputPassword.text = "Password harus memiliki minimal 6 karakter"
             binding.errorInputPassword.visibility = View.VISIBLE
             return false
         } // Check if confirmPassword is empty

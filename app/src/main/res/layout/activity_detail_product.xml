@@ -1,91 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <!-- AppBarLayout with Back Button and Icons -->
-    <com.google.android.material.appbar.AppBarLayout
+    <!-- Header -->
+    <RelativeLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:padding="@dimen/_12sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_12sdp">
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back" />
 
-            <!-- Back Button -->
+        <!-- Cart Icon with Badge -->
+        <RelativeLayout
+            android:id="@+id/cartContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/notificationButton">
             <ImageView
-                android:id="@+id/backButton"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                android:src="@drawable/ic_back"
-                android:contentDescription="Back Button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:background="?attr/selectableItemBackgroundBorderless" />
-
-            <!-- Notification Icon -->
-            <ImageView
-                android:id="@+id/notificationIcon"
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
-                android:src="@drawable/ic_bell"
-                android:contentDescription="Notification Icon"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:background="?attr/selectableItemBackgroundBorderless" />
-
-            <!-- Cart Icon with Badge -->
-            <RelativeLayout
-                android:id="@+id/cartContainer"
+                android:id="@+id/cartIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_9sdp"
-                app:layout_constraintEnd_toStartOf="@+id/notificationIcon"
-                app:layout_constraintTop_toTopOf="parent">
-                <ImageView
-                    android:id="@+id/cartIcon"
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:src="@drawable/ic_cart"
-                    android:contentDescription="Cart Icon" />
+                android:src="@drawable/ic_cart"/>
 
-                <!-- Badge on Cart Icon -->
-                <TextView
-                    android:id="@+id/cartBadge"
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp"
-                    android:background="@drawable/badge_background"
-                    android:text="+10"
-                    android:textSize="@dimen/_4sdp"
-                    android:textColor="@android:color/white"
-                    android:padding="@dimen/_1sdp"
-                    android:gravity="center"
-                    android:layout_alignTop="@id/cartIcon"
-                    android:layout_alignEnd="@id/cartIcon"
-                    android:layout_marginTop="@dimen/_1sdp"
-                    android:layout_marginEnd="@dimen/_1sdp" />
-            </RelativeLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+            <!-- Badge on Cart Icon -->
+            <TextView
+                android:id="@+id/cartBadge"
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:background="@drawable/badge_background"
+                android:text="+10"
+                android:textSize="@dimen/_4sdp"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_alignTop="@id/cartIcon"
+                android:layout_alignEnd="@id/cartIcon"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:layout_marginEnd="@dimen/_1sdp" />
+        </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/notificationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_bell" />
+    </RelativeLayout>
 
     <!-- Scrollable Content -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintBottom_toTopOf="@id/bottom_action_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/_12sdp">
+            android:paddingHorizontal="@dimen/_12sdp">
 
             <!-- Product Image Section -->
             <androidx.cardview.widget.CardView
@@ -93,21 +90,75 @@
                 android:layout_height="@dimen/_200sdp"
                 android:layout_marginVertical="@dimen/_12sdp"
                 app:cardCornerRadius="@dimen/_8sdp"
-                app:cardElevation="@dimen/_3sdp">
+                app:cardElevation="@dimen/_1sdp">
 
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/viewPagerProductImages"
+                <ImageView
+                    android:id="@+id/productImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="false" />
             </androidx.cardview.widget.CardView>
 
+            <!-- Shimmer Product Details Layout -->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerProductDetailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!-- Product Title -->
+                    <TextView
+                        android:id="@+id/shimmerTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:layout_toStartOf="@id/shimmerFavorite"
+                        android:background="@drawable/bg_rounded_grey"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Hiasan Tanaman lidah mertua asal makasar"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <!-- Favorite Icon -->
+                    <ImageView
+                        android:id="@+id/shimmerFavorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/shimmerTitle"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:contentDescription="Favorite Icon"
+                        android:src="@drawable/ic_love" />
+
+                    <!-- Product Price -->
+                    <TextView
+                        android:id="@+id/shimmerPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/shimmerTitle"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:background="@drawable/bg_rounded_grey"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Rp99.000"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/_14ssp" />
+                </RelativeLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+
             <!-- Product Details Layout -->
             <RelativeLayout
+                android:id="@+id/productDetailLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_12sdp">
+                android:visibility="gone">
 
                 <!-- Product Title -->
                 <TextView
@@ -120,14 +171,14 @@
                     android:layout_toStartOf="@id/favoriteIcon"
                     android:fontFamily="sans-serif-medium"
                     android:text="Hiasan Tanaman lidah mertua asal makasar"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/_14sdp" />
+                    android:textColor="@color/text_700"
+                    android:textSize="@dimen/_14ssp" />
 
                 <!-- Favorite Icon -->
                 <ImageView
                     android:id="@+id/favoriteIcon"
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignTop="@id/productTitle"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/_16sdp"
@@ -145,46 +196,139 @@
                     android:fontFamily="@font/poppins_bold"
                     android:text="Rp99.000"
                     android:textColor="@color/primary_500"
-                    android:textSize="@dimen/_18sdp" />
+                    android:textSize="@dimen/_18ssp" />
             </RelativeLayout>
+
+            <!-- Shimmer Ratings, Sales Info, and Tags in a Horizontal Row -->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerRatingSalesLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- Ratings, Sales Info, and Tags in a Horizontal Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_8sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <!-- Star Rating -->
+                    <TextView
+                        android:id="@+id/shimmerRating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rounded_grey"
+                        android:text="4.9"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <!-- Sales Count -->
+                    <TextView
+                        android:id="@+id/shimmerTotalSales"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:background="@drawable/bg_rounded_grey"
+                        android:text="| 20 terjual"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <!-- HorizontalScrollView for Tags -->
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_12sdp"
+                            android:orientation="horizontal">
+
+                            <!-- Photo Count Tag -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:layout_marginEnd="@dimen/_6sdp"
+                                android:background="@drawable/tag_background"
+                                android:paddingHorizontal="@dimen/_8sdp"
+                                android:paddingVertical="@dimen/_3sdp"
+                                android:text="(100) Foto Pembeli"
+                                android:textColor="@color/primary_500"
+                                android:textSize="@dimen/_10sdp" />
+
+                            <!-- Reviews Count Tag -->
+                            <TextView
+                                android:id="@+id/shimmerReviewsCounts"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/_6sdp"
+                                android:background="@drawable/bg_rounded_grey"
+                                android:paddingHorizontal="@dimen/_8sdp"
+                                android:paddingVertical="@dimen/_3sdp"
+                                android:text="(89) Ulasan"
+                                android:textColor="@color/grey"
+                                android:textSize="@dimen/_10sdp" />
+
+                            <!-- Discussion Count Tag -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:background="@drawable/tag_background"
+                                android:paddingHorizontal="@dimen/_8sdp"
+                                android:paddingVertical="@dimen/_3sdp"
+                                android:text="(4) Diskusi"
+                                android:textColor="@color/primary_500"
+                                android:textSize="@dimen/_10sdp" />
+                        </LinearLayout>
+
+                    </HorizontalScrollView>
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
 
             <!-- Ratings, Sales Info, and Tags in a Horizontal Row -->
             <LinearLayout
-                android:id="@+id/linear1"
+                android:id="@+id/ratingSalesLayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_8sdp"
+                android:visibility="gone"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <!-- Star Rating -->
                 <TextView
+                    android:id="@+id/productRating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_star"
                     android:drawablePadding="@dimen/_2sdp"
                     android:text="4.9"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/text_700"
                     android:textSize="@dimen/_12sdp" />
 
                 <!-- Sales Count -->
                 <TextView
+                    android:id="@+id/productTotalSales"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_6sdp"
                     android:text="| 20 terjual"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="@color/text_200"
                     android:textSize="@dimen/_12sdp" />
-
-                <!-- Space between Sales Info and Tags -->
-                <View
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="wrap_content" />
 
                 <!-- HorizontalScrollView for Tags -->
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_16sdp"
                     android:scrollbars="none">
 
                     <LinearLayout
@@ -197,6 +341,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             android:layout_marginEnd="@dimen/_6sdp"
                             android:background="@drawable/tag_background"
                             android:paddingHorizontal="@dimen/_8sdp"
@@ -207,6 +352,7 @@
 
                         <!-- Reviews Count Tag -->
                         <TextView
+                            android:id="@+id/reviewsCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/_6sdp"
@@ -221,6 +367,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             android:background="@drawable/tag_background"
                             android:paddingHorizontal="@dimen/_8sdp"
                             android:paddingVertical="@dimen/_3sdp"
@@ -229,23 +376,9 @@
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
 
-
-
                 </HorizontalScrollView>
 
             </LinearLayout>
-
-            <!-- Varian Section -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pilih Varian:"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/poppins_medium"/>
-
-
 
             <!-- TabLayout and ViewPager2 -->
             <com.google.android.material.tabs.TabLayout
@@ -256,7 +389,8 @@
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@color/primary_700"
                 app:tabMode="fixed"
-                app:tabTextColor="@color/primary_700" />
+                app:tabTextColor="@color/primary_700"
+                app:tabRippleColor="@color/transparent"/>
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vP2"
@@ -275,7 +409,10 @@
         android:background="@color/white"
         android:padding="@dimen/_12sdp"
         android:gravity="center_vertical"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <!-- Messaging Button -->
         <ImageButton
@@ -292,7 +429,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buy_button"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Beli"
             android:textColor="@color/secondary_500"
@@ -301,19 +438,20 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             app:strokeColor="@color/secondary_500"
             app:strokeWidth="@dimen/_2sdp"
-            android:layout_marginEnd="@dimen/_6sdp" />
+            android:layout_marginEnd="@dimen/_6sdp"
+            app:rippleColor="@color/transparent"/>
 
         <!-- Add to Cart Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_to_cart_button"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="+ Keranjang"
             android:textColor="@android:color/white"
             app:backgroundTint="@color/secondary_500"
-            style="@style/Widget.MaterialComponents.Button"
-            app:cornerRadius="@dimen/_8sdp" />
+            app:cornerRadius="@dimen/_8sdp"
+            app:rippleColor="@color/transparent"/>
     </LinearLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

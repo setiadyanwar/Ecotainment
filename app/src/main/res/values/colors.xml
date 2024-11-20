@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!-- Primary Color -->
     <color name="primary_50">#E6F1ED</color>
     <color name="primary_100">#B0D3C6</color>
@@ -11,6 +12,7 @@
     <color name="primary_700">#005032</color>
     <color name="primary_800">#003E27</color>
     <color name="primary_900">#002F1E</color>
+
 
     <!-- Secondary Color -->
     <color name="secondary_50">#EFF5EC</color>
@@ -24,36 +26,33 @@
     <color name="secondary_800">#345524</color>
     <color name="secondary_900">#28411C</color>
 
-    <color name="red">#D10B05</color>
-    <color name="black">#2B2B2B</color>
-    <color name="grey">#CCCCCC</color>
-    <color name="white">#FFFFFF</color>
 
-    <color name="transparent">#00FFFFFF</color>
+    <!-- Text Color -->
+    <color name="text_700">#2B2B2B</color>
+    <color name="text_500">#454545</color>
+    <color name="text_300">#5E5E5E</color>
+    <color name="text_200">#888888</color>
+    <color name="text_100">#AEAEAE</color>
 
-    <color name="primary_10">#FA4742</color>
-    <color name="dark_70">#2B2B2B</color>
-    <color name="dark_50">#454545</color>
-    <color name="dark_30">#5E5E5E</color>
-    <color name="dark_10">#AEAEAE</color>
-    <color name="bg_color">#F5F5F5</color>
-<!--    <color name="transparent">#00000000</color>-->
-    <color name="gradient_white">#B3FFFFFF</color>
-    <color name="custom_shadow_color">#E7716D</color>
-    <color name="btn_secondaryy">#FEBFBD</color>
-    <color name="stroke_color">#FFFFFF</color>
 
-    <color name="app_primary">#313131</color>
-    <color name="app_secondary">#808080</color>
-    <color name="app_tertiary">#7A7A7A</color>
-    <color name="app_accent">#AAAAAA</color>
+    <!-- Warning Color -->
+    <color name="warning_500">#D10B05</color>
+    <color name="warning_300">#FA4742</color>
 
-    <!--info-->
+
+    <!-- Info Color -->
     <color name="info_300">#B9E6FE</color>
     <color name="info_500">#36BFFA</color>
     <color name="info_700">#0086C9</color>
 
 
+    <!-- Normal Color -->
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="grey">#CCCCCC</color>
 
+
+    <!-- Additional -->
+    <color name="gradient_white">#B3FFFFFF</color>
 
 </resources>

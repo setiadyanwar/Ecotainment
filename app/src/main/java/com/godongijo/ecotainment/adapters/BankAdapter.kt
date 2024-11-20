@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.godongijo.ecotainment.databinding.ItemBankXmlBinding
+import com.godongijo.ecotainment.databinding.SingleViewBankBinding
 import com.godongijo.ecotainment.models.Bank
 
 class BankAdapter : RecyclerView.Adapter<BankAdapter.BankViewHolder>() {
@@ -24,7 +24,7 @@ class BankAdapter : RecyclerView.Adapter<BankAdapter.BankViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BankViewHolder {
-        val binding = ItemBankXmlBinding.inflate(
+        val binding = SingleViewBankBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -39,7 +39,7 @@ class BankAdapter : RecyclerView.Adapter<BankAdapter.BankViewHolder>() {
     override fun getItemCount() = banks.size
 
     inner class BankViewHolder(
-        private val binding: ItemBankXmlBinding
+        private val binding: SingleViewBankBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {

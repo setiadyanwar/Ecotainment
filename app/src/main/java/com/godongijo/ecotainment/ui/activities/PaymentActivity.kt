@@ -19,9 +19,25 @@ class PaymentActivity : AppCompatActivity() {
         binding = ActivityPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inisialisasi RecyclerView dan load data bank
+        init()
+        setListeners()
+
+    }
+
+    private fun init() {
+        val totalAmount = intent.getStringExtra("totalAmount")
+        if (totalAmount != null) {
+            binding.paymentAmount.text = totalAmount
+        }
+
         setupRecyclerView()
         loadBanks()
+    }
+
+    private fun setListeners() {
+        binding.backButton.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
     }
 
     private fun setupRecyclerView() {
