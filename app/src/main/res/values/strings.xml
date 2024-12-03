@@ -16,4 +16,6 @@
     <string name="api_transactions">https://admin.botanicabeautysalon.my.id/api/transactions</string>
 
     <string name="api_search_history">https://admin.botanicabeautysalon.my.id/api/search-history</string>
+
+    <string name="change_image">Change Image</string>
 </resources>
