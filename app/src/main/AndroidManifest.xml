@@ -15,6 +15,18 @@
         android:theme="@style/Theme.Ecotainment"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.ReservationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.OfflineFieldTripActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.GotoSchoolActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.VirtualTripActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.PaymentActivity"
             android:exported="false"
             android:screenOrientation="portrait"
