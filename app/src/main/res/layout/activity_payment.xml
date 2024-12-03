@@ -173,8 +173,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="2dp">
+                app:cardCornerRadius="20dp"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -301,7 +301,7 @@
                 android:background="@drawable/bg_uploud_payment"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="@dimen/_12sdp">
+                android:padding="@dimen/_20sdp">
 
                 <ImageView
                     android:layout_width="@dimen/_24sdp"
@@ -316,7 +316,7 @@
                     android:text="Upload Bukti Pembayaran"
                     android:textColor="@color/primary_500"
                     android:fontFamily="@font/poppins_medium"
-                    android:textSize="@dimen/_12sdp"/>
+                    android:textSize="@dimen/_9sdp"/>
             </LinearLayout>
 
             <!-- Other Payment Methods Section -->
