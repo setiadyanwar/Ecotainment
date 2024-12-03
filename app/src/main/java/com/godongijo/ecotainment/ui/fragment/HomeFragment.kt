@@ -90,6 +90,30 @@ class HomeFragment : Fragment() {
             initProductList()
             binding.swipeRefreshLayout.isRefreshing = false
         }
+
+        binding.virtualFieldtrip.setOnClickListener { v ->
+            val intent =
+                Intent(activity, VirtualTripActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.goesToSchool.setOnClickListener { v ->
+            val intent =
+                Intent(activity, GotoSchoolActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.offlieFieldtrip.setOnClickListener { v ->
+            val intent =
+                Intent(activity, OfflineFieldTripActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.reservation.setOnClickListener { v ->
+            val intent =
+                Intent(activity, ReservationActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initProductList() {
