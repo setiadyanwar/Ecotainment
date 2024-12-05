@@ -52,6 +52,12 @@
     <color name="grey">#CCCCCC</color>
 
 
+      <!-- grey Color -->
+    <color name="grey_secondary">#808080</color>
+    <color name="grey_tertiary">#9C9C9C</color>
+    <color name="grey_accent">#D9D9D9</color>
+
+
     <!-- Additional -->
     <color name="gradient_white">#B3FFFFFF</color>
 
