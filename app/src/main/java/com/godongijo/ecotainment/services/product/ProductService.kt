@@ -81,15 +81,16 @@ class ProductService {
             val productJson = dataArray.getJSONObject(i)
 
             val product = Product(
-                id = productJson.optString("id", ""),
+                id = productJson.optInt("id", 0),
                 name = productJson.optString("name", ""),
                 category = productJson.optString("category", ""),
-                price = productJson.optString("price", ""),
+                price = productJson.optInt("price", 0),
                 description = productJson.optString("description", ""),
                 imageUrl = productJson.optString("image", ""),
                 rating = productJson.optString("average_rating", "0.0").toDoubleOrNull() ?: 0.0, // Default rating
                 totalSales = productJson.optInt("total_sales", 0),
-                lastUpdate = productJson.optString("updated_at", ""),
+                createdAt = productJson.optString("created_at", ""),
+                updatedAt = productJson.optString("updated_at", ""),
                 reviews = emptyList()
             )
 
@@ -104,7 +105,7 @@ class ProductService {
 
     fun getSingleProduct(
         context: Context,
-        productId: String,
+        productId: Int,
         onResult: (Product) -> Unit,
         onError: (String) -> Unit
     ) {
@@ -167,7 +168,6 @@ class ProductService {
                     username = it.optString("username", ""),
                     phoneNumber = it.optString("phone_number", ""),
                     profilePicture = it.optString("profile_picture", ""),
-                    address = it.optString("address", ""),
                     createdAt = it.optString("created_at", ""),
                     updatedAt = it.optString("updated_at", "")
                 )
@@ -186,15 +186,16 @@ class ProductService {
         }
 
         return Product(
-            id = productJson.optString("id", ""),
+            id = productJson.optInt("id", 0),
             name = productJson.optString("name", ""),
             category = productJson.optString("category", ""),
-            price = productJson.optString("price", "0"),
+            price = productJson.optInt("price", 0),
             description = productJson.optString("description", ""),
             imageUrl = productJson.optString("image", ""),
             rating = productJson.optString("average_rating", "0.0").toDouble(),
             totalSales = productJson.optInt("total_sales", 0),
-            lastUpdate = productJson.optString("updated_at", ""),
+            createdAt = productJson.optString("created_at", ""),
+            updatedAt = productJson.optString("updated_at", ""),
             reviews = reviews // Pass daftar reviews ke produk
         )
     }

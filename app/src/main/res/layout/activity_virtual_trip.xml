@@ -2,9 +2,188 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
     tools:context=".ui.activities.VirtualTripActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/sc_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/headerLayout">
+
+        <!-- Content remains the same as in the original XML -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/_100sdp">
+
+            <!-- Image Slider -->
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/imageSlider"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_160sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:iss_auto_cycle="true"
+                app:iss_corner_radius="10"
+                app:iss_delay="0"
+                app:iss_period="3000"
+                app:iss_placeholder="@color/text_700"
+                app:iss_error_image="@color/primary_100"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="Virtual Fieldtrip dan Merchandise Educatif"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:maxLines="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageSlider" />
+
+            <!-- Date and Author Section -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/date_author_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:visibility="gone"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle">
+
+                <!-- Date Icon and Text -->
+                <ImageView
+                    android:id="@+id/dateIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_date"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/_10sdp"
+                    android:text="September 27, 2016"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/dateIcon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Author Icon and Text -->
+                <ImageView
+                    android:id="@+id/authorIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_author"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tvAuthor"
+                    app:layout_constraintStart_toEndOf="@+id/tvDate"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvAuthor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/grey"
+                    android:text="Penulis: Jane Nadeak"
+                    android:textSize="@dimen/_10sdp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/authorIcon"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Description -->
+            <TextView
+                android:id="@+id/DescriptionNews"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_30sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:justificationMode="inter_word"
+                android:text="Pandemi covid telah membuat kita semua semakin kreatif dan inovatif, tidak terkecuali dalam kegiatan fieldtrip. Godongijo yang selama ini memberikan pelatihan kepada siswa lewat tatap muka. Sekarang melaksanakan Hybrid System dalam fieldtrip. Dimana siswa tetap berkegiatan praktek langsung (hands on) dipandu lewat daring dengan bantuan zoom meeting. Untuk virtual fieldtrip terdapat berbagai variasi paket edukasi. Mulai dari yang basic untuk siswa TK, kemudian untuk siswa SD dan untuk siswa SMP. Pembelajarannya juga beraneka ragam seperti: flora dan fauna, sains dan teknologi juga art dan craft. Untuk bahan prakteknya dapat dikirimkan ke sekolah atau langsung ke alamat siswa. Selain materi yang berbobot, cara penyampaian ke siswa juga dilaksanakan dengan interaktif, ramah dan menyenangkan. Kakak coachnya membimbing dengan sabar sampai siswa benar-benar dapat mananriakan prakanmanua Ciowaίuantotan"
+                android:textColor="@color/material_dynamic_neutral0"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:lineSpacingExtra="4dp"
+                android:paddingStart="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_16sdp"
+                android:ellipsize="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/date_author_container" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:background="#F8F8F8"
+            android:gravity="center_vertical"
+            android:paddingVertical="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Tombol Back -->
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Judul Header -->
+            <TextView
+                android:id="@+id/headerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Virtual Field Trip"
+                android:textAlignment="viewStart"
+                android:textColor="#000000"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/backButton"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

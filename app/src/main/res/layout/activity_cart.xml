@@ -75,6 +75,7 @@
             android:textSize="@dimen/_12ssp" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/newCartButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -220,7 +221,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_round_button"
             android:backgroundTint="@color/secondary_500"
-            android:paddingVertical="@dimen/_8sdp"
+            android:paddingVertical="@dimen/_12sdp"
             android:paddingHorizontal="@dimen/_24sdp"
             android:gravity="center"
             android:orientation="horizontal">
@@ -242,7 +243,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10ssp" />
 
-            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

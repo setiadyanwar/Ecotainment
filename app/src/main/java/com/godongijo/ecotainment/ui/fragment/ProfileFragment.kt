@@ -9,8 +9,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.godongijo.ecotainment.R
 import com.godongijo.ecotainment.databinding.FragmentProfileBinding
 import com.godongijo.ecotainment.services.auth.AuthService
+import com.godongijo.ecotainment.services.transaction.TransactionService
+import com.godongijo.ecotainment.ui.activities.AddressActivity
+import com.godongijo.ecotainment.ui.activities.CustomerServiceActivity
+import com.godongijo.ecotainment.ui.activities.EditProfileActivity
+import com.godongijo.ecotainment.ui.activities.HelpCenterActivity
+import com.godongijo.ecotainment.ui.activities.NotificationActivity
+import com.godongijo.ecotainment.ui.activities.OrderStatusActivity
 import com.godongijo.ecotainment.ui.activities.SignInActivity
 import com.godongijo.ecotainment.utilities.Glide
 import kotlinx.coroutines.launch
@@ -23,6 +31,8 @@ class ProfileFragment : Fragment() {
 
     // Instance of AuthService for handling authentication
     private val authService = AuthService()
+
+    private val transactionService = TransactionService()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,12 +48,56 @@ class ProfileFragment : Fragment() {
         setListeners()
     }
 
+    override fun onResume() {
+        super.onResume()
+        initProfileInfo()
+    }
+
+
     private fun init() {
         initProfileInfo()
     }
 
     private fun setListeners() {
+        binding.notificationButton.setOnClickListener {
+            startActivity(Intent(requireContext(), NotificationActivity::class.java))
+        }
+
         binding.accountLogout.setOnClickListener { logout() }
+
+        binding.orderWaiting.setOnClickListener {
+            openOrderStatusActivity(0)
+        }
+
+        binding.orderCurrent.setOnClickListener {
+            openOrderStatusActivity(1)
+        }
+
+        binding.orderFinish.setOnClickListener {
+            openOrderStatusActivity(2)
+        }
+
+        binding.cancelOrder.setOnClickListener {
+            openOrderStatusActivity(3)
+        }
+
+        binding.editProfileButton.setOnClickListener {
+            val intent = Intent(requireContext(), EditProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.myAddress.setOnClickListener {
+            val intent = Intent(requireContext(), AddressActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.helpCenter.setOnClickListener {
+            startActivity(Intent(requireContext(), HelpCenterActivity::class.java))
+        }
+
+        binding.customerService.setOnClickListener {
+            startActivity(Intent(requireContext(), CustomerServiceActivity::class.java))
+        }
     }
 
     private fun initProfileInfo() {
@@ -53,8 +107,9 @@ class ProfileFragment : Fragment() {
         authService.getUserProfile(
             context = requireContext(),
             onResult = { user ->
-                if(user.profilePicture?.isEmpty() == true) {
-                    Glide().loadImageFromUrl(binding.profilePicture, user.profilePicture)
+                if(user.profilePicture != null) {
+                    val imageProfile = requireContext().getString(R.string.base_url) + user.profilePicture
+                    Glide().loadImageFromUrl(binding.profilePicture, imageProfile)
                 }
 
                 binding.username.text = user.username
@@ -110,6 +165,14 @@ class ProfileFragment : Fragment() {
                 )
             }
         }
+    }
+
+    // Fungsi untuk membuka OrderStatusActivity dengan parameter tab yang dipilih
+    private fun openOrderStatusActivity(selectedTab: Int) {
+        val intent = Intent(activity, OrderStatusActivity::class.java).apply {
+            putExtra("selectedTab", selectedTab)
+        }
+        startActivity(intent)
     }
 
 }

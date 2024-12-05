@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.godongijo.ecotainment.databinding.FragmentWishlistBinding
 import com.godongijo.ecotainment.ui.activities.MainActivity
+import com.godongijo.ecotainment.ui.activities.NotificationActivity
 import com.godongijo.ecotainment.ui.activities.SignInActivity
 import com.google.firebase.auth.FirebaseAuth
 
@@ -26,9 +27,16 @@ class WishlistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         init()
+        setListeners()
     }
 
     private fun init() {
 
+    }
+
+    private fun setListeners() {
+        binding.notificationButton.setOnClickListener {
+            startActivity(Intent(requireContext(), NotificationActivity::class.java))
+        }
     }
 }

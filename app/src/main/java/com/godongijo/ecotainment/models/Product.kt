@@ -1,19 +1,22 @@
 package com.godongijo.ecotainment.models
 
+import android.os.Parcelable
 import com.google.firebase.Timestamp
+import kotlinx.parcelize.Parcelize
 
 // Replace with your actual package name
-
+@Parcelize
 data class Product(
-    val id: String = "",
+    val id: Int = 0,
     val imageUrl: String = "",
     val name: String = "",
     val category: String = "",
-    val price: String = "",
+    val price: Int = 0,
     val description: String = "",
     val rating: Double = 0.0,
     val totalSales: Int = 0,
-    val lastUpdate: String = "",
-    val reviews: List<Review>
-)
+    val createdAt: String,
+    val updatedAt: String,
+    val reviews: List<Review>? = null
+): Parcelable
 

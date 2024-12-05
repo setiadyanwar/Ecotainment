@@ -15,6 +15,7 @@ class SkeletonAdapter(
         val layoutRes = when (layoutType) {
             1 -> R.layout.skeleton_view_product // Skeleton Product
             2 -> R.layout.skeleton_view_cart
+            3 -> R.layout.skeleton_order_status
             else -> R.layout.skeleton_view_product
         }
         val view = LayoutInflater.from(parent.context).inflate(layoutRes, parent, false)

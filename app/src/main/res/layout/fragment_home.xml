@@ -26,7 +26,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintWidth_default="spread" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profilePicture"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -46,7 +46,7 @@
             android:paddingVertical="@dimen/_4sdp"
             android:paddingHorizontal="@dimen/_16sdp"
             android:background="@drawable/bg_button_500"
-            app:layout_constraintEnd_toStartOf="@id/ic_bell"
+            app:layout_constraintEnd_toStartOf="@id/notificationButton"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
@@ -66,7 +66,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageButton
-            android:id="@+id/ic_bell"
+            android:id="@+id/notificationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
@@ -137,6 +137,8 @@
             android:layout_toEndOf="@+id/DeliverText"
             android:textColor="@color/primary_400"
             android:text="Tambahkan Alamatmu"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:textSize="@dimen/_12ssp"/>
 
     </RelativeLayout>

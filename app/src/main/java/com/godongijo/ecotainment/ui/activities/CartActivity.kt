@@ -44,6 +44,7 @@ class CartActivity : AppCompatActivity(), CartAdapter.OnCartInteractionListener 
 
             if (selectedProductIds.isNotEmpty()) {
                 val intent = Intent(this, CheckoutActivity::class.java).apply {
+                    putExtra("sourceActivity", "CartActivity")
                     putStringArrayListExtra("selectedProductIds", ArrayList(selectedProductIds))
                 }
                 startActivity(intent)
@@ -52,6 +53,10 @@ class CartActivity : AppCompatActivity(), CartAdapter.OnCartInteractionListener 
 
         binding.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
+        }
+
+        binding.notificationButton.setOnClickListener {
+            startActivity(Intent(this, NotificationActivity::class.java))
         }
 
         binding.selectAll.setOnClickListener {
@@ -139,9 +144,9 @@ class CartActivity : AppCompatActivity(), CartAdapter.OnCartInteractionListener 
         val selectedItemsList = cartAdapter.getSelectedItems()
         if (selectedItemsList.isNotEmpty()) {
             totalPrice = selectedItemsList.sumOf { cartItem ->
-                val price = cartItem.product?.price?.toLongOrNull() ?: 0
+                val price = cartItem.product?.price?: 0
                 price * cartItem.quantity  // Menghitung total harga berdasarkan kuantitas dan harga produk
-            }
+            }.toLong()
         }
 
         val formattedTotalPrice = NumberFormat.getInstance(Locale("id", "ID")).format(totalPrice)

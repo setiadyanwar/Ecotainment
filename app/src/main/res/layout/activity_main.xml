@@ -16,21 +16,22 @@
         android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_12sdp"
+        android:background="@color/white"
         app:elevation="0dp"
         app:contentInsetRight="0dp"
         app:contentInsetEnd="0dp"
         app:contentInsetStart="0dp"
         app:contentInsetLeft="0dp"
-        android:paddingBottom="@dimen/_8sdp"
-        android:layout_gravity="bottom"
-        app:fabCradleMargin="10dp"
-        app:fabCradleRoundedCornerRadius="10dp">
+        android:layout_gravity="bottom">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:elevation="0dp"
             android:background="@color/white"
+            app:itemRippleColor="@color/grey"
             app:itemIconSize="@dimen/_24sdp"
             app:itemIconTint="@color/primary_300"
             app:itemPaddingBottom="@dimen/_2sdp"

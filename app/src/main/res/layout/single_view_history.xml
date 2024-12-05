@@ -3,16 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_8sdp"
-    app:cardCornerRadius="@dimen/_6sdp"
-    app:cardElevation="@dimen/_2sdp">
+    app:cardCornerRadius="@dimen/_6sdp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white"
-        android:padding="@dimen/_8sdp">
+        android:background="@color/white">
 
         <!-- Product Header Section -->
         <LinearLayout
@@ -29,35 +26,19 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/fs8" />
 
-            <!-- Product Title and Variant -->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/productTitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:orientation="vertical">
+                android:text="Hiasan Tanaman lidah mertua asal makasar"
+                android:textColor="@color/text_700"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textSize="@dimen/_12sdp"
+                android:fontFamily="@font/poppins_bold"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/productTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hiasan Tanaman lidah mertua asal makasar"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/_12sdp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textStyle="bold" />
-
-
-
-            </LinearLayout>
         </LinearLayout>
-
-        <!-- Divider -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:layout_marginBottom="@dimen/_8sdp"
-            android:background="#E0E0E0" />
 
         <!-- Price Information Section -->
         <LinearLayout
@@ -72,9 +53,8 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="Biaya Layanan:"
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/_10sdp"
@@ -82,9 +62,11 @@
 
                 <TextView
                     android:id="@+id/serviceFee"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Rp 0"
+                    android:textAlignment="textEnd"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/_10sdp"
                     android:textColor="#000000" />
@@ -98,9 +80,8 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="Total 1 produk:"
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/_10sdp"
@@ -110,7 +91,9 @@
                     android:id="@+id/totalPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Rp 200.000"
+                    android:textAlignment="textEnd"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/_10sdp"
                     android:textColor="#000000" />

@@ -166,6 +166,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvCounter"
             android:layout_marginTop="@dimen/_8sdp"
+            android:paddingVertical="@dimen/_12sdp"
             android:background="@drawable/bg_btn_fill"
             android:backgroundTint="@color/secondary_500"
             android:text="Kirim"

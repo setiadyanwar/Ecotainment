@@ -16,10 +16,12 @@ import com.godongijo.ecotainment.R
 import com.godongijo.ecotainment.adapters.ProductDetailAdapter
 import com.godongijo.ecotainment.databinding.ActivityDetailProductBinding
 import com.godongijo.ecotainment.databinding.DialogAddCartBinding
+import com.godongijo.ecotainment.databinding.DialogSelectQuantityBinding
 import com.godongijo.ecotainment.services.cart.CartService
 import com.godongijo.ecotainment.services.product.ProductService
 import com.godongijo.ecotainment.utilities.Glide
 import com.godongijo.ecotainment.utilities.PreferenceManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import java.text.NumberFormat
@@ -34,6 +36,10 @@ class DetailProductActivity : AppCompatActivity() {
 
     private lateinit var preferenceManager: PreferenceManager
     private lateinit var authToken: String
+
+    private var productName = ""
+    private var productImage = ""
+    private var productPrice = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,12 +64,20 @@ class DetailProductActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
+        binding.cartContainer.setOnClickListener {
+            startActivity(Intent(this, CartActivity::class.java))
+        }
+
+        binding.notificationButton.setOnClickListener {
+            startActivity(Intent(this, NotificationActivity::class.java))
+        }
+
         binding.addToCartButton.setOnClickListener {
             if(authToken == "") {
                 startActivity(Intent(this, SignInActivity::class.java))
             } else {
                 // Ambil id produk dari intent
-                val productId = intent.getStringExtra("product_id")
+                val productId = intent.getIntExtra("product_id", 0)
 
                 if (productId != null) {
                     cartService.addNewCart(
@@ -78,6 +92,65 @@ class DetailProductActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.buyButton.setOnClickListener {
+            // Inisialisasi Dialog
+            val dialogBinding = DialogSelectQuantityBinding.inflate(layoutInflater)
+            val dialog = BottomSheetDialog(this)
+            dialog.setContentView(dialogBinding.root)
+
+            dialogBinding.productName.text = productName
+            Glide().loadImageFromUrl(dialogBinding.productImage, productImage)
+            dialogBinding.productPrice.text = "Rp${productPrice}"
+
+            // Ambil data product_id dari intent
+            val productId = intent.getIntExtra("product_id", 0)
+
+            // Variabel untuk menyimpan quantity
+            var quantity = 1
+            dialogBinding.quantity.text = quantity.toString()
+
+            // Fungsi untuk memperbarui harga total
+            fun updateTotalPrice() {
+                val totalPrice = productPrice * quantity
+                dialogBinding.productPrice.text = "Rp$totalPrice"
+            }
+
+            // Tombol plus untuk menambah quantity
+            dialogBinding.plusQuantity.setOnClickListener {
+                quantity++
+                dialogBinding.quantity.text = quantity.toString()
+                updateTotalPrice()
+            }
+
+            // Tombol minus untuk mengurangi quantity (min 1)
+            dialogBinding.minusQuantity.setOnClickListener {
+                if (quantity > 1) {
+                    quantity--
+                    dialogBinding.quantity.text = quantity.toString()
+                    updateTotalPrice()
+                }
+            }
+
+            // Tombol checkout
+            dialogBinding.checkoutButton.setOnClickListener {
+                val intent = Intent(this, CheckoutActivity::class.java).apply {
+                    putExtra("sourceActivity", "DetailProductActivity")
+                    putExtra("selectedProductId", productId)
+                    putExtra("selectedQuantity", quantity)
+                }
+                startActivity(intent)
+                dialog.dismiss() // Tutup dialog setelah checkout
+            }
+
+            dialogBinding.closeDialog.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            // Tampilkan dialog
+            dialog.show()
+        }
+
     }
 
     // Inisialisasi ViewPager dan TabLayout
@@ -90,7 +163,7 @@ class DetailProductActivity : AppCompatActivity() {
         adapter = ProductDetailAdapter(this)
 
         // Ambil id produk dari intent
-        val productId = intent.getStringExtra("product_id")
+        val productId = intent.getIntExtra("product_id", 0)
 
         if (productId != null) {
             productService.getSingleProduct(
@@ -102,21 +175,25 @@ class DetailProductActivity : AppCompatActivity() {
                     Glide().loadImageFromUrl(binding.productImage, imageProduct)
 
                     // Format harga
-                    val price = product.price.toLongOrNull() ?: 0 // Menggunakan toLongOrNull untuk menghindari error jika tidak valid
+                    val price = product.price
                     val formattedPrice = NumberFormat.getInstance(Locale("id", "ID")).format(price) // Format ke format ribuan
+
+                    productName = product.name
+                    productImage = imageProduct
+                    productPrice = product.price
 
                     binding.productTitle.text = product.name
                     binding.productPrice.text = "Rp$formattedPrice"
                     binding.productRating.text = product.rating.toString()
                     binding.productTotalSales.text = "| ${product.totalSales} terjual"
-                    binding.reviewsCount.text = "(${product.reviews.size.toString()}) Ulasan"
+                    binding.reviewsCount.text = "(${product.reviews?.size.toString()}) Ulasan"
 
 
                     // Set deskripsi produk ke adapter
                     adapter.setProductDescription(product.description)
 
                     // Set ulasan produk ke adapter
-                    adapter.setProductReviews(product.reviews, product.rating)
+                    product.reviews?.let { adapter.setProductReviews(it, product.rating) }
 
                     // Mengatur adapter ke ViewPager setelah set description
                     binding.vP2.adapter = adapter

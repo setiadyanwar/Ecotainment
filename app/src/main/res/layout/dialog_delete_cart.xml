@@ -38,7 +38,7 @@
             android:layout_marginEnd="@dimen/_3sdp"
             android:layout_weight="1"
             android:gravity="center"
-            android:paddingVertical="@dimen/_6sdp"
+            android:paddingVertical="@dimen/_12sdp"
             android:background="@drawable/bg_btn_outline">
 
             <TextView
@@ -58,7 +58,7 @@
             android:layout_marginStart="@dimen/_3sdp"
             android:layout_weight="1"
             android:gravity="center"
-            android:paddingVertical="@dimen/_6sdp"
+            android:paddingVertical="@dimen/_12sdp"
             android:background="@drawable/bg_btn_fill"
             android:backgroundTint="@color/warning_300">
 

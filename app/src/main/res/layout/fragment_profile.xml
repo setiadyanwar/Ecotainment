@@ -90,22 +90,22 @@
         android:id="@+id/layoutProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:paddingHorizontal="@dimen/_12sdp"
         android:paddingBottom="@dimen/_12sdp"
-        android:visibility="gone"
+
         android:orientation="horizontal">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profilePicture"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:src="@drawable/ic_profile_fill"
-            android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:tint="@color/white" />
+            app:tint="@color/white"/>
 
         <TextView
             android:id="@+id/username"
@@ -117,6 +117,15 @@
             android:textColor="@color/white"
             app:layout_constraintStart_toEndOf="@id/profilePicture"
             app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:id="@+id/editProfileButton"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:src="@drawable/ic_pencil"
+            app:layout_constraintStart_toEndOf="@id/username"
+            app:layout_constraintTop_toTopOf="@id/username"
+            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/accountDate"
@@ -226,7 +235,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/orderCancelled"
+                    android:id="@+id/cancelOrder"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -240,7 +249,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_6sdp"
-                        android:text="Batal"
+                        android:text="Dibatalkan"
                         android:gravity="center"
                         android:textSize="@dimen/_12ssp"
                         android:textColor="@color/text_700" />
@@ -276,7 +285,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Alamat"
+                        android:text="Daftar Alamat"
                         android:textSize="@dimen/_14ssp"
                         android:textColor="@color/text_700"
                         android:drawablePadding="@dimen/_6sdp"
@@ -292,6 +301,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/myPhoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -391,6 +401,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/accountSettings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -442,6 +453,12 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <ImageView
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ecotainment_godongijo"/>
 
     </LinearLayout>
 

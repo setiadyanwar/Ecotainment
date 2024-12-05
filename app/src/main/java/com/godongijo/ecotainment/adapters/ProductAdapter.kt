@@ -33,7 +33,7 @@ class ProductAdapter(
         Glide().loadImageFromUrl(holder.binding.productImage, imageProduct)
 
         // Format harga
-        val price = product.price.toLongOrNull() ?: 0 // Menggunakan toLongOrNull untuk menghindari error jika tidak valid
+        val price = product.price
         val formattedPrice = NumberFormat.getInstance(Locale("id", "ID")).format(price) // Format ke format ribuan
 
         holder.binding.apply {

@@ -1,21 +1,35 @@
 package com.godongijo.ecotainment.ui.activities
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import com.godongijo.ecotainment.R
+import com.godongijo.ecotainment.databinding.ActivityGotoSchoolBinding
 
 class GotoSchoolActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityGotoSchoolBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_goto_school)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        binding = ActivityGotoSchoolBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setListeners()
+
+
+        // Set up the image slider with slide models
+        val slideModels = listOf(
+            SlideModel(R.drawable.banner_gtc, null, ScaleTypes.FIT),
+
+            )
+        binding.imageSlider.setImageList(slideModels)
+
+    }
+
+    private fun setListeners() {
+        binding.backButton.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
     }
+
 }

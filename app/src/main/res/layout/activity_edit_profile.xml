@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.EditProfileActivity">
+
+    <!-- Header -->
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:padding="@dimen/_12sdp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_toEndOf="@id/backButton"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Edit Profile"
+            android:textColor="@color/text_700"
+            android:textSize="@dimen/_14ssp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="@dimen/_12sdp"
+        android:background="#F9F9F9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintBottom_toTopOf="@id/buttonSave">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="@dimen/_16sdp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="@dimen/_75sdp"
+                            android:layout_height="@dimen/_75sdp"
+                            android:background="@drawable/ic_profile_fill"
+                            app:tint="@color/grey"
+                            app:civ_border_width="@dimen/_1sdp"
+                            app:civ_border_color="@color/text_100"/>
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_12sdp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/backButton"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Nama"
+                            android:textColor="@color/text_700"
+                            android:textSize="@dimen/_14ssp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_12sdp"
+                            android:padding="@dimen/_12sdp"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/bg_outline_grey"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_rounded_grey"
+                                android:hint="cth: ecotainment"
+                                android:textColorHint="@color/grey"
+                                android:inputType="text"
+                                android:textSize="@dimen/_14ssp"
+                                android:textColor="@color/text_700"/>
+
+                        </LinearLayout>
+
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/backButton"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Email"
+                            android:textColor="@color/text_700"
+                            android:textSize="@dimen/_14ssp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_12sdp"
+                            android:padding="@dimen/_12sdp"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/bg_outline_grey"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_rounded_grey"
+                                android:hint="contoh@gmail.com"
+                                android:textColorHint="@color/grey"
+                                android:inputType="textEmailAddress"
+                                android:textSize="@dimen/_14ssp"
+                                android:textColor="@color/text_700"/>
+
+                        </LinearLayout>
+
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/backButton"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Nomor Telepon"
+                            android:textColor="@color/text_700"
+                            android:textSize="@dimen/_14ssp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_12sdp"
+                            android:padding="@dimen/_12sdp"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/bg_outline_grey"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_rounded_grey"
+                                android:hint="089XXXXXXXXXXX"
+                                android:textColorHint="@color/grey"
+                                android:inputType="number"
+                                android:textSize="@dimen/_14ssp"
+                                android:textColor="@color/text_700"/>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+            <LinearLayout
+                android:id="@+id/mainLayout"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_16sdp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profilePicture"
+                        android:layout_width="@dimen/_75sdp"
+                        android:layout_height="@dimen/_75sdp"
+                        android:src="@drawable/ic_profile_fill"
+                        app:civ_border_width="@dimen/_1sdp"
+                        app:civ_border_color="@color/text_100"/>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/editPicture"
+                        android:layout_width="@dimen/_26sdp"
+                        android:layout_height="@dimen/_26sdp"
+                        android:src="@drawable/ic_pencil"
+                        app:civ_circle_background_color="@color/white"
+                        app:civ_border_width="1dp"
+                        app:civ_border_color="#16000000"
+                        android:layout_alignBottom="@id/profilePicture"
+                        android:layout_alignEnd="@id/profilePicture"/>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_12sdp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/backButton"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Nama"
+                        android:textColor="@color/text_700"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutInputUsername"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:padding="@dimen/_12sdp"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/bg_outline_grey"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/inputUsername"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@color/transparent"
+                            android:hint="cth: ecotainment"
+                            android:textColorHint="@color/text_100"
+                            android:inputType="text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textColor="@color/text_700"/>
+
+                    </LinearLayout>
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/backButton"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Email"
+                        android:textColor="@color/text_700"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutInputEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:padding="@dimen/_12sdp"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/bg_outline_grey"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/inputEmail"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@color/transparent"
+                            android:hint="contoh@gmail.com"
+                            android:textColorHint="@color/text_100"
+                            android:inputType="textEmailAddress"
+                            android:textSize="@dimen/_14ssp"
+                            android:textColor="@color/text_700"/>
+
+                    </LinearLayout>
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/backButton"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Nomor Telepon"
+                        android:textColor="@color/text_700"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutInputPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:padding="@dimen/_12sdp"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/bg_outline_grey"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/inputPhone"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@color/transparent"
+                            android:hint="089XXXXXXXXXXX"
+                            android:textColorHint="@color/text_100"
+                            android:inputType="number"
+                            android:textSize="@dimen/_14ssp"
+                            android:textColor="@color/text_700"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- Button Daftar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/buttonSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_12sdp"
+        android:layout_margin="@dimen/_12sdp"
+        android:gravity="center"
+        android:background="@drawable/bg_button_500"
+        android:backgroundTint="@color/secondary_500"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/textButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Simpan Perubahan"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/_14ssp"
+            android:layout_height="@dimen/_14ssp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/white"
+            android:visibility="invisible"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

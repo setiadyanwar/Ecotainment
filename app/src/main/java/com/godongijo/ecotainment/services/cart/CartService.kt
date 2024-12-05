@@ -146,15 +146,16 @@ class CartService {
             val productJson = cartItemJson.optJSONObject("product")
             val product = productJson?.let {
                 Product(
-                    id = it.optString("id", ""),
+                    id = it.optInt("id", 0),
                     name = it.optString("name", ""),
                     category = it.optString("category", ""),
-                    price = it.optString("price", ""),
+                    price = it.optInt("price", 0),
                     description = it.optString("description", ""),
                     imageUrl = it.optString("image", ""),
                     rating = it.optString("average_rating", "0.0").toDouble(),
                     totalSales = it.optInt("total_sales", 0),
-                    lastUpdate = it.optString("updated_at", ""),
+                    createdAt = it.optString("created_at", ""),
+                    updatedAt = it.optString("updated_at", ""),
                     reviews = emptyList()
                 )
             }
@@ -177,7 +178,7 @@ class CartService {
 
     fun addNewCart(
         context: Context,
-        productId: String,
+        productId: Int,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {

@@ -50,7 +50,7 @@ class CartAdapter(
         Glide().loadImageFromUrl(holder.binding.productImage, imageProduct)
 
         // Format harga
-        val price = product?.price?.toLongOrNull() ?: 0
+        val price = product?.price?: 0
         val formattedPrice = NumberFormat.getInstance(Locale("id", "ID")).format(price)
 
         holder.binding.apply {

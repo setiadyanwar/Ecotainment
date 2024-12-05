@@ -2,6 +2,7 @@ package com.godongijo.ecotainment.ui.activities
 
 import ProductAdapter
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -67,6 +68,10 @@ class SearchActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
+        }
+
+        binding.buttonCart.setOnClickListener {
+            startActivity(Intent(this, CartActivity::class.java))
         }
 
         // Listener untuk mendeteksi perubahan teks

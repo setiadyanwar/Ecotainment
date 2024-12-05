@@ -20,13 +20,13 @@
             android:textColor="@color/text_700"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ic_bell"
+            app:layout_constraintEnd_toStartOf="@id/notificationButton"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintWidth_default="spread" />
 
         <ImageButton
-            android:id="@+id/ic_bell"
+            android:id="@+id/notificationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"

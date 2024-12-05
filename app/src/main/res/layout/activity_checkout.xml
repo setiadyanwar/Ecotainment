@@ -83,6 +83,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/addressLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
@@ -123,9 +124,27 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/poppins_regular"/>
                     </LinearLayout>
+
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/addressEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@drawable/bg_blue_light"
+                    android:backgroundTint="#FEF0EF"
+                    android:padding="@dimen/_5sdp"
+                    android:drawablePadding="@dimen/_6sdp"
+                    android:drawableStart="@drawable/ic_info"
+                    android:drawableTint="@color/warning_300"
+                    android:text="Kamu belum punya alamat nih, klik untuk tambahin alamat"
+                    android:textColor="@color/warning_300"
+                    android:textSize="@dimen/_11ssp"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <TextView
+                    android:id="@+id/addressWarning"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
@@ -150,6 +169,7 @@
 
             <!-- Notes Section -->
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -196,6 +216,7 @@
                     tools:itemCount="2"/>
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/ivArrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -221,6 +242,7 @@
                 android:padding="@dimen/_12sdp">
 
                 <EditText
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_payment_summary"
@@ -268,7 +290,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Rp400.000"
+                            android:text="Rp0"
                             android:textAlignment="textEnd"
                             android:textColor="@color/text_200"
                             android:textSize="@dimen/_11ssp"/>
@@ -276,6 +298,7 @@
 
                     <!-- Detail Diskon -->
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp">
@@ -292,7 +315,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="-Rp1000"
+                            android:text="-Rp0"
                             android:textAlignment="textEnd"
                             android:textColor="@color/text_200"
                             android:textSize="@dimen/_11ssp"/>
@@ -300,6 +323,7 @@
 
                     <!-- Detail Voucher -->
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp">
@@ -316,7 +340,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="-Rp1000"
+                            android:text="-Rp0"
                             android:textAlignment="textEnd"
                             android:textColor="@color/text_200"
                             android:textSize="@dimen/_11ssp"/>
@@ -372,7 +396,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Rp398.000"
+                            android:text="Rp0"
                             android:textAlignment="textEnd"
                             android:textColor="@color/text_700"
                             android:textSize="@dimen/_12ssp"
@@ -427,7 +451,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Bayar sekarang"
+            android:paddingVertical="@dimen/_12sdp"
+            android:text="Bayar Sekarang"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_11ssp"

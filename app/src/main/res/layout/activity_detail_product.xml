@@ -34,6 +34,7 @@
             android:layout_marginEnd="@dimen/_8sdp"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@id/notificationButton">
+
             <ImageView
                 android:id="@+id/cartIcon"
                 android:layout_width="wrap_content"
@@ -56,13 +57,12 @@
                 android:layout_marginEnd="@dimen/_1sdp" />
         </RelativeLayout>
 
-        <ImageButton
+        <ImageView
             android:id="@+id/notificationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_bell" />
     </RelativeLayout>
 
@@ -417,8 +417,8 @@
         <!-- Messaging Button -->
         <ImageButton
             android:id="@+id/message_button"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="@dimen/_36sdp"
+            android:layout_height="@dimen/_36sdp"
             android:background="@drawable/rounded_border_button"
             android:src="@drawable/ic_chat"
             android:contentDescription="Message"
@@ -431,6 +431,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingVertical="@dimen/_12sdp"
+            android:textAllCaps="false"
             android:text="Beli"
             android:textColor="@color/secondary_500"
             app:backgroundTint="@android:color/white"
@@ -447,6 +449,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingVertical="@dimen/_12sdp"
+            android:textAllCaps="false"
             android:text="+ Keranjang"
             android:textColor="@android:color/white"
             app:backgroundTint="@color/secondary_500"

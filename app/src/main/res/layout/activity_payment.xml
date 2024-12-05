@@ -70,8 +70,30 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerPaymentAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/paymentAmountTitle">
+
+                    <!-- Payment Amount -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rounded_grey"
+                        android:text="Rp398.000"
+                        android:textSize="@dimen/_16ssp"
+                        android:textColor="@color/grey"
+                        android:fontFamily="@font/poppins_bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/paymentAmountTitle" />
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
                 <!-- Payment Amount -->
                 <TextView
+                    android:visibility="invisible"
                     android:id="@+id/paymentAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -116,7 +138,7 @@
                         android:id="@+id/tv_timer_hours"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="02"
+                        android:text="00"
                         android:textColor="@color/white"
                         android:background="@drawable/bg_red"
                         android:padding="@dimen/_4sdp"
@@ -152,7 +174,7 @@
                         android:id="@+id/tv_timer_seconds"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="30"
+                        android:text="00"
                         android:textColor="@color/white"
                         android:background="@drawable/bg_red"
                         android:padding="@dimen/_4sdp"
@@ -318,6 +340,84 @@
                     android:fontFamily="@font/poppins_medium"
                     android:textSize="@dimen/_12sdp"/>
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutProofFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingHorizontal="@dimen/_12sdp"
+                android:paddingVertical="@dimen/_6sdp"
+                android:background="@drawable/bg_uploud_payment"
+                android:gravity="start"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/ic_upload_payment"
+                    android:contentDescription="Upload Payment Icon"/>
+
+                <TextView
+                    android:id="@+id/uploadFileName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:text="Screenshot-1.png"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/primary_500"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_12sdp"/>
+
+                <ImageView
+                    android:id="@+id/editPaymentProof"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/ic_edit"
+                    android:contentDescription="Upload Payment Icon"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutConfirmProof"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingHorizontal="@dimen/_12sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:background="@drawable/bg_btn_fill"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:text="Kirim Bukti"
+                    android:textAlignment="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_12sdp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/confirmMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@drawable/bg_blue_light"
+                android:padding="@dimen/_5sdp"
+                android:drawablePadding="@dimen/_6sdp"
+                android:drawableStart="@drawable/ic_info"
+                android:text="Yeay, pembayaranmu sedang diperiksa, kami akan mengabari kamu bila pembayaranmu berhasil."
+                android:textColor="@color/info_700"
+                android:textSize="@dimen/_11ssp"
+                android:fontFamily="@font/poppins_regular"/>
 
             <!-- Other Payment Methods Section -->
             <TextView
