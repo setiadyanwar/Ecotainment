@@ -2,30 +2,44 @@ package com.godongijo.ecotainment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.godongijo.ecotainment.ui.activities.DetailProductActivity
+import androidx.lifecycle.lifecycleScope
 import com.godongijo.ecotainment.ui.activities.MainActivity
-import com.godongijo.ecotainment.ui.activities.PaymentActivity
 import com.godongijo.ecotainment.viewModels.SplashViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class Startup : AppCompatActivity() {
-    // Create an instance of SplashViewModel for managing the splash screen state
     private val viewModel: SplashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Install the splash screen and keep it on the screen based on the ViewModel's loading state
+        // Install the splash screen
         val splashScreen = installSplashScreen()
 
-        // Condition to keep the splash screen visible until isLoading value is false
+        // Keep splash screen while loading
         splashScreen.setKeepOnScreenCondition {
             viewModel.isLoading.value
         }
+
         super.onCreate(savedInstanceState)
 
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
+        // Observe loading state and navigate when ready
+        lifecycleScope.launch {
+            viewModel.isLoading.collectLatest { isLoading ->
+                if (!isLoading) {
+                    try {
+                        val intent = Intent(this@Startup, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } catch (e: Exception) {
+                        Log.e("Startup", "Error saat membuka Aplikasi", e)
+                        finish()
+                    }
+                }
+            }
+        }
     }
 }

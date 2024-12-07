@@ -11,6 +11,7 @@ data class User(
     val username: String?,
     val phoneNumber: String?,
     val profilePicture: String?,
+    val role: String?,
     val address: List<Address>? = null,
     val createdAt: String?,
     val updatedAt: String?

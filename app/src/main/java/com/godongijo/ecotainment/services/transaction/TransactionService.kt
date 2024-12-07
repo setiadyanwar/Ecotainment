@@ -8,7 +8,6 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.godongijo.ecotainment.R
-import com.godongijo.ecotainment.models.CartItem
 import com.godongijo.ecotainment.models.Product
 import com.godongijo.ecotainment.models.Transaction
 import com.godongijo.ecotainment.models.TransactionItem
@@ -92,8 +91,6 @@ class TransactionService {
         for (i in 0 until dataArray.length()) {
             val transactionJson = dataArray.getJSONObject(i)
 
-            Log.d("Transaction Service 2", transactionJson.toString())
-
             // Mengambil array "items" dan memproses setiap item
             val itemsArray = transactionJson.optJSONArray("items")
             val itemList = mutableListOf<TransactionItem>()
@@ -137,6 +134,10 @@ class TransactionService {
                 userId = transactionJson.optString("user_id", ""),
                 totalAmount = transactionJson.optInt("total_amount", 0),
                 status = transactionJson.optString("status", ""),
+                recipientName = transactionJson.optString("recipient_name", ""),
+                phoneNumber = transactionJson.optString("phone_number", ""),
+                address = transactionJson.optString("address", ""),
+                paymentProof = transactionJson.optString("payment_proof", ""),
                 items = itemList, // Assign list of items
                 createdAt = transactionJson.optString("created_at", ""),
                 updatedAt = transactionJson.optString("updated_at", "")
@@ -153,6 +154,9 @@ class TransactionService {
     fun addNewTransaction(
         context: Context,
         totalAmount: Int,
+        recipientNames: String,
+        phoneNumber: String,
+        address: String,
         items: List<*>,
         onResult: (Transaction) -> Unit,
         onError: (String) -> Unit
@@ -170,17 +174,16 @@ class TransactionService {
                 if (item is Pair<*, *>) {
                     val productId = item.first as? Int ?: 0
                     val quantity = item.second as? Int ?: 0
-                    Log.d("Transaction Service", "product_id: $productId, quantity: $quantity")
                     val jsonObject = JSONObject().apply {
                         put("product_id", productId)
                         put("quantity", quantity)
                     }
                     formattedItems.put(jsonObject)
-                } else {
-                    Log.d("Transaction Service", "Item is NOT PAIR")
                 }
             }
-
+            put("recipient_name", recipientNames)
+            put("phone_number", phoneNumber)
+            put("address", address)
             put("items", formattedItems)
         }
 
@@ -268,6 +271,10 @@ class TransactionService {
             userId = dataJson.optString("user_id", ""),
             totalAmount = dataJson.optInt("total_amount", 0),
             status = dataJson.optString("status", ""),
+            recipientName = dataJson.optString("recipient_name", ""),
+            phoneNumber = dataJson.optString("phone_number", ""),
+            address = dataJson.optString("address", ""),
+            paymentProof = dataJson.optString("payment_proof", ""),
             items = itemList,
             createdAt = dataJson.optString("created_at", ""),
             updatedAt = dataJson.optString("updated_at", "")
@@ -373,6 +380,126 @@ class TransactionService {
         } else {
             onError("Token is missing")
         }
+    }
+
+    fun getAllTransactionList(
+        context: Context,
+        onResult: (List<Transaction>) -> Unit,
+        onError: (String) -> Unit
+    ) {
+        val url = context.getString(R.string.base_url) + "/api/admin/transactions"
+
+        val authToken = PreferenceManager(context).getString("auth_token")
+
+        val request = object : JsonObjectRequest(
+            Request.Method.GET, url, null,
+            { response ->
+                try {
+                    // Ambil status dan pesan dari response
+                    val success = response.getBoolean("success")
+                    val message = response.getString("message")
+
+                    if (success) {
+                        // Ambil data cart jika success
+                        val dataArray = response.getJSONArray("data")
+                        val transactionList = parseTransactionList(dataArray)
+                        onResult(transactionList)
+                    } else {
+                        // Kirim pesan error jika status success = false
+                        onError(message)
+                    }
+                } catch (e: Exception) {
+                    // Kirim pesan error jika parsing JSON gagal
+                    onError("Terjadi kesalahan saat memproses data: ${e.message}")
+                }
+            },
+            { error ->
+                val networkResponse = error.networkResponse
+                val errorMessage = if (networkResponse?.data != null) {
+                    // Parsing respons error dari server
+                    val errorJson = JSONObject(String(networkResponse.data))
+                    errorJson.optString("message", "Terjadi kesalahan")
+                } else {
+                    // Default pesan jika tidak ada respons dari server
+                    "Koneksi gagal. Periksa koneksi internet Anda."
+                }
+                Log.e("TransactionService", "Error fetching data: $errorMessage")
+                onError(errorMessage)
+            }
+        ) {
+            // Menambahkan header Authorization dengan Bearer token
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Authorization"] = "Bearer $authToken"
+                return headers
+            }
+        }
+
+        // Add request to the request queue
+        val requestQueue = Volley.newRequestQueue(context)
+        requestQueue.add(request)
+    }
+
+    fun adminUpdateTransactionStatus(
+        context: Context,
+        transactionId: Int,
+        status: String,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
+        val url = context.getString(R.string.base_url) + "/api/admin/transactions/$transactionId/status"
+        val authToken = PreferenceManager(context).getString("auth_token")
+
+        // Body request
+        val requestBody = JSONObject().apply {
+            put("status", status)
+        }
+
+        Log.d("Req Body", requestBody.toString())
+
+        val request = object : JsonObjectRequest(
+            Request.Method.PUT, url, requestBody,
+            { response ->
+                try {
+                    // Ambil status dan pesan dari response
+                    val success = response.getBoolean("success")
+                    val message = response.getString("message")
+
+                    if (success) {
+                        Log.d("TransactionService", "SUCCESS UPDATE TRANSACTION STATUS")
+                        onSuccess()
+                    } else {
+                        onError(message)
+                    }
+                } catch (e: Exception) {
+                    onError("Terjadi kesalahan saat memproses data: ${e.message}")
+                }
+            },
+            { error ->
+                val networkResponse = error.networkResponse
+                val errorMessage = if (networkResponse?.data != null) {
+                    // Parsing respons error dari server
+                    val errorJson = JSONObject(String(networkResponse.data))
+                    errorJson.optString("message", "Terjadi kesalahan")
+                } else {
+                    // Default pesan jika tidak ada respons dari server
+                    "Koneksi gagal. Periksa koneksi internet Anda."
+                }
+                Log.e("Transaction Service", "Error updating transaction status: $errorMessage")
+                onError(errorMessage)
+            }
+        ) {
+            // Menambahkan header Authorization dengan Bearer token
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Authorization"] = "Bearer $authToken"
+                return headers
+            }
+        }
+
+        // Add request to the request queue
+        val requestQueue = Volley.newRequestQueue(context)
+        requestQueue.add(request)
     }
 
     // Mendapatkan path file dari URI

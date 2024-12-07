@@ -133,7 +133,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="@dimen/_16sdp"
                         android:contentDescription="Favorite Icon"
-                        android:src="@drawable/ic_love" />
+                        android:src="@drawable/ic_wishlist_outline" />
 
                     <!-- Product Price -->
                     <TextView
@@ -183,7 +183,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:contentDescription="Favorite Icon"
-                    android:src="@drawable/ic_love" />
+                    android:src="@drawable/ic_wishlist_outline" />
 
                 <!-- Product Price -->
                 <TextView

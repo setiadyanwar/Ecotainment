@@ -1,3 +1,5 @@
+package com.godongijo.ecotainment.adapters
+
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -7,8 +9,10 @@ import com.godongijo.ecotainment.R
 import com.godongijo.ecotainment.databinding.SingleViewProductBinding
 import com.godongijo.ecotainment.models.Product
 import com.godongijo.ecotainment.services.product.ProductService
+import com.godongijo.ecotainment.services.product.WishlistService
 import com.godongijo.ecotainment.ui.activities.DetailProductActivity
 import com.godongijo.ecotainment.utilities.Glide
+import com.godongijo.ecotainment.utilities.PreferenceManager
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -18,8 +22,16 @@ class ProductAdapter(
     private val productService: ProductService
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
-    // ViewHolder with binding
+    private val wishlistStatus = mutableListOf<Boolean>()
+
     inner class ProductViewHolder(val binding: SingleViewProductBinding) : RecyclerView.ViewHolder(binding.root)
+
+    init {
+        productList.forEach { _ ->
+            wishlistStatus.add(false)
+        }
+        checkWishlistStatus()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val binding = SingleViewProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -32,22 +44,43 @@ class ProductAdapter(
         val imageProduct = context.getString(R.string.base_url) + product.imageUrl
         Glide().loadImageFromUrl(holder.binding.productImage, imageProduct)
 
-        // Format harga
         val price = product.price
-        val formattedPrice = NumberFormat.getInstance(Locale("id", "ID")).format(price) // Format ke format ribuan
+        val formattedPrice = NumberFormat.getInstance(Locale("id", "ID")).format(price)
 
         holder.binding.apply {
             productName.text = product.name
             productPrice.text = "Rp$formattedPrice"
             productRating.text = product.rating.toString()
             productSales.text = "${product.totalSales} terjual"
+
+            if (wishlistStatus[position]) {
+                favoriteIcon.setImageResource(R.drawable.ic_wishlist_fill)
+            } else {
+                favoriteIcon.setImageResource(R.drawable.ic_wishlist_outline)
+            }
+
+            favoriteIcon.setOnClickListener {
+                val authToken = PreferenceManager(context).getString("auth_token") ?: ""
+                if (authToken != "") {
+                    val wishlistService = WishlistService()
+                    wishlistService.toggleWishlist(
+                        context,
+                        product.id,
+                        onResult = { message ->
+                            wishlistStatus[position] = !wishlistStatus[position]
+                            notifyItemChanged(position)
+                        },
+                        onError = { errorMessage ->
+                            // Tangani error jika perlu
+                        }
+                    )
+                }
+            }
         }
 
-
-        // Click listener untuk item
         holder.itemView.setOnClickListener {
             val intent = Intent(context, DetailProductActivity::class.java).apply {
-                putExtra("product_id", product.id) // Kirimkan id produk ke aktivitas
+                putExtra("product_id", product.id)
             }
             context.startActivity(intent)
         }
@@ -57,6 +90,33 @@ class ProductAdapter(
 
     fun updateList(newProductList: List<Product>) {
         productList = newProductList
+        wishlistStatus.clear()
+        newProductList.forEach { _ ->
+            wishlistStatus.add(false)
+        }
+        checkWishlistStatus()
         notifyDataSetChanged()
+    }
+
+    private fun checkWishlistStatus() {
+        val authToken = PreferenceManager(context).getString("auth_token") ?: ""
+        if (authToken != "") {
+            val wishlistService = WishlistService()
+            wishlistService.getAllWishlist(
+                context,
+                onResult = { wishlistList ->
+                    wishlistList.forEach { wishlistItem ->
+                        val index = productList.indexOfFirst { it.id == wishlistItem.productId }
+                        if (index != -1) {
+                            wishlistStatus[index] = true
+                        }
+                    }
+                    notifyDataSetChanged()
+                },
+                onError = { errorMessage ->
+                    // Tangani error jika perlu
+                }
+            )
+        }
     }
 }

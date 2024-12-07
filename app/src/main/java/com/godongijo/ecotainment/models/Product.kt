@@ -1,10 +1,8 @@
 package com.godongijo.ecotainment.models
 
 import android.os.Parcelable
-import com.google.firebase.Timestamp
 import kotlinx.parcelize.Parcelize
 
-// Replace with your actual package name
 @Parcelize
 data class Product(
     val id: Int = 0,

@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/transparent"
-                android:hint="No. Handphone/Email"
+                android:hint="Email"
                 android:textColorHint="@color/text_100"
                 android:inputType="text"
                 android:textSize="@dimen/_14ssp"

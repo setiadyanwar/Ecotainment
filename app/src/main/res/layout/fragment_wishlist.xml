@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:padding="@dimen/_12sdp"
     android:background="@color/white"
     android:orientation="vertical">
@@ -64,7 +65,17 @@
 
     </LinearLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/wishlistRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        tools:itemCount="2"
+        tools:listitem="@layout/single_view_wishlist"/>
+
     <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/emptyLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -84,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_26sdp"
-                android:text="Ayo Mulai Semua Wishlist \nmu Dengan Group"
+                android:text="Ayo Mulai Tambahkan Produk \nKesukaanmu ke Wishlist"
                 android:textSize="@dimen/_16ssp"
                 android:textColor="@color/text_700"
                 android:textAlignment="center"/>
@@ -93,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_6sdp"
-                android:text="Bikin wishlist kamu makin rapih"
+                android:text="Agar kamu mudah menemukan\n produk kesukaan"
                 android:textSize="@dimen/_12ssp"
                 android:textColor="@color/text_100"
                 android:textAlignment="center"/>

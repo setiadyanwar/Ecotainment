@@ -12,7 +12,7 @@
         android:id="@+id/checkIcon"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
-        android:src="@drawable/ic_trash"
+        android:src="@drawable/ic_trash_bg"
         android:layout_gravity="center"/>
 
     <TextView

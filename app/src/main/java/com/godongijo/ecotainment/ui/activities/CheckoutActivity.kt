@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.godongijo.ecotainment.R
 import com.godongijo.ecotainment.adapters.CheckoutAdapter
 import com.godongijo.ecotainment.databinding.ActivityCheckoutBinding
 import com.godongijo.ecotainment.models.Address
@@ -14,7 +16,6 @@ import com.godongijo.ecotainment.models.CartItem
 import com.godongijo.ecotainment.services.auth.AuthService
 import com.godongijo.ecotainment.services.cart.CartService
 import com.godongijo.ecotainment.services.product.ProductService
-import com.godongijo.ecotainment.utilities.PreferenceManager
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -52,6 +53,9 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        binding.payNowButton.isEnabled = false
+        binding.payNowButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.grey)
+
         initCheckoutList()
         loadUserAddress()
     }
@@ -62,6 +66,9 @@ class CheckoutActivity : AppCompatActivity() {
             onResult = { addressList ->
                 if (addressList.isNotEmpty()) {
                     selectedAddress = addressList[0] // Ambil alamat pertama sebagai default
+                    binding.payNowButton.isEnabled = true
+                    binding.payNowButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.secondary_500)
+
                     val nameAndPhone = "${selectedAddress.recipientName} | ${selectedAddress.phoneNumber}"
                     val fullAddress = "${selectedAddress.detailAddress}, ${selectedAddress.cityOrDistrict}, ${selectedAddress.province}"
 
@@ -99,9 +106,13 @@ class CheckoutActivity : AppCompatActivity() {
         }
 
         binding.payNowButton.setOnClickListener {
+            val fullAddress = "${selectedAddress.detailAddress}, ${selectedAddress.cityOrDistrict}, ${selectedAddress.province}"
             val intent = Intent(this, PaymentActivity::class.java).apply {
                 putExtra("isNewTransaction", true)
                 putExtra("totalAmount", formattedSubtotal)
+                putExtra("recipientName", selectedAddress.recipientName)
+                putExtra("phoneNumber", selectedAddress.phoneNumber)
+                putExtra("address", fullAddress)
                 putExtra("transactionItems", ArrayList(transactionItems))
             }
             startActivity(intent)

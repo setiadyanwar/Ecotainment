@@ -33,7 +33,7 @@
                 android:layout_marginStart="@dimen/_12sdp"
                 android:text="Selesai"
                 android:fontFamily="@font/poppins_regular"
-                android:textSize="@dimen/_10sdp"
+                android:textSize="@dimen/_12ssp"
                 android:textColor="@color/primary_500" />
 
 
@@ -58,15 +58,16 @@
                     android:layout_height="wrap_content"
                     android:text="Biaya Layanan:"
                     android:fontFamily="@font/poppins_regular"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="@dimen/_12ssp"
                     android:textColor="@color/text_500" />
 
                 <TextView
+                    android:id="@+id/totalProduct"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total 1 produk:"
                     android:fontFamily="@font/poppins_regular"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="@dimen/_12ssp"
                     android:textColor="@color/text_500" />
 
             </LinearLayout>
@@ -85,8 +86,8 @@
                     android:text="Rp 0"
                     android:textAlignment="textEnd"
                     android:fontFamily="@font/poppins_semibold"
-                    android:textSize="@dimen/_10sdp"
-                    android:textColor="#000000" />
+                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/text_700" />
 
                 <TextView
                     android:id="@+id/totalAmount"
@@ -96,8 +97,8 @@
                     android:text="Rp 200.000"
                     android:textAlignment="textEnd"
                     android:fontFamily="@font/poppins_semibold"
-                    android:textSize="@dimen/_10sdp"
-                    android:textColor="#000000" />
+                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/text_700" />
 
             </LinearLayout>
 

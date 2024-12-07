@@ -6,17 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.godongijo.ecotainment.R
 import com.godongijo.ecotainment.databinding.ActivityMainBinding
-import com.godongijo.ecotainment.ui.fragment.*
+import com.godongijo.ecotainment.ui.fragment.HistoryFragment
 import com.godongijo.ecotainment.ui.fragment.HomeFragment
+import com.godongijo.ecotainment.ui.fragment.ProfileFragment
+import com.godongijo.ecotainment.ui.fragment.WishlistFragment
 import com.godongijo.ecotainment.utilities.PreferenceManager
-import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
-    // Instance of Auth
-    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private lateinit var preferenceManager: PreferenceManager
     private lateinit var authToken: String

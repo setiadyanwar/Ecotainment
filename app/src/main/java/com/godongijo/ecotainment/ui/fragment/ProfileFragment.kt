@@ -1,15 +1,18 @@
 package com.godongijo.ecotainment.ui.fragment
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.godongijo.ecotainment.R
+import com.godongijo.ecotainment.databinding.DialogConfirmLogoutBinding
 import com.godongijo.ecotainment.databinding.FragmentProfileBinding
 import com.godongijo.ecotainment.services.auth.AuthService
 import com.godongijo.ecotainment.services.transaction.TransactionService
@@ -17,10 +20,13 @@ import com.godongijo.ecotainment.ui.activities.AddressActivity
 import com.godongijo.ecotainment.ui.activities.CustomerServiceActivity
 import com.godongijo.ecotainment.ui.activities.EditProfileActivity
 import com.godongijo.ecotainment.ui.activities.HelpCenterActivity
+import com.godongijo.ecotainment.ui.activities.ManageProductActivity
+import com.godongijo.ecotainment.ui.activities.ManageTransactionActivity
 import com.godongijo.ecotainment.ui.activities.NotificationActivity
 import com.godongijo.ecotainment.ui.activities.OrderStatusActivity
 import com.godongijo.ecotainment.ui.activities.SignInActivity
 import com.godongijo.ecotainment.utilities.Glide
+import com.godongijo.ecotainment.utilities.PreferenceManager
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -33,6 +39,8 @@ class ProfileFragment : Fragment() {
     private val authService = AuthService()
 
     private val transactionService = TransactionService()
+
+    private lateinit var role: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -98,11 +106,21 @@ class ProfileFragment : Fragment() {
         binding.customerService.setOnClickListener {
             startActivity(Intent(requireContext(), CustomerServiceActivity::class.java))
         }
+
+        binding.manageProduct.setOnClickListener {
+            startActivity(Intent(requireContext(), ManageProductActivity::class.java))
+        }
+
+        binding.manageTransaction.setOnClickListener {
+            startActivity(Intent(requireContext(), ManageTransactionActivity::class.java))
+        }
     }
 
     private fun initProfileInfo() {
         binding.layoutProfile.visibility = View.GONE
         binding.layoutShimmer.visibility = View.VISIBLE
+
+        role = PreferenceManager(requireContext()).getString("role") ?: ""
 
         authService.getUserProfile(
             context = requireContext(),
@@ -143,24 +161,37 @@ class ProfileFragment : Fragment() {
                 Log.d("ERROR LOAD ACCOUNT", error)
             }
         )
+
+        if (role == "admin") {
+            binding.layoutAdminTools.visibility = View.VISIBLE
+        } else {
+            binding.layoutAdminTools.visibility = View.GONE
+        }
     }
 
     private fun logout() {
         lifecycleScope.launch {
             if (isAdded) { // Memastikan fragment masih terhubung
-                authService.signOut(
-                    context = requireContext(),
-                    onResult = {
-                        if (isAdded) { // Memastikan fragment masih terhubung sebelum melanjutkan
-                            val intent = Intent(requireContext(), SignInActivity::class.java)
-                            startActivity(intent)
-                            requireActivity().finish()
-                        }
+                showConfirmDialog(
+                    onConfirm = {
+                        authService.signOut(
+                            context = requireContext(),
+                            onResult = {
+                                if (isAdded) { // Memastikan fragment masih terhubung sebelum melanjutkan
+                                    val intent = Intent(requireContext(), SignInActivity::class.java)
+                                    startActivity(intent)
+                                    requireActivity().finish()
+                                }
+                            },
+                            onError = { error ->
+                                if (isAdded) { // Memastikan fragment masih terhubung sebelum menampilkan Toast
+                                    Toast.makeText(requireContext(), "Logout failed: $error", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        )
                     },
-                    onError = { error ->
-                        if (isAdded) { // Memastikan fragment masih terhubung sebelum menampilkan Toast
-                            Toast.makeText(requireContext(), "Logout failed: $error", Toast.LENGTH_SHORT).show()
-                        }
+                    onCancel = {
+
                     }
                 )
             }
@@ -173,6 +204,36 @@ class ProfileFragment : Fragment() {
             putExtra("selectedTab", selectedTab)
         }
         startActivity(intent)
+    }
+
+
+    private fun showConfirmDialog(
+        onConfirm: () -> Unit,
+        onCancel: () -> Unit
+    ) {
+        // Inflate layout menggunakan View Binding
+        val dialogBinding = DialogConfirmLogoutBinding.inflate(LayoutInflater.from(requireContext()))
+
+        // Buat dialog
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(dialogBinding.root)
+
+        // Aksi untuk tombol Cancel
+        dialogBinding.cancelButton.setOnClickListener {
+            onCancel()
+            dialog.dismiss()
+        }
+
+        // Aksi untuk tombol Confirm
+        dialogBinding.confirmButton.setOnClickListener {
+            onConfirm()
+            dialog.dismiss()
+        }
+
+        // Tampilkan dialog
+        dialog.show()
     }
 
 }

@@ -35,9 +35,16 @@
     <color name="text_100">#AEAEAE</color>
 
 
+
+    <!-- Yellow Color -->
+    <color name="yellow_700">#B58C3C</color>
+    <color name="yellow_200">#FFE4B0</color>
+
+
     <!-- Warning Color -->
     <color name="warning_500">#D10B05</color>
     <color name="warning_300">#FA4742</color>
+    <color name="warning_100">#FFCCCB</color>
 
 
     <!-- Info Color -->

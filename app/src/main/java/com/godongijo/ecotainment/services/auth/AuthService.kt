@@ -15,7 +15,6 @@ import com.godongijo.ecotainment.utilities.PreferenceManager
 import com.godongijo.ecotainment.utilities.RetrofitInstance
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
@@ -66,11 +65,13 @@ class AuthService {
                             val message = response.getString("message")
                             if (success) {
                                 val userId = response.getJSONObject("data").getJSONObject("user").getString("id")
+                                val role = response.getJSONObject("data").getJSONObject("user").getString("role")
                                 val authToken = response.getJSONObject("data").getString("token")
 
                                 // Save userId and authToken to SharedPreferences
                                 val preferenceManager = PreferenceManager(context)
                                 preferenceManager.putString("user_id", userId)
+                                preferenceManager.putString("role", role)
                                 preferenceManager.putString("auth_token", authToken)
 
                                 onResult(userId)
@@ -152,11 +153,13 @@ class AuthService {
                             val message = response.getString("message")
                             if (success) {
                                 val userId = response.getJSONObject("data").getJSONObject("user").getString("id")
+                                val role = response.getJSONObject("data").getJSONObject("user").getString("role")
                                 val authToken = response.getJSONObject("data").getString("token")
 
                                 // Save userId and authToken to SharedPreferences
                                 val preferenceManager = PreferenceManager(context)
                                 preferenceManager.putString("user_id", userId)
+                                preferenceManager.putString("role", role)
                                 preferenceManager.putString("auth_token", authToken)
 
                                 onResult(userId)
@@ -312,13 +315,13 @@ class AuthService {
                                             val addressObject = addressArray.getJSONObject(i)
                                             val address = Address(
                                                 id = addressObject.getInt("id"),
-                                                recipientName = addressObject.optString("recipient_name", null),
-                                                phoneNumber = addressObject.optString("phone_number", null),
-                                                province = addressObject.optString("province", null),
-                                                cityOrDistrict = addressObject.optString("city_or_district", null),
+                                                recipientName = addressObject.optString("recipient_name", ""),
+                                                phoneNumber = addressObject.optString("phone_number", ""),
+                                                province = addressObject.optString("province", ""),
+                                                cityOrDistrict = addressObject.optString("city_or_district", ""),
                                                 detailAddress = addressObject.optString("detailed_address"),
-                                                createdAt = addressObject.optString("created_at", null),
-                                                updatedAt = addressObject.optString("updated_at", null)
+                                                createdAt = addressObject.optString("created_at", ""),
+                                                updatedAt = addressObject.optString("updated_at", "")
                                             )
                                             addresses.add(address)
                                         }
@@ -331,6 +334,7 @@ class AuthService {
                                         username = data.optString("username", "Anonymous"),
                                         phoneNumber = data.optString("phone_number", ""),
                                         profilePicture = data.optString("profile_picture", ""),
+                                        role = data.optString("role", ""),
                                         address = addresses,
                                         createdAt = data.optString("created_at", ""),
                                         updatedAt = data.optString("updated_at", "")
@@ -460,13 +464,13 @@ class AuthService {
                                         val addressObject = addresses.getJSONObject(i)
                                         val address = Address(
                                             id = addressObject.getInt("id"),
-                                            recipientName = addressObject.optString("recipient_name", null),
-                                            phoneNumber = addressObject.optString("phone_number", null),
-                                            province = addressObject.optString("province", null),
-                                            cityOrDistrict = addressObject.optString("city_or_district", null),
+                                            recipientName = addressObject.optString("recipient_name", ""),
+                                            phoneNumber = addressObject.optString("phone_number", ""),
+                                            province = addressObject.optString("province", ""),
+                                            cityOrDistrict = addressObject.optString("city_or_district", ""),
                                             detailAddress = addressObject.optString("detailed_address"),
-                                            createdAt = addressObject.optString("created_at", null),
-                                            updatedAt = addressObject.optString("updated_at", null)
+                                            createdAt = addressObject.optString("created_at", ""),
+                                            updatedAt = addressObject.optString("updated_at", "")
                                         )
                                         addressList.add(address)
                                     }
@@ -562,6 +566,131 @@ class AuthService {
         } else {
             onError("Token is missing")
         }
+    }
+
+    fun editAddress(
+        context: Context,
+        addressId: Int,
+        recipientName: String? = null,
+        phoneNumber: String? = null,
+        province: String? = null,
+        city: String? = null,
+        fullAddress: String? = null,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
+        val url = context.getString(R.string.base_url) + "/api/auth/address/$addressId"
+
+        val authToken = PreferenceManager(context).getString("auth_token")
+
+        // Body request
+        val requestBody = JSONObject().apply {
+            recipientName?.let { put("recipient_name", it) }
+            phoneNumber?.let { put("phone_number", it) }
+            province?.let { put("province", it) }
+            city?.let { put("city_or_district", it) }
+            fullAddress?.let { put("detailed_address", it) }
+        }
+
+        val request = object : JsonObjectRequest(
+            Request.Method.PUT, url, requestBody,
+            { response ->
+                try {
+                    // Ambil status dan pesan dari response
+                    val success = response.getBoolean("success")
+                    val message = response.getString("message")
+
+                    if (success) {
+                        onSuccess()
+                    } else {
+                        onError(message)
+                    }
+                } catch (e: Exception) {
+                    onError("Terjadi kesalahan saat memproses data: ${e.message}")
+                }
+            },
+            { error ->
+                val networkResponse = error.networkResponse
+                val errorMessage = if (networkResponse?.data != null) {
+                    // Parsing respons error dari server
+                    val errorJson = JSONObject(String(networkResponse.data))
+                    errorJson.optString("message", "Terjadi kesalahan")
+                } else {
+                    // Default pesan jika tidak ada respons dari server
+                    "Koneksi gagal. Periksa koneksi internet Anda."
+                }
+                Log.e("Auth Service", "Error updating address: $errorMessage")
+                onError(errorMessage)
+            }
+        ) {
+            // Menambahkan header Authorization dengan Bearer token
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Authorization"] = "Bearer $authToken"
+                return headers
+            }
+        }
+
+        // Add request to the request queue
+        val requestQueue = Volley.newRequestQueue(context)
+        requestQueue.add(request)
+    }
+
+
+
+
+    fun deleteAddress(
+        context: Context,
+        addressId: Int,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
+        val url = context.getString(R.string.base_url) + "/api/auth/address/$addressId"
+
+        val authToken = PreferenceManager(context).getString("auth_token")
+
+        val request = object : JsonObjectRequest(
+            Request.Method.DELETE, url, null,
+            { response ->
+                try {
+                    // Ambil status dan pesan dari response
+                    val success = response.getBoolean("success")
+                    val message = response.getString("message")
+
+                    if (success) {
+                        onSuccess()
+                    } else {
+                        onError(message)
+                    }
+                } catch (e: Exception) {
+                    onError("Terjadi kesalahan saat memproses data: ${e.message}")
+                }
+            },
+            { error ->
+                val networkResponse = error.networkResponse
+                val errorMessage = if (networkResponse?.data != null) {
+                    // Parsing respons error dari server
+                    val errorJson = JSONObject(String(networkResponse.data))
+                    errorJson.optString("message", "Terjadi kesalahan")
+                } else {
+                    // Default pesan jika tidak ada respons dari server
+                    "Koneksi gagal. Periksa koneksi internet Anda."
+                }
+                Log.e("Auth Service", "Error updating address: $errorMessage")
+                onError(errorMessage)
+            }
+        ) {
+            // Menambahkan header Authorization dengan Bearer token
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Authorization"] = "Bearer $authToken"
+                return headers
+            }
+        }
+
+        // Add request to the request queue
+        val requestQueue = Volley.newRequestQueue(context)
+        requestQueue.add(request)
     }
 
     // Mendapatkan path file dari URI

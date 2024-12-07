@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:text="2 min ago"
             android:textColor="#999999"
-            android:textSize="@dimen/_8sdp"
+            android:textSize="@dimen/_9ssp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"/>
 
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:text="Freya Jayawardana"
                 android:textColor="#000000"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_11ssp"
                 android:textStyle="bold"/>
 
             <!-- Rating Stars -->
@@ -79,7 +79,7 @@
                 android:layout_marginTop="@dimen/_2sdp"
                 android:text="Pesanan selama langganan &amp; datang sesuai jadwal, terima kasih."
                 android:textColor="#666666"
-                android:textSize="@dimen/_9sdp"/>
+                android:textSize="@dimen/_10ssp"/>
         </LinearLayout>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

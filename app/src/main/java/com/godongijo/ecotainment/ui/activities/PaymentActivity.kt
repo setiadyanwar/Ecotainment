@@ -26,7 +26,6 @@ import com.godongijo.ecotainment.adapters.BankAdapter
 import com.godongijo.ecotainment.databinding.ActivityPaymentBinding
 import com.godongijo.ecotainment.models.Bank
 import com.godongijo.ecotainment.models.BankAccount
-import com.godongijo.ecotainment.models.TransactionItem
 import com.godongijo.ecotainment.services.transaction.TransactionService
 import java.io.File
 import java.text.NumberFormat
@@ -277,12 +276,18 @@ class PaymentActivity : AppCompatActivity() {
         binding.shimmerPaymentAmount.visibility = View.INVISIBLE
         binding.paymentAmount.visibility = View.VISIBLE
 
+        val recipientName = intent.getStringExtra("recipientName") ?: ""
+        val phoneNumber = intent.getStringExtra("phoneNumber") ?: ""
+        val address = intent.getStringExtra("address") ?: ""
         val transactionItems = intent.getSerializableExtra("transactionItems") as? ArrayList<Pair<Int, Int>>
 
         if (transactionItems != null) {
             transactionService.addNewTransaction(
                 context = this,
                 totalAmount = totalAmount,
+                recipientNames = recipientName,
+                phoneNumber = phoneNumber,
+                address = address,
                 items = transactionItems,
                 onResult = { transactions ->
                     transactionId = transactions.id
@@ -400,7 +405,6 @@ class PaymentActivity : AppCompatActivity() {
                 Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
             }
         )
-
     }
 
     private fun loadBanks() {

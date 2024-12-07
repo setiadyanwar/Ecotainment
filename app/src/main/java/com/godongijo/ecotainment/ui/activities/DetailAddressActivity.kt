@@ -6,10 +6,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
@@ -22,6 +21,8 @@ class DetailAddressActivity : AppCompatActivity() {
 
     private val authService = AuthService()
 
+    private var isEditing: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailAddressBinding.inflate(layoutInflater)
@@ -33,6 +34,12 @@ class DetailAddressActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        isEditing = intent.getBooleanExtra("isEditing", false)
+
+        if(isEditing) {
+            initAddressInfo()
+        }
+
         loadProvinces()
     }
 
@@ -44,14 +51,60 @@ class DetailAddressActivity : AppCompatActivity() {
         binding.buttonSave.setOnClickListener {
             saveAddress()
         }
+
+    }
+
+    private fun initAddressInfo() {
+        val addressId = intent.getIntExtra("addressId", 0)
+
+        if (addressId != 0) {
+            authService.getUserAddress(
+                this,
+                onResult = { addressList ->
+                    val selectedAddress = addressList.find { it.id == addressId }
+
+                    if (selectedAddress != null) {
+                        binding.inputRecipientName.setText(selectedAddress.recipientName)
+                        binding.inputPhoneNumber.setText(selectedAddress.phoneNumber)
+                        binding.inputFullAddress.setText(selectedAddress.detailAddress)
+
+
+                        // Simpan nama provinsi dan kabupaten dari selectedAddress
+                        val selectedProvince = selectedAddress.province
+                        val selectedCity = selectedAddress.cityOrDistrict
+
+                        // Setelah provinsi selesai dimuat, set pilihan provinsi
+                        binding.spinnerProvinsi.post {
+                            val provinceIndex = (binding.spinnerProvinsi.adapter as ArrayAdapter<String>)
+                                .getPosition(selectedProvince)
+                            binding.spinnerProvinsi.setSelection(provinceIndex)
+
+                            // Setelah kabupaten selesai dimuat, set pilihan kabupaten
+//                            loadKabupaten(provinceIndex.toString())
+                            binding.spinnerKabupatenKota.post {
+                                val cityIndex = (binding.spinnerKabupatenKota.adapter as ArrayAdapter<String>)
+                                    .getPosition(selectedCity)
+                                binding.spinnerKabupatenKota.setSelection(cityIndex)
+                            }
+                        }
+                    }
+                },
+                onError = {
+
+                }
+            )
+        }
+
     }
 
     private fun saveAddress() {
         // Ambil data dari input
+        val addressId = intent.getIntExtra("addressId", 0)
+
         val recipientName = binding.inputRecipientName.text.toString().trim()
         val phoneNumber = binding.inputPhoneNumber.text.toString().trim()
         val province = binding.spinnerProvinsi.selectedItem?.toString()
-        val city = binding.spinnerKabupatenKota.selectedItem?.toString()
+        val cityOrDistrict = binding.spinnerKabupatenKota.selectedItem?.toString()
         val fullAddress = binding.inputFullAddress.text.toString().trim()
 
         // Validasi data input
@@ -70,7 +123,7 @@ class DetailAddressActivity : AppCompatActivity() {
                 showErrorMessage("Silakan pilih provinsi")
                 return
             }
-            city.isNullOrEmpty() || city == "Pilih" -> {
+            cityOrDistrict.isNullOrEmpty() || cityOrDistrict == "Pilih Kabupaten/Kota" -> {
                 showErrorMessage("Silakan pilih kabupaten/kota")
                 return
             }
@@ -80,22 +133,41 @@ class DetailAddressActivity : AppCompatActivity() {
                 return
             }
             else -> {
-                // Jika semua validasi lolos, panggil authService.addAddress
-                authService.addAddress(
-                    this,
-                    recipientName,
-                    phoneNumber,
-                    province,
-                    city,
-                    fullAddress,
-                    onSuccess = {
-                        showSuccessMessage("Alamat berhasil disimpan")
-                        finish() // Kembali ke aktivitas sebelumnya
-                    },
-                    onError = { errorMessage ->
-                        showErrorMessage(errorMessage)
-                    }
-                )
+                if(isEditing) {
+                    authService.editAddress(
+                        this,
+                        addressId,
+                        recipientName,
+                        phoneNumber,
+                        province,
+                        cityOrDistrict,
+                        fullAddress,
+                        onSuccess = {
+                            showSuccessMessage("Alamat berhasil diperbarui")
+                            finish() // Kembali ke aktivitas sebelumnya
+                        },
+                        onError = { errorMessage ->
+                            showErrorMessage(errorMessage)
+                        }
+                    )
+                } else {
+                    authService.addAddress(
+                        this,
+                        recipientName,
+                        phoneNumber,
+                        province,
+                        cityOrDistrict,
+                        fullAddress,
+                        onSuccess = {
+                            showSuccessMessage("Alamat berhasil disimpan")
+                            finish() // Kembali ke aktivitas sebelumnya
+                        },
+                        onError = { errorMessage ->
+                            showErrorMessage(errorMessage)
+                        }
+                    )
+                }
+
             }
         }
     }
@@ -117,6 +189,10 @@ class DetailAddressActivity : AppCompatActivity() {
 
         val url = "https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json"
         val request = JsonArrayRequest(Request.Method.GET, url, null, { response ->
+
+            binding.buttonSave.isEnabled = true
+            binding.buttonSave.backgroundTintList = ContextCompat.getColorStateList(this, R.color.secondary_500)
+
             val provinces = mutableListOf("Pilih Provinsi")
             val provinceMap = mutableMapOf<String, String>() // Menyimpan id dan nama provinsi
 
@@ -161,7 +237,7 @@ class DetailAddressActivity : AppCompatActivity() {
 
         val url = "https://www.emsifa.com/api-wilayah-indonesia/api/regencies/$provinceId.json"
         val request = JsonArrayRequest(Request.Method.GET, url, null, { response ->
-            val kabupaten = mutableListOf<String>()
+            val kabupaten = mutableListOf("Pilih Kabupaten/Kota") // Tambahkan item dummy
             val kabupatenMap = mutableMapOf<String, String>()
 
             for (i in 0 until response.length()) {
@@ -179,8 +255,14 @@ class DetailAddressActivity : AppCompatActivity() {
             // Listener untuk spinnerKabupatenKota
             binding.spinnerKabupatenKota.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    val selectedKabupaten = kabupaten[position]
-                    val kabupatenId = kabupatenMap[selectedKabupaten]
+                    if (position > 0) {
+                        // Lakukan sesuatu jika item valid dipilih
+                        val selectedKabupaten = kabupaten[position]
+//                        val kabupatenId = kabupatenMap[selectedKabupaten]
+                        // Proses kabupatenId jika diperlukan
+                    } else {
+                        // Handle jika user memilih item dummy
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -193,10 +275,12 @@ class DetailAddressActivity : AppCompatActivity() {
         queue.add(request)
     }
 
-    // Fungsi reset spinner
+
     private fun resetSpinner(spinner: Spinner) {
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf("Pilih"))
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf("Pilih Kabupaten/Kota"))
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
     }
+
+
 }

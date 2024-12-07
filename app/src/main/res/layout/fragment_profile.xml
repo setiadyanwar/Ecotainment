@@ -140,326 +140,418 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="@dimen/_12sdp"
         android:background="@drawable/bg_rounded_top"
-        android:orientation="vertical">
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_12sdp"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_12sdp"
-                android:text="Order List"
-                android:textSize="@dimen/_16ssp"
-                android:textColor="@color/text_700"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/profilePicture"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <LinearLayout
-                android:id="@+id/mainNavbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_12sdp"
-                android:gravity="top"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/orderWaiting"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal">
-                    <ImageView
-                        android:layout_width="@dimen/_26sdp"
-                        android:layout_height="@dimen/_26sdp"
-                        android:src="@drawable/ic_order_waiting" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6sdp"
-                        android:text="Menunggu  "
-                        android:gravity="center"
-                        android:textSize="@dimen/_12ssp"
-                        android:textColor="@color/text_700" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/orderCurrent"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal">
-                    <ImageView
-                        android:layout_width="@dimen/_26sdp"
-                        android:layout_height="@dimen/_26sdp"
-                        android:src="@drawable/ic_order_current" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6sdp"
-                        android:text="Saat Ini"
-                        android:gravity="center"
-                        android:textSize="@dimen/_12ssp"
-                        android:textColor="@color/text_700" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/orderFinish"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal">
-                    <ImageView
-                        android:layout_width="@dimen/_26sdp"
-                        android:layout_height="@dimen/_26sdp"
-                        android:src="@drawable/ic_order_finish" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6sdp"
-                        android:text="Selesai"
-                        android:gravity="center"
-                        android:textSize="@dimen/_12ssp"
-                        android:textColor="@color/text_700" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/cancelOrder"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal">
-                    <ImageView
-                        android:layout_width="@dimen/_26sdp"
-                        android:layout_height="@dimen/_26sdp"
-                        android:src="@drawable/ic_order_cancelled" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6sdp"
-                        android:text="Dibatalkan"
-                        android:gravity="center"
-                        android:textSize="@dimen/_12ssp"
-                        android:textColor="@color/text_700" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_12sdp"
-                android:text="Informasi Saya"
-                android:textSize="@dimen/_16ssp"
-                android:textColor="@color/text_700"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/profilePicture"
-                app:layout_constraintTop_toTopOf="parent"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_12sdp"
+                    android:text="Order List"
+                    android:textSize="@dimen/_16ssp"
+                    android:textColor="@color/text_700"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/profilePicture"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
                 <LinearLayout
-                    android:id="@+id/myAddress"
+                    android:id="@+id/mainNavbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_12sdp"
-                    android:gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/_12sdp"
+                    android:gravity="top"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/orderWaiting"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Daftar Alamat"
-                        android:textSize="@dimen/_14ssp"
-                        android:textColor="@color/text_700"
-                        android:drawablePadding="@dimen/_6sdp"
-                        app:drawableStartCompat="@drawable/ic_maps_outline"
-                        app:layout_constraintStart_toEndOf="@id/profilePicture"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/_26sdp"
+                            android:layout_height="@dimen/_26sdp"
+                            android:src="@drawable/ic_order_waiting" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_6sdp"
+                            android:text="Menunggu  "
+                            android:gravity="center"
+                            android:textSize="@dimen/_12ssp"
+                            android:textColor="@color/text_700" />
+                    </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="@dimen/_12sdp"
-                        android:layout_height="@dimen/_12sdp"
-                        android:src="@drawable/ic_arrow_right"/>
+                    <LinearLayout
+                        android:id="@+id/orderCurrent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/_26sdp"
+                            android:layout_height="@dimen/_26sdp"
+                            android:src="@drawable/ic_order_current" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_6sdp"
+                            android:text="Saat Ini"
+                            android:gravity="center"
+                            android:textSize="@dimen/_12ssp"
+                            android:textColor="@color/text_700" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/orderFinish"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/_26sdp"
+                            android:layout_height="@dimen/_26sdp"
+                            android:src="@drawable/ic_order_finish" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_6sdp"
+                            android:text="Selesai"
+                            android:gravity="center"
+                            android:textSize="@dimen/_12ssp"
+                            android:textColor="@color/text_700" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/cancelOrder"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/_26sdp"
+                            android:layout_height="@dimen/_26sdp"
+                            android:src="@drawable/ic_order_cancelled" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_6sdp"
+                            android:text="Dibatalkan"
+                            android:gravity="center"
+                            android:textSize="@dimen/_12ssp"
+                            android:textColor="@color/text_700" />
+                    </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:visibility="gone"
-                    android:id="@+id/myPhoneNumber"
+                    android:id="@+id/layoutAdminTools"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_6sdp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="No. Telepon"
-                        android:textSize="@dimen/_14ssp"
+                        android:layout_marginVertical="@dimen/_12sdp"
+                        android:text="Admin"
+                        android:textSize="@dimen/_16ssp"
                         android:textColor="@color/text_700"
-                        android:drawablePadding="@dimen/_6sdp"
-                        app:drawableStartCompat="@drawable/ic_phone_outline"
+                        android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@id/profilePicture"
                         app:layout_constraintTop_toTopOf="parent"/>
 
-                    <ImageView
-                        android:layout_width="@dimen/_12sdp"
-                        android:layout_height="@dimen/_12sdp"
-                        android:src="@drawable/ic_arrow_right"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/manageProduct"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_12sdp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Kelola Produk"
+                                android:textSize="@dimen/_14ssp"
+                                android:textColor="@color/text_700"
+                                android:drawablePadding="@dimen/_6sdp"
+                                app:drawableStartCompat="@drawable/ic_manage_product"
+                                app:layout_constraintStart_toEndOf="@id/profilePicture"
+                                app:layout_constraintTop_toTopOf="parent"/>
+
+                            <ImageView
+                                android:layout_width="@dimen/_12sdp"
+                                android:layout_height="@dimen/_12sdp"
+                                android:src="@drawable/ic_arrow_right"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/manageTransaction"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_6sdp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Kelola Transaksi"
+                                android:textSize="@dimen/_14ssp"
+                                android:textColor="@color/text_700"
+                                android:drawablePadding="@dimen/_6sdp"
+                                app:drawableStartCompat="@drawable/ic_manage_transaction"
+                                app:layout_constraintStart_toEndOf="@id/profilePicture"
+                                app:layout_constraintTop_toTopOf="parent"/>
+
+                            <ImageView
+                                android:layout_width="@dimen/_12sdp"
+                                android:layout_height="@dimen/_12sdp"
+                                android:src="@drawable/ic_arrow_right"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_12sdp"
+                    android:text="Informasi Saya"
+                    android:textSize="@dimen/_16ssp"
+                    android:textColor="@color/text_700"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/profilePicture"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/myAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Daftar Alamat"
+                            android:textSize="@dimen/_14ssp"
+                            android:textColor="@color/text_700"
+                            android:drawablePadding="@dimen/_6sdp"
+                            app:drawableStartCompat="@drawable/ic_maps_outline"
+                            app:layout_constraintStart_toEndOf="@id/profilePicture"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <ImageView
+                            android:layout_width="@dimen/_12sdp"
+                            android:layout_height="@dimen/_12sdp"
+                            android:src="@drawable/ic_arrow_right"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/myPhoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_6sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="No. Telepon"
+                            android:textSize="@dimen/_14ssp"
+                            android:textColor="@color/text_700"
+                            android:drawablePadding="@dimen/_6sdp"
+                            app:drawableStartCompat="@drawable/ic_phone_outline"
+                            app:layout_constraintStart_toEndOf="@id/profilePicture"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <ImageView
+                            android:layout_width="@dimen/_12sdp"
+                            android:layout_height="@dimen/_12sdp"
+                            android:src="@drawable/ic_arrow_right"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_12sdp"
+                    android:text="Bantuan Ecotainment"
+                    android:textSize="@dimen/_16ssp"
+                    android:textColor="@color/text_700"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/profilePicture"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/helpCenter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_16sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Pusat Bantuan"
+                            android:textSize="@dimen/_14ssp"
+                            android:textColor="@color/text_700"
+                            android:drawablePadding="@dimen/_6sdp"
+                            app:drawableStartCompat="@drawable/ic_help"
+                            app:layout_constraintStart_toEndOf="@id/profilePicture"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <ImageView
+                            android:layout_width="@dimen/_12sdp"
+                            android:layout_height="@dimen/_12sdp"
+                            android:src="@drawable/ic_arrow_right"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/customerService"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Chat dengan Ecotainment"
+                            android:textSize="@dimen/_14ssp"
+                            android:textColor="@color/text_700"
+                            android:drawablePadding="@dimen/_6sdp"
+                            app:drawableStartCompat="@drawable/ic_customer_service"
+                            app:layout_constraintStart_toEndOf="@id/profilePicture"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <ImageView
+                            android:layout_width="@dimen/_12sdp"
+                            android:layout_height="@dimen/_12sdp"
+                            android:src="@drawable/ic_arrow_right"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/accountSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Pengaturan Akun"
+                            android:textSize="@dimen/_14ssp"
+                            android:textColor="@color/text_700"
+                            android:drawablePadding="@dimen/_6sdp"
+                            app:drawableStartCompat="@drawable/ic_settings_account"
+                            app:layout_constraintStart_toEndOf="@id/profilePicture"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <ImageView
+                            android:layout_width="@dimen/_12sdp"
+                            android:layout_height="@dimen/_12sdp"
+                            android:src="@drawable/ic_arrow_right"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/accountLogout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Keluar Akun"
+                            android:textSize="@dimen/_14ssp"
+                            android:textColor="@color/text_700"
+                            android:drawablePadding="@dimen/_6sdp"
+                            app:drawableStartCompat="@drawable/ic_logout"
+                            app:layout_constraintStart_toEndOf="@id/profilePicture"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_12sdp"
-                android:text="Bantuan Ecotainment"
-                android:textSize="@dimen/_16ssp"
-                android:textColor="@color/text_700"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/profilePicture"
-                app:layout_constraintTop_toTopOf="parent"/>
+            <ImageView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ecotainment_godongijo"/>
 
-            <LinearLayout
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/helpCenter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_16sdp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Pusat Bantuan"
-                        android:textSize="@dimen/_14ssp"
-                        android:textColor="@color/text_700"
-                        android:drawablePadding="@dimen/_6sdp"
-                        app:drawableStartCompat="@drawable/ic_help"
-                        app:layout_constraintStart_toEndOf="@id/profilePicture"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-                    <ImageView
-                        android:layout_width="@dimen/_12sdp"
-                        android:layout_height="@dimen/_12sdp"
-                        android:src="@drawable/ic_arrow_right"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/customerService"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_12sdp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Chat dengan Ecotainment"
-                        android:textSize="@dimen/_14ssp"
-                        android:textColor="@color/text_700"
-                        android:drawablePadding="@dimen/_6sdp"
-                        app:drawableStartCompat="@drawable/ic_customer_service"
-                        app:layout_constraintStart_toEndOf="@id/profilePicture"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-                    <ImageView
-                        android:layout_width="@dimen/_12sdp"
-                        android:layout_height="@dimen/_12sdp"
-                        android:src="@drawable/ic_arrow_right"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:visibility="gone"
-                    android:id="@+id/accountSettings"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_12sdp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Pengaturan Akun"
-                        android:textSize="@dimen/_14ssp"
-                        android:textColor="@color/text_700"
-                        android:drawablePadding="@dimen/_6sdp"
-                        app:drawableStartCompat="@drawable/ic_settings_account"
-                        app:layout_constraintStart_toEndOf="@id/profilePicture"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-                    <ImageView
-                        android:layout_width="@dimen/_12sdp"
-                        android:layout_height="@dimen/_12sdp"
-                        android:src="@drawable/ic_arrow_right"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/accountLogout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_12sdp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Keluar Akun"
-                        android:textSize="@dimen/_14ssp"
-                        android:textColor="@color/text_700"
-                        android:drawablePadding="@dimen/_6sdp"
-                        app:drawableStartCompat="@drawable/ic_logout"
-                        app:layout_constraintStart_toEndOf="@id/profilePicture"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
+                android:layout_height="100dp"/>
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/ecotainment_godongijo"/>
-
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

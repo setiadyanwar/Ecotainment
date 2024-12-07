@@ -112,7 +112,7 @@
                         android:background="@color/transparent"
                         android:hint="misal: 0829321342XXX"
                         android:textColorHint="@color/text_100"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:textSize="@dimen/_14ssp"
                         android:textColor="@color/text_700"/>
                 </LinearLayout>
@@ -189,10 +189,11 @@
                         android:layout_weight="1"
                         android:background="@color/transparent"
                         android:hint="Ketikkan alamat lengkapmu disini"
+                        android:inputType="textMultiLine|text"
                         android:minLines="5"
-                        android:maxLines="5"
+                        android:gravity="top|start"
+                        android:scrollbars="vertical"
                         android:textColorHint="@color/text_100"
-                        android:inputType="text"
                         android:textSize="@dimen/_14ssp"
                         android:textColor="@color/text_700"/>
                 </LinearLayout>

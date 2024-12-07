@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.godongijo.ecotainment.adapters.AddressAdapter
@@ -48,7 +47,7 @@ class AddressActivity : AppCompatActivity() {
         addressAdapter = AddressAdapter(
             context = this,
             addressList = emptyList(),
-            fromCheckout = fromCheckout
+            fromCheckout = fromCheckout,
         ) { selectedAddress ->
             if (fromCheckout) {
                 // Kirim hasil kembali ke CheckoutActivity

@@ -132,7 +132,7 @@
                 android:id="@+id/favorite_icon"
                 android:layout_width="@dimen/_26sdp"
                 android:layout_height="@dimen/_26sdp"
-                android:src="@drawable/ic_love"
+                android:src="@drawable/ic_wishlist_outline"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

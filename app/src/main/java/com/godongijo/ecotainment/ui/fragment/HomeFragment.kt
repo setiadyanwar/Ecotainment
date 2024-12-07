@@ -1,11 +1,9 @@
 package com.godongijo.ecotainment.ui.fragment
 
-import ProductAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.godongijo.ecotainment.R
+import com.godongijo.ecotainment.adapters.ProductAdapter
 import com.godongijo.ecotainment.adapters.SkeletonAdapter
 import com.godongijo.ecotainment.databinding.FragmentHomeBinding
 import com.godongijo.ecotainment.services.auth.AuthService
@@ -29,8 +28,6 @@ import com.godongijo.ecotainment.ui.activities.VirtualTripActivity
 import com.godongijo.ecotainment.utilities.Glide
 import com.godongijo.ecotainment.utilities.PreferenceManager
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -64,6 +61,7 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         initProfileInfo() // Panggil ulang setiap kali fragment aktif kembali
+        initProductList()
     }
 
 
@@ -115,25 +113,25 @@ class HomeFragment : Fragment() {
             binding.swipeRefreshLayout.isRefreshing = false
         }
 
-        binding.virtualFieldtrip.setOnClickListener { v ->
+        binding.virtualFieldtrip.setOnClickListener {
             val intent =
                 Intent(activity, VirtualTripActivity::class.java)
             startActivity(intent)
         }
 
-        binding.goesToSchool.setOnClickListener { v ->
+        binding.goesToSchool.setOnClickListener {
             val intent =
                 Intent(activity, GotoSchoolActivity::class.java)
             startActivity(intent)
         }
 
-        binding.offlieFieldtrip.setOnClickListener { v ->
+        binding.offlieFieldtrip.setOnClickListener {
             val intent =
                 Intent(activity, OfflineFieldTripActivity::class.java)
             startActivity(intent)
         }
 
-        binding.reservation.setOnClickListener { v ->
+        binding.reservation.setOnClickListener {
             val intent =
                 Intent(activity, ReservationActivity::class.java)
             startActivity(intent)

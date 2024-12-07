@@ -42,7 +42,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:layout_marginEnd="@dimen/_16sdp"
-                    android:layout_toStartOf="@+id/deleteProduct"
                     android:text="Hiasan Tanaman lidah mertua asal makasar"
                     android:textColor="@color/text_700"
                     android:textSize="@dimen/_12ssp"

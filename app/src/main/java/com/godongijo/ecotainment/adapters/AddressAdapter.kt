@@ -1,12 +1,15 @@
 package com.godongijo.ecotainment.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.godongijo.ecotainment.databinding.SingleViewAddressBinding
 import com.godongijo.ecotainment.databinding.SingleViewSelectAddressBinding
 import com.godongijo.ecotainment.models.Address
+import com.godongijo.ecotainment.services.auth.AuthService
+import com.godongijo.ecotainment.ui.activities.DetailAddressActivity
 
 class AddressAdapter(
     private var context: Context,
@@ -50,6 +53,24 @@ class AddressAdapter(
 
                     val textAddress = "${address.detailAddress}, ${address.cityOrDistrict}, ${address.province}"
                     detailAddress.text = textAddress
+
+                    changeDetailAddress.setOnClickListener {
+                        val intent = Intent(context, DetailAddressActivity::class.java).apply {
+                            putExtra("isEditing", true)
+                            putExtra("addressId", address.id)
+                        }
+                        context.startActivity(intent)
+                    }
+
+                    deleteAddress.setOnClickListener {
+                        val authService = AuthService()
+                        authService.deleteAddress(
+                            context,
+                            address.id,
+                            onSuccess = {},
+                            onError = {}
+                        )
+                    }
                 }
             }
             is SelectAddressViewHolder -> {

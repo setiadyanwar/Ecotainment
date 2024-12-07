@@ -1,23 +1,17 @@
 package com.godongijo.ecotainment.ui.activities
 
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.godongijo.ecotainment.R
 import com.godongijo.ecotainment.databinding.ActivityEditProfileBinding
 import com.godongijo.ecotainment.services.auth.AuthService
 import com.godongijo.ecotainment.utilities.Glide
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class EditProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditProfileBinding
@@ -108,19 +102,44 @@ class EditProfileActivity : AppCompatActivity() {
         val email = binding.inputEmail.text.toString().trim()
         val phoneNumber = binding.inputPhone.text.toString().trim()
 
-        authService.editUserProfile(
-            this,
-            username = username,
-            email = email,
-            phoneNumber = phoneNumber,
-            profilePictureUri = selectedUri,
-            onSuccess = {
-                Toast.makeText(this, "Berhasil update Profile", Toast.LENGTH_SHORT).show()
-                onBackPressedDispatcher.onBackPressed()
-            },
-            onError = { error ->
-                Log.d("ERROR LOAD ACCOUNT", error)
+        when {
+            username.isEmpty() -> {
+                binding.inputUsername.error = "Nama pengguna tidak boleh kosong"
+                binding.inputUsername.requestFocus()
+                return
             }
-        )
+
+            email.isEmpty() -> {
+                binding.inputEmail.error = "Email tidak boleh kosong"
+                binding.inputEmail.requestFocus()
+                return
+            }
+
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                binding.inputEmail.error = "Masukkan email valid"
+                binding.inputEmail.requestFocus()
+                return
+            }
+            else -> {
+
+                authService.editUserProfile(
+                    this,
+                    username = username,
+                    email = email,
+                    phoneNumber = phoneNumber,
+                    profilePictureUri = selectedUri,
+                    onSuccess = {
+                        Toast.makeText(this, "Berhasil update Profile", Toast.LENGTH_SHORT).show()
+                        onBackPressedDispatcher.onBackPressed()
+                    },
+                    onError = { error ->
+                        Toast.makeText(this, "Gagal edit Profile", Toast.LENGTH_SHORT).show()
+                        Log.d("ERROR Edit ACCOUNT", error)
+                    }
+                )
+
+            }
+        }
+
     }
 }

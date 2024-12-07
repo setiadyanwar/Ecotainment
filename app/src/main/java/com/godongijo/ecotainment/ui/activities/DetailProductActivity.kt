@@ -19,6 +19,7 @@ import com.godongijo.ecotainment.databinding.DialogAddCartBinding
 import com.godongijo.ecotainment.databinding.DialogSelectQuantityBinding
 import com.godongijo.ecotainment.services.cart.CartService
 import com.godongijo.ecotainment.services.product.ProductService
+import com.godongijo.ecotainment.services.product.WishlistService
 import com.godongijo.ecotainment.utilities.Glide
 import com.godongijo.ecotainment.utilities.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -33,6 +34,7 @@ class DetailProductActivity : AppCompatActivity() {
 
     private val productService = ProductService()
     private val cartService = CartService()
+    private val wishlistService = WishlistService()
 
     private lateinit var preferenceManager: PreferenceManager
     private lateinit var authToken: String
@@ -65,7 +67,11 @@ class DetailProductActivity : AppCompatActivity() {
         }
 
         binding.cartContainer.setOnClickListener {
-            startActivity(Intent(this, CartActivity::class.java))
+            if(authToken == "") {
+                startActivity(Intent(this, SignInActivity::class.java))
+            } else {
+                startActivity(Intent(this, CartActivity::class.java))
+            }
         }
 
         binding.notificationButton.setOnClickListener {
@@ -79,76 +85,78 @@ class DetailProductActivity : AppCompatActivity() {
                 // Ambil id produk dari intent
                 val productId = intent.getIntExtra("product_id", 0)
 
-                if (productId != null) {
-                    cartService.addNewCart(
-                        context = this,
-                        productId = productId,
-                        onSuccess = {  ->
-                            showSuccessDialog()
-                        },
-                        onError = {
-                        }
-                    )
-                }
+                cartService.addNewCart(
+                    context = this,
+                    productId = productId,
+                    onSuccess = {  ->
+                        showSuccessDialog()
+                    },
+                    onError = {
+                    }
+                )
             }
         }
 
         binding.buyButton.setOnClickListener {
-            // Inisialisasi Dialog
-            val dialogBinding = DialogSelectQuantityBinding.inflate(layoutInflater)
-            val dialog = BottomSheetDialog(this)
-            dialog.setContentView(dialogBinding.root)
+            if(authToken == "") {
+                startActivity(Intent(this, SignInActivity::class.java))
+            } else {
+                // Inisialisasi Dialog
+                val dialogBinding = DialogSelectQuantityBinding.inflate(layoutInflater)
+                val dialog = BottomSheetDialog(this)
+                dialog.setContentView(dialogBinding.root)
 
-            dialogBinding.productName.text = productName
-            Glide().loadImageFromUrl(dialogBinding.productImage, productImage)
-            dialogBinding.productPrice.text = "Rp${productPrice}"
+                dialogBinding.productName.text = productName
+                Glide().loadImageFromUrl(dialogBinding.productImage, productImage)
+                dialogBinding.productPrice.text = "Rp${productPrice}"
 
-            // Ambil data product_id dari intent
-            val productId = intent.getIntExtra("product_id", 0)
+                // Ambil data product_id dari intent
+                val productId = intent.getIntExtra("product_id", 0)
 
-            // Variabel untuk menyimpan quantity
-            var quantity = 1
-            dialogBinding.quantity.text = quantity.toString()
-
-            // Fungsi untuk memperbarui harga total
-            fun updateTotalPrice() {
-                val totalPrice = productPrice * quantity
-                dialogBinding.productPrice.text = "Rp$totalPrice"
-            }
-
-            // Tombol plus untuk menambah quantity
-            dialogBinding.plusQuantity.setOnClickListener {
-                quantity++
+                // Variabel untuk menyimpan quantity
+                var quantity = 1
                 dialogBinding.quantity.text = quantity.toString()
-                updateTotalPrice()
-            }
 
-            // Tombol minus untuk mengurangi quantity (min 1)
-            dialogBinding.minusQuantity.setOnClickListener {
-                if (quantity > 1) {
-                    quantity--
+                // Fungsi untuk memperbarui harga total
+                fun updateTotalPrice() {
+                    val totalPrice = productPrice * quantity
+                    dialogBinding.productPrice.text = "Rp$totalPrice"
+                }
+
+                // Tombol plus untuk menambah quantity
+                dialogBinding.plusQuantity.setOnClickListener {
+                    quantity++
                     dialogBinding.quantity.text = quantity.toString()
                     updateTotalPrice()
                 }
-            }
 
-            // Tombol checkout
-            dialogBinding.checkoutButton.setOnClickListener {
-                val intent = Intent(this, CheckoutActivity::class.java).apply {
-                    putExtra("sourceActivity", "DetailProductActivity")
-                    putExtra("selectedProductId", productId)
-                    putExtra("selectedQuantity", quantity)
+                // Tombol minus untuk mengurangi quantity (min 1)
+                dialogBinding.minusQuantity.setOnClickListener {
+                    if (quantity > 1) {
+                        quantity--
+                        dialogBinding.quantity.text = quantity.toString()
+                        updateTotalPrice()
+                    }
                 }
-                startActivity(intent)
-                dialog.dismiss() // Tutup dialog setelah checkout
-            }
 
-            dialogBinding.closeDialog.setOnClickListener {
-                dialog.dismiss()
-            }
+                // Tombol checkout
+                dialogBinding.checkoutButton.setOnClickListener {
+                    val intent = Intent(this, CheckoutActivity::class.java).apply {
+                        putExtra("sourceActivity", "DetailProductActivity")
+                        putExtra("selectedProductId", productId)
+                        putExtra("selectedQuantity", quantity)
+                    }
+                    startActivity(intent)
+                    dialog.dismiss() // Tutup dialog setelah checkout
+                }
 
-            // Tampilkan dialog
-            dialog.show()
+                dialogBinding.closeDialog.setOnClickListener {
+                    dialog.dismiss()
+                }
+
+                // Tampilkan dialog
+                dialog.show()
+            }
         }
 
     }
@@ -165,60 +173,61 @@ class DetailProductActivity : AppCompatActivity() {
         // Ambil id produk dari intent
         val productId = intent.getIntExtra("product_id", 0)
 
-        if (productId != null) {
-            productService.getSingleProduct(
-                context = this,
-                productId = productId,
-                onResult = { product ->
-                    // Memperbarui UI dengan data produk
-                    val imageProduct = applicationContext.getString(R.string.base_url) + product.imageUrl
-                    Glide().loadImageFromUrl(binding.productImage, imageProduct)
+        productService.getSingleProduct(
+            context = this,
+            productId = productId,
+            onResult = { product ->
+                // Memperbarui UI dengan data produk
+                val imageProduct = applicationContext.getString(R.string.base_url) + product.imageUrl
+                Glide().loadImageFromUrl(binding.productImage, imageProduct)
 
-                    // Format harga
-                    val price = product.price
-                    val formattedPrice = NumberFormat.getInstance(Locale("id", "ID")).format(price) // Format ke format ribuan
+                // Format harga
+                val price = product.price
+                val formattedPrice = NumberFormat.getInstance(Locale("id", "ID")).format(price) // Format ke format ribuan
 
-                    productName = product.name
-                    productImage = imageProduct
-                    productPrice = product.price
+                productName = product.name
+                productImage = imageProduct
+                productPrice = product.price
 
-                    binding.productTitle.text = product.name
-                    binding.productPrice.text = "Rp$formattedPrice"
-                    binding.productRating.text = product.rating.toString()
-                    binding.productTotalSales.text = "| ${product.totalSales} terjual"
-                    binding.reviewsCount.text = "(${product.reviews?.size.toString()}) Ulasan"
+                binding.productTitle.text = product.name
+                binding.productPrice.text = "Rp$formattedPrice"
+                binding.productRating.text = product.rating.toString()
+                binding.productTotalSales.text = "| ${product.totalSales} terjual"
+                binding.reviewsCount.text = "(${product.reviews?.size.toString()}) Ulasan"
 
 
-                    // Set deskripsi produk ke adapter
-                    adapter.setProductDescription(product.description)
+                // Set deskripsi produk ke adapter
+                adapter.setProductDescription(product.description)
 
-                    // Set ulasan produk ke adapter
-                    product.reviews?.let { adapter.setProductReviews(it, product.rating) }
+                // Set ulasan produk ke adapter
+                product.reviews?.let { adapter.setProductReviews(it, product.rating) }
 
-                    // Mengatur adapter ke ViewPager setelah set description
-                    binding.vP2.adapter = adapter
+                // Mengatur adapter ke ViewPager setelah set description
+                binding.vP2.adapter = adapter
 
-                    // Connect TabLayout with ViewPager2 using TabLayoutMediator
-                    TabLayoutMediator(binding.tabLayout, binding.vP2) { tab, position ->
-                        tab.customView = createCustomTabView(
-                            when (position) {
-                                0 -> "Deskripsi"
-                                1 -> "Ulasan Produk"
-                                else -> ""
-                            }
-                        )
-                    }.attach()
+                // Connect TabLayout with ViewPager2 using TabLayoutMediator
+                TabLayoutMediator(binding.tabLayout, binding.vP2) { tab, position ->
+                    tab.customView = createCustomTabView(
+                        when (position) {
+                            0 -> "Deskripsi"
+                            1 -> "Ulasan Produk"
+                            else -> ""
+                        }
+                    )
+                }.attach()
 
-                    binding.shimmerProductDetailLayout.visibility = View.GONE
-                    binding.shimmerRatingSalesLayout.visibility = View.GONE
-                    binding.productDetailLayout.visibility = View.VISIBLE
-                    binding.ratingSalesLayout.visibility = View.VISIBLE
-                },
-                onError = { errorMessage ->
-                    Log.d("ERROR SINGLE PRODUCT", errorMessage)
-                }
-            )
-        }
+                // Cek apakah produk ada di wishlist
+                checkIfProductInWishlist(productId)
+
+                binding.shimmerProductDetailLayout.visibility = View.GONE
+                binding.shimmerRatingSalesLayout.visibility = View.GONE
+                binding.productDetailLayout.visibility = View.VISIBLE
+                binding.ratingSalesLayout.visibility = View.VISIBLE
+            },
+            onError = { errorMessage ->
+                Log.d("ERROR SINGLE PRODUCT", errorMessage)
+            }
+        )
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -263,6 +272,72 @@ class DetailProductActivity : AppCompatActivity() {
 
         // Tampilkan dialog
         dialog.show()
+    }
+
+    private fun checkIfProductInWishlist(productId: Int) {
+        if (authToken == "") {
+            return
+        }
+
+        wishlistService.getAllWishlist(
+            context = this,
+            onResult = { wishlistList ->
+                val isInWishlist = wishlistList.any { it.productId == productId }
+                binding.favoriteIcon.setImageResource(
+                    if (isInWishlist) R.drawable.ic_wishlist_fill else R.drawable.ic_wishlist_outline
+                )
+
+                binding.favoriteIcon.setOnClickListener {
+                    if (isInWishlist) {
+                        removeProductFromWishlist(productId)
+                    } else {
+                        addProductToWishlist(productId)
+                    }
+                }
+            },
+            onError = { errorMessage ->
+                Log.e("WishlistError", errorMessage)
+            }
+        )
+    }
+
+
+    private fun addProductToWishlist(productId: Int) {
+        if (authToken == "") {
+            return
+        }
+
+        wishlistService.toggleWishlist(
+            context = this,
+            productId = productId,
+            onResult = {
+                binding.favoriteIcon.setImageResource(R.drawable.ic_wishlist_fill)
+                Log.d("Wishlist", "Product added to wishlist")
+                checkIfProductInWishlist(productId)
+            },
+            onError = { errorMessage ->
+                Log.e("WishlistError", errorMessage)
+            }
+        )
+    }
+
+    private fun removeProductFromWishlist(productId: Int) {
+        if (authToken == "") {
+            return
+        }
+
+        wishlistService.toggleWishlist(
+            context = this,
+            productId = productId,
+            onResult = {
+                binding.favoriteIcon.setImageResource(R.drawable.ic_wishlist_outline)
+                Log.d("Wishlist", "Product removed from wishlist")
+                checkIfProductInWishlist(productId)
+            },
+            onError = { errorMessage ->
+                Log.e("WishlistError", errorMessage)
+            }
+        )
     }
 
 }

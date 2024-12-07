@@ -1,6 +1,5 @@
 package com.godongijo.ecotainment.ui.activities
 
-import ProductAdapter
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.godongijo.ecotainment.adapters.ProductAdapter
 import com.godongijo.ecotainment.adapters.SearchHistoryAdapter
 import com.godongijo.ecotainment.adapters.SkeletonAdapter
 import com.godongijo.ecotainment.databinding.ActivitySearchBinding
@@ -71,7 +71,11 @@ class SearchActivity : AppCompatActivity() {
         }
 
         binding.buttonCart.setOnClickListener {
-            startActivity(Intent(this, CartActivity::class.java))
+            if(authToken == "") {
+                startActivity(Intent(this, SignInActivity::class.java))
+            } else {
+                startActivity(Intent(this, CartActivity::class.java))
+            }
         }
 
         // Listener untuk mendeteksi perubahan teks

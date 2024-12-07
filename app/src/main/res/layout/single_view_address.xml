@@ -45,19 +45,36 @@
             android:maxLines="3"
             android:ellipsize="end"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/changeDetailAddress"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/_12sdp"
-            android:text="Ubah Detail"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_11ssp"
-            android:fontFamily="@font/poppins_medium"
-            app:backgroundTint="@color/secondary_500"
-            app:cornerRadius="@dimen/_6sdp"
-            style="@style/Widget.MaterialComponents.Button"/>
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/changeDetailAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:text="Ubah Detail"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11ssp"
+                android:fontFamily="@font/poppins_medium"
+                app:backgroundTint="@color/secondary_500"
+                app:cornerRadius="@dimen/_6sdp"
+                style="@style/Widget.MaterialComponents.Button"/>
+
+            <ImageView
+                android:id="@+id/deleteAddress"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:src="@drawable/ic_trash_bg"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

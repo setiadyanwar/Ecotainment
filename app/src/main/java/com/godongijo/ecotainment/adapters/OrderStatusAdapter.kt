@@ -4,15 +4,21 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.godongijo.ecotainment.databinding.*
+import com.godongijo.ecotainment.R
+import com.godongijo.ecotainment.databinding.DialogFinishOrderBinding
+import com.godongijo.ecotainment.databinding.DialogReviewBinding
+import com.godongijo.ecotainment.databinding.SingleViewOrderCancelledBinding
+import com.godongijo.ecotainment.databinding.SingleViewOrderCurrentBinding
+import com.godongijo.ecotainment.databinding.SingleViewOrderFinishBinding
+import com.godongijo.ecotainment.databinding.SingleViewOrderWaitingBinding
 import com.godongijo.ecotainment.models.Transaction
 import com.godongijo.ecotainment.services.transaction.TransactionService
 import com.godongijo.ecotainment.ui.activities.PaymentActivity
@@ -46,7 +52,9 @@ class OrderStatusAdapter(
         val transaction = items[position]
         return when (transaction.status) {
             "pending" -> VIEW_TYPE_WAITING
+            "waiting_for_confirmation" -> VIEW_TYPE_WAITING
             "processed" -> VIEW_TYPE_CURRENT
+            "on_shipment" -> VIEW_TYPE_CURRENT
             "completed" -> VIEW_TYPE_FINISHED
             "canceled" -> VIEW_TYPE_CANCELLED
             else -> VIEW_TYPE_WAITING
@@ -70,55 +78,67 @@ class OrderStatusAdapter(
             is SingleViewOrderWaitingBinding -> {
                 holder.binding.apply {
                     totalAmount.text = "Rp${formatCurrency(transaction.totalAmount.toLong())}"
+                    totalProduct.text = "Total ${transaction.items.size} produk:"
 
-                    // Format waktu MySQL
-                    val createdAt = transaction.createdAt // Contoh: "2024-12-03T11:42:35.000000Z"
-                    val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault())
-                    sdf.timeZone = TimeZone.getTimeZone("UTC")
+                    if (transaction.status == "pending") {
+                        layoutTimer.visibility = View.VISIBLE
+                        orderStatus.visibility = View.GONE
 
-                    try {
-                        // Konversi createdAt ke timestamp dalam milidetik
-                        val createdAtTime = sdf.parse(createdAt)?.time ?: 0
-
-                        // Tambahkan 12 jam dalam milidetik
-                        val expirationTime = createdAtTime + 12 * 60 * 60 * 1000 // 12 jam
-
-                        // Hitung waktu tersisa
-                        val currentTime = System.currentTimeMillis()
-                        val timeLeftInMillis = expirationTime - currentTime
-
-                        if (timeLeftInMillis > 0) {
-                            // Timer untuk hitung mundur
-                            object : CountDownTimer(timeLeftInMillis, 1000) {
-                                override fun onTick(millisUntilFinished: Long) {
-                                    val hours = millisUntilFinished / (1000 * 60 * 60) % 24
-                                    val minutes = millisUntilFinished / (1000 * 60) % 60
-                                    val seconds = millisUntilFinished / 1000 % 60
-
-                                    // Update tampilan waktu tersisa
-                                    tvTimerHours.text = String.format("%02d", hours)
-                                    tvTimerMinutes.text = String.format("%02d", minutes)
-                                    tvTimerSeconds.text = String.format("%02d", seconds)
+                        // Timer logic for "pending" status
+                        val createdAt = transaction.createdAt
+                        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault())
+                        sdf.timeZone = TimeZone.getTimeZone("UTC")
+                        try {
+                            val createdAtTime = sdf.parse(createdAt)?.time ?: 0
+                            val expirationTime = createdAtTime + 12 * 60 * 60 * 1000
+                            val currentTime = System.currentTimeMillis()
+                            val timeLeftInMillis = expirationTime - currentTime
+                            if (timeLeftInMillis > 0) {
+                                object : CountDownTimer(timeLeftInMillis, 1000) {
+                                    override fun onTick(millisUntilFinished: Long) {
+                                        val hours = millisUntilFinished / (1000 * 60 * 60) % 24
+                                        val minutes = millisUntilFinished / (1000 * 60) % 60
+                                        val seconds = millisUntilFinished / 1000 % 60
+                                        tvTimerHours.text = String.format("%02d", hours)
+                                        tvTimerMinutes.text = String.format("%02d", minutes)
+                                        tvTimerSeconds.text = String.format("%02d", seconds)
+                                    }
+                                    override fun onFinish() {
+                                        tvTimerHours.text = "00"
+                                        tvTimerMinutes.text = "00"
+                                        tvTimerSeconds.text = "00"
+                                        payButton.apply {
+                                            isEnabled = false // Nonaktifkan tombol
+                                            backgroundTintList =
+                                                ContextCompat.getColorStateList(context, R.color.grey) // Ubah warna menjadi abu-abu
+                                        }
+                                        updateTransactionStatus("canceled", transaction.id)
+                                    }
+                                }.start()
+                            } else {
+                                layoutTimer.visibility = View.GONE
+                                payButton.apply {
+                                    isEnabled = false // Nonaktifkan tombol
+                                    backgroundTintList = ContextCompat.getColorStateList(context, R.color.grey) // Ubah warna menjadi abu-abu
                                 }
+                                orderStatus.text = "Waktu \nHabis"
+                                orderStatus.visibility = View.VISIBLE
+                                orderStatus.setTextColor(ContextCompat.getColor(context, R.color.warning_300))
+                                updateTransactionStatus("canceled", transaction.id)
 
-                                override fun onFinish() {
-                                    // Tindakan ketika timer selesai
-                                    tvTimerHours.text = "00"
-                                    tvTimerMinutes.text = "00"
-                                    tvTimerSeconds.text = "00"
-                                }
-                            }.start()
-                        } else {
+                            }
+                        } catch (e: Exception) {
                             tvTimerHours.text = "00"
                             tvTimerMinutes.text = "00"
                             tvTimerSeconds.text = "00"
-
-                            updateTransactionStatus("canceled", transaction.id)
                         }
-                    } catch (e: Exception) {
-                        tvTimerHours.text = "00"
-                        tvTimerMinutes.text = "00"
-                        tvTimerSeconds.text = "00"
+                    } else if (transaction.status == "waiting_for_confirmation") {
+                        layoutTimer.visibility = View.GONE
+                        payButton.apply {
+                            isEnabled = false // Nonaktifkan tombol
+                            backgroundTintList = ContextCompat.getColorStateList(context, R.color.grey) // Ubah warna menjadi abu-abu
+                        }
+                        orderStatus.visibility = View.VISIBLE
                     }
 
                     // Setup nested RecyclerView
@@ -141,6 +161,17 @@ class OrderStatusAdapter(
             is SingleViewOrderCurrentBinding -> {
                 holder.binding.apply {
                     totalAmount.text = "Rp${formatCurrency(transaction.totalAmount.toLong())}"
+                    totalProduct.text = "Total ${transaction.items.size} produk:"
+
+                    if (transaction.status == "processed") {
+                        orderStatus.text = "Sedang \nDiproses"
+                        finishOrder.isEnabled = false
+                        finishOrder.backgroundTintList = ContextCompat.getColorStateList(context, R.color.grey)
+                    } else if(transaction.status == "on_shipment") {
+                        orderStatus.text = "Dalam \nPengiriman"
+                        finishOrder.isEnabled = true
+                        finishOrder.backgroundTintList = ContextCompat.getColorStateList(context, R.color.secondary_500)
+                    }
 
                     // Setup nested RecyclerView
                     val productItemAdapter = ProductItemAdapter(context)
@@ -163,6 +194,7 @@ class OrderStatusAdapter(
             is SingleViewOrderFinishBinding -> {
                 holder.binding.apply {
                     totalAmount.text = "Rp${formatCurrency(transaction.totalAmount.toLong())}"
+                    totalProduct.text = "Total ${transaction.items.size} produk:"
 
                     // Setup nested RecyclerView
                     val productItemAdapter = ProductItemAdapter(context)
@@ -205,6 +237,8 @@ class OrderStatusAdapter(
             is SingleViewOrderCancelledBinding -> {
                 holder.binding.apply {
                     totalAmount.text = "Rp${formatCurrency(transaction.totalAmount.toLong())}"
+                    totalProduct.text = "Total ${transaction.items.size} produk:"
+
                     // Setup nested RecyclerView
                     val productItemAdapter = ProductItemAdapter(context)
                     productItemAdapter.updateData(transaction.items) // List produk dari transaksi
@@ -220,10 +254,10 @@ class OrderStatusAdapter(
     // ViewHolder class to bind the view
     class ViewHolder(val binding: androidx.viewbinding.ViewBinding) : RecyclerView.ViewHolder(binding.root)
 
-    private fun updateTransactionStatus(status: String, productId: Int) {
+    private fun updateTransactionStatus(status: String, transactionId: Int) {
         transactionService.updateTransactionStatus(
             context,
-            productId,
+            transactionId,
             status = status,
             onSuccess = {},
             onError = {}

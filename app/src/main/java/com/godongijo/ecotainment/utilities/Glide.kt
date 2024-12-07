@@ -1,7 +1,6 @@
 package com.godongijo.ecotainment.utilities
 
 import android.widget.ImageView
-import androidx.constraintlayout.widget.Placeholder
 import com.bumptech.glide.Glide
 import com.godongijo.ecotainment.R
 

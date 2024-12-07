@@ -1,22 +1,14 @@
 package com.godongijo.ecotainment.ui.activities
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.godongijo.ecotainment.R
 import com.godongijo.ecotainment.adapters.OrderStatusAdapter
 import com.godongijo.ecotainment.adapters.SkeletonAdapter
 import com.godongijo.ecotainment.databinding.ActivityOrderStatusBinding
-import com.godongijo.ecotainment.models.Transaction
-import com.godongijo.ecotainment.models.TransactionItem
 import com.godongijo.ecotainment.services.transaction.TransactionService
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 
 class OrderStatusActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOrderStatusBinding
@@ -72,8 +64,8 @@ class OrderStatusActivity : AppCompatActivity() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 // Get selected tab and load data accordingly
                 tab?.let {
-                    val tabTitle = it.text.toString()
-                    loadDataForTab(tabTitle)
+                    val selectedTabTitle = it.text.toString()
+                    loadDataForTab(selectedTabTitle)
                 }
             }
 
@@ -97,8 +89,8 @@ class OrderStatusActivity : AppCompatActivity() {
             onResult = { transactionList ->
                 // Fetch data based on selected tab
                 val filteredData = when (tabTitle) {
-                    "Menunggu" -> transactionList.filter { it.status == "pending" }
-                    "Saat Ini" -> transactionList.filter { it.status == "processed" }
+                    "Menunggu" -> transactionList.filter { it.status == "pending" || it.status == "waiting_for_confirmation" }
+                    "Saat Ini" -> transactionList.filter { it.status == "processed" || it.status == "on_shipment"}
                     "Selesai" -> transactionList.filter { it.status == "completed" }
                     "Dibatalkan" -> transactionList.filter { it.status == "canceled" }
                     else -> emptyList()

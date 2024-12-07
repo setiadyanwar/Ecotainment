@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ui.activities.FormProductActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="200dp"
+            android:orientation="vertical">
+
+            <!-- Header -->
+            <RelativeLayout
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:background="@color/white"
+                android:padding="@dimen/_12sdp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/backButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_back" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_toEndOf="@id/backButton"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Kelola Produk"
+                    android:textColor="@color/text_700"
+                    android:textSize="@dimen/_14ssp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_12sdp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp"
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    android:layout_gravity="center_horizontal"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    android:background="@drawable/bg_outline_grey"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:id="@+id/inputProductImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:src="@drawable/ic_placeholder_edit_image" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/backButton"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Nama Produk"
+                    android:textColor="@color/text_700"
+                    android:textSize="@dimen/_14ssp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    android:padding="@dimen/_12sdp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_outline_grey"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/inputProductName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
+                        android:hint="Ketik nama produk"
+                        android:textColorHint="@color/text_100"
+                        android:inputType="text"
+                        android:textSize="@dimen/_14ssp"
+                        android:textColor="@color/text_700"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/backButton"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Harga Produk"
+                    android:textColor="@color/text_700"
+                    android:textSize="@dimen/_14ssp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    android:padding="@dimen/_12sdp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_outline_grey"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/inputProductPrice"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
+                        android:hint="10000"
+                        android:textColorHint="@color/text_100"
+                        android:inputType="number"
+                        android:textSize="@dimen/_14ssp"
+                        android:textColor="@color/text_700"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/backButton"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Kategori Produk"
+                    android:textColor="@color/text_700"
+                    android:textSize="@dimen/_14ssp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    android:padding="@dimen/_12sdp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_outline_grey"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/inputProductCategory"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
+                        android:hint="Tanaman"
+                        android:textColorHint="@color/text_100"
+                        android:inputType="text"
+                        android:textSize="@dimen/_14ssp"
+                        android:textColor="@color/text_700"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/backButton"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Deskripsi Produk"
+                    android:textColor="@color/text_700"
+                    android:textSize="@dimen/_14ssp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    android:padding="@dimen/_12sdp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_outline_grey"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/inputProductDescription"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
+                        android:hint="Deskripsi..."
+                        android:textColorHint="@color/text_100"
+                        android:inputType="textMultiLine|text"
+                        android:minLines="5"
+                        android:gravity="top|start"
+                        android:scrollbars="vertical"
+                        android:textSize="@dimen/_14ssp"
+                        android:textColor="@color/text_700" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- Button Save -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_12sdp"
+        android:paddingVertical="@dimen/_8sdp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/buttonSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_12sdp"
+            android:gravity="center"
+            android:background="@drawable/bg_button_500"
+            android:backgroundTint="@color/secondary_500"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/textButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Simpan"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="@dimen/_14ssp"
+                android:layout_height="@dimen/_14ssp"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/white"
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
