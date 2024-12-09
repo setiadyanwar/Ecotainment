@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_8ssp"
             android:text="Deliver :"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_11ssp"
             android:layout_toEndOf="@id/ic_maps" />
 
         <TextView
@@ -139,7 +139,7 @@
             android:text="Tambahkan Alamatmu"
             android:maxLines="2"
             android:ellipsize="end"
-            android:textSize="@dimen/_12ssp"/>
+            android:textSize="@dimen/_11ssp"/>
 
     </RelativeLayout>
 
