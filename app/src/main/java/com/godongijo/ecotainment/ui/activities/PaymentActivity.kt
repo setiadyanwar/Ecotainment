@@ -401,6 +401,8 @@ class PaymentActivity : AppCompatActivity() {
                 binding.confirmMessage.visibility = View.VISIBLE
             },
             onError = { error ->
+                binding.confirmMessage.visibility = View.VISIBLE
+                binding.confirmMessage.text = error
                 Log.d("ERROR", error)
                 Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
             }
