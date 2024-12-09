@@ -109,7 +109,7 @@
                     android:id="@+id/ic_timer_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_12sdp"
+                    android:layout_marginBottom="@dimen/_45sdp"
                     android:src="@drawable/ic_timer"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -197,6 +197,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
+                android:background="@drawable/card_left_border"
+
                 >
 
                 <LinearLayout
