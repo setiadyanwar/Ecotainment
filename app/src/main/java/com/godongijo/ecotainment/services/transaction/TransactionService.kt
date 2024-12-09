@@ -504,12 +504,50 @@ class TransactionService {
 
     // Mendapatkan path file dari URI
     private fun getRealPathFromURI(context: Context, uri: Uri): String {
-        val cursor = context.contentResolver.query(uri, null, null, null, null)
-        cursor?.moveToFirst()
-        val columnIndex = cursor?.getColumnIndex(MediaStore.Images.Media.DATA)
-        val filePath = cursor?.getString(columnIndex ?: 0)
-        cursor?.close()
-        return filePath ?: ""
+        // Check different URI schemes and handle accordingly
+        return when {
+            // Content URI (most common for gallery and other content providers)
+            uri.scheme == "content" -> {
+                try {
+                    // Try to get the real path using content resolver
+                    val projection = arrayOf(MediaStore.Images.Media.DATA)
+                    val cursor = context.contentResolver.query(uri, projection, null, null, null)
+                    cursor?.use {
+                        val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                        it.moveToFirst()
+                        it.getString(columnIndex)
+                    } ?: copyFileToAppStorage(context, uri)
+                } catch (e: Exception) {
+                    // If query fails, copy the file to app's storage
+                    copyFileToAppStorage(context, uri)
+                }
+            }
+
+            // File URI
+            uri.scheme == "file" -> uri.path ?: ""
+
+            // Other schemes - try to copy to app storage
+            else -> copyFileToAppStorage(context, uri)
+        }
+    }
+
+    private fun copyFileToAppStorage(context: Context, uri: Uri): String {
+        return try {
+            // Create a temporary file in app's cache directory
+            val file = File(context.cacheDir, "temp_upload_${System.currentTimeMillis()}.jpg")
+
+            // Copy input stream to the new file
+            context.contentResolver.openInputStream(uri)?.use { input ->
+                file.outputStream().use { output ->
+                    input.copyTo(output)
+                }
+            }
+
+            file.absolutePath
+        } catch (e: Exception) {
+            Log.e("FileUpload", "Error copying file: ${e.message}")
+            ""
+        }
     }
 
 }
