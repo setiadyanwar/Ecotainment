@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.godongijo.ecotainment.adapters.OrderStatusAdapter
 import com.godongijo.ecotainment.adapters.SkeletonAdapter
 import com.godongijo.ecotainment.databinding.ActivityOrderStatusBinding
+import com.godongijo.ecotainment.models.SkeletonLayoutType
 import com.godongijo.ecotainment.services.transaction.TransactionService
 import com.google.android.material.tabs.TabLayout
 
@@ -94,7 +95,7 @@ class OrderStatusActivity : AppCompatActivity() {
     }
 
     private fun loadDataForTab(tabTitle: String) {
-        val skeletonAdapter = SkeletonAdapter(1, 3)
+        val skeletonAdapter = SkeletonAdapter(5, SkeletonLayoutType.ORDER_STATUS)
         binding.orderStatusRecyclerView.adapter = skeletonAdapter
 
         // Fetch all transactions (replace this with your service call)

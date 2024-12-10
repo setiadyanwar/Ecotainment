@@ -5,21 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.godongijo.ecotainment.R
+import com.godongijo.ecotainment.models.SkeletonLayoutType
 
 class SkeletonAdapter(
     private val itemCount: Int,
-    private val layoutType: Int
+    private val layoutType: SkeletonLayoutType
 ) : RecyclerView.Adapter<SkeletonAdapter.SkeletonViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SkeletonViewHolder {
-        val layoutRes = when (layoutType) {
-            1 -> R.layout.skeleton_view_product // Skeleton Product
-            2 -> R.layout.skeleton_view_cart
-            3 -> R.layout.skeleton_order_status
-            4 -> R.layout.skeleton_view_history
-            else -> R.layout.skeleton_view_product
-        }
-        val view = LayoutInflater.from(parent.context).inflate(layoutRes, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(layoutType.layoutResId, parent, false)
         return SkeletonViewHolder(view)
     }
 

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_1sdp"
+    android:paddingVertical="@dimen/_12sdp"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Product Image -->
+        <ImageView
+            android:id="@+id/bankLogo"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_gravity="center_vertical"
+            android:adjustViewBounds="true"
+            android:background="@drawable/bg_rounded_grey"
+            android:scaleType="fitCenter"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/accountNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_grey"
+                android:text="12345"
+                android:textColor="@color/grey"
+                android:fontFamily="@font/poppins_bold"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textSize="@dimen/_16ssp"/>
+
+            <TextView
+                android:id="@+id/accountHolder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:background="@drawable/bg_rounded_grey"
+                android:text="a.n Ecotainment"
+                android:textColor="@color/grey"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textSize="@dimen/_12ssp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.facebook.shimmer.ShimmerFrameLayout>

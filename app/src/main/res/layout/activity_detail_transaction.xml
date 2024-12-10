@@ -70,6 +70,7 @@
                     android:textColor="@color/text_700" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/transactionId"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -79,6 +80,24 @@
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/_12sdp"
                     android:textColor="@color/text_700" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerTransactionId"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:background="@drawable/bg_rounded_grey"
+                        android:text="123456789"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textSize="@dimen/_12sdp"
+                        android:textColor="@color/grey" />
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
             </LinearLayout>
 
@@ -99,6 +118,7 @@
                     android:textColor="@color/text_700" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/transactionDate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -108,6 +128,24 @@
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/text_700" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerTransactionDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:background="@drawable/bg_rounded_grey"
+                        android:text="123456789"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textSize="@dimen/_12sdp"
+                        android:textColor="@color/grey" />
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
             </LinearLayout>
 
@@ -130,10 +168,32 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
                     android:layout_weight="2"
                     android:orientation="vertical">
 
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shimmerBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="@dimen/_4sdp"
+                            android:paddingHorizontal="@dimen/_12sdp"
+                            android:layout_gravity="start"
+                            android:background="@drawable/bg_rounded_grey"
+                            android:backgroundTint="@color/grey"
+                            android:text="Menunggu Konfirmasi"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textSize="@dimen/_10sdp"
+                            android:textColor="@color/grey" />
+
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
                     <TextView
+                        android:visibility="gone"
                         android:id="@+id/badgeWaitingConfirmation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -238,6 +298,7 @@
                     android:textColor="@color/text_700" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/recipientName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -247,6 +308,24 @@
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/text_700" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerRecipientName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:background="@drawable/bg_rounded_grey"
+                        android:text="123456789"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textSize="@dimen/_12sdp"
+                        android:textColor="@color/grey" />
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
             </LinearLayout>
 
@@ -267,6 +346,7 @@
                     android:textColor="@color/text_700" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/phoneNumber"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -276,6 +356,24 @@
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/text_700" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerPhoneNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:background="@drawable/bg_rounded_grey"
+                        android:text="123456789"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textSize="@dimen/_12sdp"
+                        android:textColor="@color/grey" />
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
             </LinearLayout>
 
@@ -296,6 +394,7 @@
                     android:textColor="@color/text_700" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/address"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -305,6 +404,24 @@
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/text_700" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:background="@drawable/bg_rounded_grey"
+                        android:text="123456789"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textSize="@dimen/_12sdp"
+                        android:textColor="@color/grey" />
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
             </LinearLayout>
 
@@ -353,6 +470,7 @@
                     android:textColor="@color/text_700" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/totalAmount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -362,6 +480,24 @@
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/text_700" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerTotalAmount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:background="@drawable/bg_rounded_grey"
+                        android:text="123456789"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textSize="@dimen/_12sdp"
+                        android:textColor="@color/grey" />
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
             </LinearLayout>
 
@@ -382,6 +518,7 @@
                     android:textColor="@color/text_700" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/paymentProof"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -391,6 +528,24 @@
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/primary_500" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerPaymentProof"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:background="@drawable/bg_rounded_grey"
+                        android:text="123456789"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textSize="@dimen/_12sdp"
+                        android:textColor="@color/grey" />
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
             </LinearLayout>
             
@@ -424,7 +579,7 @@
             android:padding="@dimen/_12sdp"
             android:gravity="center"
             android:background="@drawable/bg_button_500"
-            android:backgroundTint="@color/primary_500"
+            android:backgroundTint="@color/grey"
             android:orientation="horizontal">
 
             <TextView

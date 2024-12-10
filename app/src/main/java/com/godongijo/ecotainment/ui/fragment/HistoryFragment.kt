@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.godongijo.ecotainment.adapters.HistoryAdapter
 import com.godongijo.ecotainment.adapters.SkeletonAdapter
 import com.godongijo.ecotainment.databinding.FragmentHistoryBinding
+import com.godongijo.ecotainment.models.SkeletonLayoutType
 import com.godongijo.ecotainment.services.transaction.TransactionService
 import com.godongijo.ecotainment.ui.activities.NotificationActivity
 
@@ -50,7 +51,7 @@ class HistoryFragment : Fragment() {
         historyAdapter = HistoryAdapter(requireContext())
         binding.historyRecycler.layoutManager = LinearLayoutManager(requireContext())
 
-        val skeletonAdapter = SkeletonAdapter(2, 4)
+        val skeletonAdapter = SkeletonAdapter(5, SkeletonLayoutType.HISTORY)
         binding.historyRecycler.adapter = skeletonAdapter
 
 

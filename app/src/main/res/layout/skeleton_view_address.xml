@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutSingleAddress"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/_12sdp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_12sdp"
+        android:background="@drawable/bg_outline_grey"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/recipientName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:background="@drawable/bg_rounded_grey"
+            android:text="Nama"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/_14ssp" />
+
+        <TextView
+            android:id="@+id/phoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:background="@drawable/bg_rounded_grey"
+            android:text="No. Telepon"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/detailAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_12sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:background="@drawable/bg_rounded_grey"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            android:textColor="@color/grey"
+            android:textSize="@dimen/_12ssp"
+            android:minLines="1"
+            android:maxLines="3"
+            android:ellipsize="end"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/changeDetailAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:text="Ubah Detail"
+                android:textAllCaps="false"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/_11ssp"
+                android:fontFamily="@font/poppins_medium"
+                app:backgroundTint="@color/grey"
+                app:cornerRadius="@dimen/_6sdp"
+                style="@style/Widget.MaterialComponents.Button"/>
+
+            <ImageView
+                android:id="@+id/deleteAddress"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:src="@drawable/ic_trash_bg"
+                app:tint="@color/grey" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.facebook.shimmer.ShimmerFrameLayout>

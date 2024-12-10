@@ -16,6 +16,7 @@ import com.godongijo.ecotainment.adapters.ProductAdapter
 import com.godongijo.ecotainment.adapters.SearchHistoryAdapter
 import com.godongijo.ecotainment.adapters.SkeletonAdapter
 import com.godongijo.ecotainment.databinding.ActivitySearchBinding
+import com.godongijo.ecotainment.models.SkeletonLayoutType
 import com.godongijo.ecotainment.services.product.ProductService
 import com.godongijo.ecotainment.services.product.SearchService
 import com.godongijo.ecotainment.utilities.PreferenceManager
@@ -151,7 +152,7 @@ class SearchActivity : AppCompatActivity() {
         binding.searchResultRecycler.layoutManager = GridLayoutManager(this, 2) // Menampilkan 2 kolom per baris
         productAdapter = ProductAdapter(this, emptyList(), productService)
 
-        val skeletonAdapter = SkeletonAdapter(10, 1)
+        val skeletonAdapter = SkeletonAdapter(10, SkeletonLayoutType.PRODUCT)
         binding.searchResultRecycler.adapter = skeletonAdapter
 
         productService.getProductList(

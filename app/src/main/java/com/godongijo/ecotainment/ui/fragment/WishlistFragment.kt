@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.godongijo.ecotainment.adapters.SkeletonAdapter
 import com.godongijo.ecotainment.adapters.WishlistAdapter
 import com.godongijo.ecotainment.databinding.FragmentWishlistBinding
+import com.godongijo.ecotainment.models.SkeletonLayoutType
 import com.godongijo.ecotainment.services.product.WishlistService
 import com.godongijo.ecotainment.ui.activities.NotificationActivity
 
@@ -50,6 +52,9 @@ class WishlistFragment : Fragment() {
 
         wishlistAdapter = WishlistAdapter(requireContext(), wishlistService)
         binding.wishlistRecycler.layoutManager = LinearLayoutManager(requireContext())
+
+        val skeletonAdapter = SkeletonAdapter(10, SkeletonLayoutType.WISHLIST)
+        binding.wishlistRecycler.adapter = skeletonAdapter
 
         wishlistService.getAllWishlist(
             context = requireContext(),

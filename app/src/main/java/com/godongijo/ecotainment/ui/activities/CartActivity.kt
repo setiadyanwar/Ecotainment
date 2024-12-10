@@ -9,6 +9,7 @@ import com.godongijo.ecotainment.adapters.CartAdapter
 import com.godongijo.ecotainment.adapters.SkeletonAdapter
 import com.godongijo.ecotainment.databinding.ActivityCartBinding
 import com.godongijo.ecotainment.models.CartItem
+import com.godongijo.ecotainment.models.SkeletonLayoutType
 import com.godongijo.ecotainment.services.cart.CartService
 import java.text.NumberFormat
 import java.util.Locale
@@ -89,7 +90,7 @@ class CartActivity : AppCompatActivity(), CartAdapter.OnCartInteractionListener 
             }
         )
 
-        val skeletonAdapter = SkeletonAdapter(5, 2)
+        val skeletonAdapter = SkeletonAdapter(5, SkeletonLayoutType.CART)
         binding.cartItemRecycler.adapter = skeletonAdapter
 
         cartService.getCartList(

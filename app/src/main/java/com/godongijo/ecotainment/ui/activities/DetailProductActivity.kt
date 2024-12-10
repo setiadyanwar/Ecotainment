@@ -165,8 +165,11 @@ class DetailProductActivity : AppCompatActivity() {
     private fun initDetailProduct() {
         binding.shimmerProductDetailLayout.visibility = View.VISIBLE
         binding.shimmerRatingSalesLayout.visibility = View.VISIBLE
+        binding.shimmerImage.visibility = View.VISIBLE
+
         binding.productDetailLayout.visibility = View.GONE
         binding.ratingSalesLayout.visibility = View.GONE
+        binding.productImage.visibility = View.GONE
 
         productDetailAdapter = ProductDetailAdapter(this)
 
@@ -221,8 +224,11 @@ class DetailProductActivity : AppCompatActivity() {
 
                 binding.shimmerProductDetailLayout.visibility = View.GONE
                 binding.shimmerRatingSalesLayout.visibility = View.GONE
+                binding.shimmerImage.visibility = View.GONE
+
                 binding.productDetailLayout.visibility = View.VISIBLE
                 binding.ratingSalesLayout.visibility = View.VISIBLE
+                binding.productImage.visibility = View.VISIBLE
             },
             onError = { errorMessage ->
                 Log.d("ERROR SINGLE PRODUCT", errorMessage)

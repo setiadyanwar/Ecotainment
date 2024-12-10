@@ -10,8 +10,10 @@ import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.godongijo.ecotainment.adapters.ManageBankAdapter
+import com.godongijo.ecotainment.adapters.SkeletonAdapter
 import com.godongijo.ecotainment.databinding.ActivityManageBankBinding
 import com.godongijo.ecotainment.databinding.DialogConfirmDeleteBinding
+import com.godongijo.ecotainment.models.SkeletonLayoutType
 import com.godongijo.ecotainment.services.bank.BankService
 
 class ManageBankActivity : AppCompatActivity() {
@@ -67,7 +69,8 @@ class ManageBankActivity : AppCompatActivity() {
             }
         )
 
-
+        val skeletonAdapter = SkeletonAdapter(10, SkeletonLayoutType.MANAGE_BANK)
+        binding.manageBankRecycler.adapter = skeletonAdapter
 
         bankService.getBankList(
             context = this,

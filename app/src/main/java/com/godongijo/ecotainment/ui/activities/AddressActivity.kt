@@ -7,7 +7,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.godongijo.ecotainment.adapters.AddressAdapter
+import com.godongijo.ecotainment.adapters.SkeletonAdapter
 import com.godongijo.ecotainment.databinding.ActivityAddressBinding
+import com.godongijo.ecotainment.models.SkeletonLayoutType
 import com.godongijo.ecotainment.services.auth.AuthService
 
 class AddressActivity : AppCompatActivity() {
@@ -58,6 +60,9 @@ class AddressActivity : AppCompatActivity() {
                 finish() // Tutup AddressActivity
             }
         }
+
+        val skeletonAdapter = SkeletonAdapter(4, SkeletonLayoutType.ADDRESS)
+        binding.addressRecycler.adapter = skeletonAdapter
 
         authService.getUserAddress(
             this,

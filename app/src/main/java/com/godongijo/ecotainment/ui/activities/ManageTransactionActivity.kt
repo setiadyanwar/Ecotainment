@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.godongijo.ecotainment.adapters.SkeletonAdapter
 import com.godongijo.ecotainment.databinding.ActivityManageTransactionBinding
+import com.godongijo.ecotainment.models.SkeletonLayoutType
 import com.godongijo.ecotainment.services.transaction.TransactionService
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class ManageTransactionActivity : AppCompatActivity() {
@@ -52,6 +52,9 @@ class ManageTransactionActivity : AppCompatActivity() {
                 checkTransaction(transaction.id)
             },
         )
+
+        val skeletonAdapter = SkeletonAdapter(5, SkeletonLayoutType.MANAGE_TRANSACTION)
+        binding.manageTransactionRecyclerView.adapter = skeletonAdapter
 
         transactionService.getAllTransactionList(
             context = this,

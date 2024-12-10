@@ -16,6 +16,7 @@ import com.godongijo.ecotainment.R
 import com.godongijo.ecotainment.adapters.ProductAdapter
 import com.godongijo.ecotainment.adapters.SkeletonAdapter
 import com.godongijo.ecotainment.databinding.FragmentHomeBinding
+import com.godongijo.ecotainment.models.SkeletonLayoutType
 import com.godongijo.ecotainment.services.auth.AuthService
 import com.godongijo.ecotainment.services.product.ProductService
 import com.godongijo.ecotainment.ui.activities.GotoSchoolActivity
@@ -175,7 +176,7 @@ class HomeFragment : Fragment() {
         binding.recyclerViewProduct.isNestedScrollingEnabled = false
         productAdapter = ProductAdapter(requireContext(), emptyList(), productService)
 
-        val skeletonAdapter = SkeletonAdapter(10, 1)
+        val skeletonAdapter = SkeletonAdapter(10, SkeletonLayoutType.PRODUCT)
         binding.recyclerViewProduct.adapter = skeletonAdapter
 
         lifecycleScope.launch {

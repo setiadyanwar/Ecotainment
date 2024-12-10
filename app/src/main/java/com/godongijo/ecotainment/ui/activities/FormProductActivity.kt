@@ -78,6 +78,9 @@ class FormProductActivity : AppCompatActivity() {
     private fun initProductInfo() {
         val productId = intent.getIntExtra("productId", 0)
 
+        binding.shimmerLayout.visibility = View.VISIBLE
+        binding.mainLayout.visibility = View.GONE
+
         if (productId != 0) {
             productService.getSingleProduct(
                 context = this,
@@ -90,6 +93,9 @@ class FormProductActivity : AppCompatActivity() {
                     binding.inputProductPrice.setText(product.price.toString())
                     binding.inputProductCategory.setText(product.category)
                     binding.inputProductDescription.setText(product.description)
+
+                    binding.shimmerLayout.visibility = View.GONE
+                    binding.mainLayout.visibility = View.VISIBLE
                 },
                 onError = { errorMessage ->
                     Toast.makeText(this, "Error memuat data produk", Toast.LENGTH_SHORT).show()

@@ -92,11 +92,25 @@
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardElevation="@dimen/_1sdp">
 
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_rounded_grey"
+                        android:clipToPadding="false" />
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
                 <ImageView
                     android:id="@+id/productImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="false" />
+
             </androidx.cardview.widget.CardView>
 
             <!-- Shimmer Product Details Layout -->

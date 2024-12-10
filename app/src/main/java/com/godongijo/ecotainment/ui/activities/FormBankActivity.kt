@@ -68,12 +68,13 @@ class FormBankActivity : AppCompatActivity() {
 
         isEditing = intent.getBooleanExtra("isEditing", false)
 
-        if (isEditing) {
-            initBankInfo()
-        }
+        initBankSpinner{
+            initDefaultInstructions()
 
-        initBankSpinner()
-        initDefaultInstructions()
+            if (isEditing) {
+                initBankInfo()
+            }
+        }
     }
 
     private fun setListeners() {
@@ -122,7 +123,10 @@ class FormBankActivity : AppCompatActivity() {
         }
     }
 
-    private fun initBankSpinner() {
+    private fun initBankSpinner(onBankLoaded: () -> Unit) {
+        binding.shimmerLayout.visibility = View.VISIBLE
+        binding.mainLayout.visibility = View.GONE
+
         val spinnerBankAdapter = SpinnerBankAdapter(this, banks)
         binding.spinnerBank.adapter = spinnerBankAdapter
 
@@ -154,6 +158,10 @@ class FormBankActivity : AppCompatActivity() {
             }
         }
 
+        binding.shimmerLayout.visibility = View.GONE
+        binding.mainLayout.visibility = View.VISIBLE
+
+        onBankLoaded()
     }
 
     private fun initDefaultInstructions() {

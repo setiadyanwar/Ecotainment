@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.godongijo.ecotainment.adapters.SkeletonAdapter
 import com.godongijo.ecotainment.databinding.ActivityManageProductBinding
 import com.godongijo.ecotainment.databinding.DialogConfirmDeleteBinding
+import com.godongijo.ecotainment.models.SkeletonLayoutType
 import com.godongijo.ecotainment.services.product.ProductService
 
 class ManageProductActivity : AppCompatActivity() {
@@ -68,7 +69,7 @@ class ManageProductActivity : AppCompatActivity() {
             }
         )
 
-        val skeletonAdapter = SkeletonAdapter(1, 1)
+        val skeletonAdapter = SkeletonAdapter(10, SkeletonLayoutType.MANAGE_PRODUCT)
         binding.manageProductRecyclerView.adapter = skeletonAdapter
 
         productService.getProductList(

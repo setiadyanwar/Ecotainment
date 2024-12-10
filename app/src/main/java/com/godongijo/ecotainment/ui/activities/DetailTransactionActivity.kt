@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.godongijo.ecotainment.R
 import com.godongijo.ecotainment.adapters.ProductItemAdapter
+import com.godongijo.ecotainment.adapters.SkeletonAdapter
 import com.godongijo.ecotainment.databinding.ActivityDetailTransactionBinding
 import com.godongijo.ecotainment.databinding.DialogConfirmTransactionStatusBinding
 import com.godongijo.ecotainment.databinding.PopupPaymentProofBinding
+import com.godongijo.ecotainment.models.SkeletonLayoutType
 import com.godongijo.ecotainment.services.transaction.TransactionService
 import com.godongijo.ecotainment.utilities.DialogLoader
 import com.godongijo.ecotainment.utilities.Glide
@@ -87,6 +89,33 @@ class DetailTransactionActivity : AppCompatActivity() {
     private fun initTransactionInfo() {
         val transactionId = intent.getIntExtra("transactionId", 0)
 
+        // Referensi ke Views
+        val actualViews = listOf(
+            binding.transactionId,
+            binding.transactionDate,
+            binding.recipientName,
+            binding.phoneNumber,
+            binding.address,
+            binding.totalAmount,
+            binding.paymentProof
+        )
+
+        val shimmerViews = listOf(
+            binding.shimmerTransactionId,
+            binding.shimmerTransactionDate,
+            binding.shimmerBadge,
+            binding.shimmerRecipientName,
+            binding.shimmerPhoneNumber,
+            binding.shimmerAddress,
+            binding.shimmerTotalAmount,
+            binding.shimmerPaymentProof
+        )
+
+        // Hide Actual Layout & Show Shimmer Layout
+        setViewsVisibility(actualViews, View.GONE)
+        setViewsVisibility(shimmerViews, View.VISIBLE)
+
+
         if(transactionId > 0) {
             transactionService.getAllTransactionList(
                 context = this,
@@ -116,6 +145,7 @@ class DetailTransactionActivity : AppCompatActivity() {
                             "processed" -> binding.badgeOnProcessed.visibility = View.VISIBLE
                             "on_shipment" -> binding.badgeOnShipment.visibility = View.VISIBLE
                             "completed" -> binding.badgeCompleted.visibility = View.VISIBLE
+                            "reviewed" -> binding.badgeCompleted.visibility = View.VISIBLE
                             "canceled" -> binding.badgeCanceled.visibility = View.VISIBLE
                         }
 
@@ -123,11 +153,16 @@ class DetailTransactionActivity : AppCompatActivity() {
                         binding.phoneNumber.text = selectedTransaction.phoneNumber
                         binding.address.text = selectedTransaction.address
 
+                        binding.transactionitemRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+
+                        val skeletonAdapter = SkeletonAdapter(1, SkeletonLayoutType.PRODUCT)
+                        binding.transactionitemRecycler.adapter = skeletonAdapter
+
                         // Setup Transaction Item
                         val productItemAdapter = ProductItemAdapter(this)
                         productItemAdapter.updateData(selectedTransaction.items) // List produk dari transaksi
+
                         binding.transactionitemRecycler.adapter = productItemAdapter
-                        binding.transactionitemRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
                         val formattedPrice = NumberFormat.getInstance(Locale("id", "ID")).format(selectedTransaction.totalAmount) // Format ke format ribuan
                         binding.totalAmount.text = "Rp${formattedPrice}"
@@ -153,6 +188,9 @@ class DetailTransactionActivity : AppCompatActivity() {
                         binding.textButtonConfirmShipping.isEnabled = isShippingEnabled
                         binding.progressBarConfirmShipping.isEnabled = isShippingEnabled
 
+                        // Hide Shimmer Layout & Show Actual Layout
+                        setViewsVisibility(actualViews, View.VISIBLE)
+                        setViewsVisibility(shimmerViews, View.GONE)
                     } else {
                         // Tampilkan pesan jika transaksi tidak ditemukan
                         Toast.makeText(this, "Transaksi tidak ditemukan", Toast.LENGTH_SHORT).show()
@@ -165,6 +203,9 @@ class DetailTransactionActivity : AppCompatActivity() {
         }
     }
 
+    private fun setViewsVisibility(views: List<View>, visibility: Int) {
+        views.forEach { it.visibility = visibility }
+    }
 
     private fun formatDateTime(isoDate: String): String {
         return try {
