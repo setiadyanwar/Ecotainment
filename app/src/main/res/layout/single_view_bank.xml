@@ -25,8 +25,9 @@
             <!-- Bank Logo and Name -->
             <ImageView
                 android:id="@+id/ivBankLogo"
-                android:layout_width="60dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:adjustViewBounds="true"
                 android:src="@drawable/ic_bank_bri" />
 
             <TextView
@@ -71,16 +72,16 @@
                     android:layout_height="wrap_content"
                     android:text="14245664853342"
                     android:gravity="center"
-                    android:textSize="24sp"
+                    android:textSize="@dimen/_16ssp"
                     android:textStyle="bold"
                     android:textColor="@android:color/black" />
 
                 <!-- Copy Button -->
                 <ImageButton
                     android:id="@+id/btnCopy"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_copy"
                     />
@@ -91,11 +92,11 @@
                 android:id="@+id/tvAccountHolder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/_4sdp"
                 android:layout_gravity="center"
                 android:text="a.n Ecotainment"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="14sp" />
+                android:textSize="@dimen/_12ssp" />
 
             <!-- Instructions Title -->
             <TextView
@@ -103,17 +104,18 @@
                 android:layout_height="wrap_content"
                 android:text="Tata Cara Pembayaran"
                 android:textStyle="bold"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/_12sdp"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/_14ssp" />
 
             <!-- Instructions List Container -->
-            <LinearLayout
+            <TextView
                 android:id="@+id/layoutInstructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="@dimen/_6sdp"
+                android:singleLine="false"
+                android:ellipsize="none"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

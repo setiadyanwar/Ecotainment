@@ -1,10 +1,11 @@
+package com.godongijo.ecotainment.adapters
+
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.godongijo.ecotainment.adapters.ProductItemAdapter
 import com.godongijo.ecotainment.databinding.SingleViewManageTransactionBinding
 import com.godongijo.ecotainment.models.Transaction
 import java.text.NumberFormat
@@ -54,6 +55,7 @@ class ManageTransactionAdapter(
                 "processed" -> badgeOnProcessed.visibility = View.VISIBLE
                 "on_shipment" -> badgeOnShipment.visibility = View.VISIBLE
                 "completed" -> badgeCompleted.visibility = View.VISIBLE
+                "reviewed" -> badgeCompleted.visibility = View.VISIBLE
                 "canceled" -> badgeCanceled.visibility = View.VISIBLE
             }
 

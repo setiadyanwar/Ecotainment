@@ -85,5 +85,10 @@ class AddressActivity : AppCompatActivity() {
         binding.addAddress.setOnClickListener {
             startActivity(Intent(this, DetailAddressActivity::class.java))
         }
+
+        binding.backButton.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
     }
+
 }

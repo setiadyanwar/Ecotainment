@@ -1,6 +1,8 @@
-package com.godongijo.ecotainment.services.product
+package com.godongijo.ecotainment.services.bank
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
@@ -8,11 +10,11 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.godongijo.ecotainment.R
+import com.godongijo.ecotainment.models.Bank
 import com.godongijo.ecotainment.models.Product
 import com.godongijo.ecotainment.models.Review
 import com.godongijo.ecotainment.models.User
-import com.godongijo.ecotainment.services.AddProductResponse
-import com.godongijo.ecotainment.services.UpdateProductResponse
+import com.godongijo.ecotainment.services.ApiResponse
 import com.godongijo.ecotainment.utilities.PreferenceManager
 import com.godongijo.ecotainment.utilities.RetrofitInstance
 import okhttp3.MediaType.Companion.toMediaType
@@ -25,21 +27,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.io.FileOutputStream
 
-class ProductService {
-
-    fun getProductList(
+class BankService {
+    fun getBankList(
         context: Context,
-        searchQuery: String? = null, // Parameter opsional
-        onResult: (List<Product>) -> Unit,
+        onResult: (List<Bank>) -> Unit,
         onError: (String) -> Unit
     ) {
-        var url = context.getString(R.string.api_products)
-
-        // Tambahkan query parameter jika searchQuery diberikan
-        if (!searchQuery.isNullOrEmpty()) {
-            url += "?search=${searchQuery}"
-        }
+        val url = context.getString(R.string.base_url) + "/api/bank"
 
         val request = object : JsonObjectRequest(
             Request.Method.GET, url, null,
@@ -50,10 +46,10 @@ class ProductService {
                     val message = response.getString("message")
 
                     if (success) {
-                        // Ambil data produk jika success
+                        // Ambil data bank jika success
                         val dataArray = response.getJSONArray("data")
-                        val productList = parseProductList(dataArray)
-                        onResult(productList)
+                        val bankList = parseBankList(dataArray)
+                        onResult(bankList)
                     } else {
                         // Kirim pesan error jika status success = false
                         onError(message)
@@ -73,7 +69,7 @@ class ProductService {
                     // Default pesan jika tidak ada respons dari server
                     "Koneksi gagal. Periksa koneksi internet Anda."
                 }
-                Log.e("ProductService", "Error fetching products: $errorMessage")
+                Log.e("BankService", "Error fetching banks: $errorMessage")
                 onError(errorMessage)
             }
         ) {}
@@ -83,43 +79,14 @@ class ProductService {
         requestQueue.add(request)
     }
 
-    // Helper function to parse JSONArray to List<Product>
-    private fun parseProductList(dataArray: JSONArray): List<Product> {
-        val productList = mutableListOf<Product>()
 
-        for (i in 0 until dataArray.length()) {
-            val productJson = dataArray.getJSONObject(i)
-
-            val product = Product(
-                id = productJson.optInt("id", 0),
-                name = productJson.optString("name", ""),
-                category = productJson.optString("category", ""),
-                price = productJson.optInt("price", 0),
-                description = productJson.optString("description", ""),
-                imageUrl = productJson.optString("image", ""),
-                rating = productJson.optString("average_rating", "0.0").toDoubleOrNull() ?: 0.0, // Default rating
-                totalSales = productJson.optInt("total_sales", 0),
-                createdAt = productJson.optString("created_at", ""),
-                updatedAt = productJson.optString("updated_at", ""),
-                reviews = emptyList()
-            )
-
-            productList.add(product)
-        }
-
-        return productList
-    }
-
-
-
-
-    fun getSingleProduct(
+    fun getSingleBank(
         context: Context,
-        productId: Int,
-        onResult: (Product) -> Unit,
+        bankId: Int,
+        onResult: (Bank) -> Unit,
         onError: (String) -> Unit
     ) {
-        val url = context.getString(R.string.api_products) + "/$productId"
+        val url = context.getString(R.string.base_url) + "/api/bank/$bankId"
 
         val request = object : JsonObjectRequest(
             Request.Method.GET, url, null,
@@ -131,9 +98,9 @@ class ProductService {
 
                     if (success) {
                         // Ambil data produk jika success
-                        val productData = response.getJSONObject("data")
-                        val product = parseSingleProduct(productData)
-                        onResult(product)
+                        val bankData = response.getJSONObject("data")
+                        val bank = parseSingleBank(bankData)
+                        onResult(bank)
                     } else {
                         // Kirim pesan error jika status success = false
                         onError(message)
@@ -163,65 +130,52 @@ class ProductService {
         requestQueue.add(request)
     }
 
-    private fun parseSingleProduct(productJson: JSONObject): Product {
-        val reviewsArray = productJson.optJSONArray("reviews") ?: JSONArray()
-        val reviews = mutableListOf<Review>()
 
-        for (i in 0 until reviewsArray.length()) {
-            val reviewJson = reviewsArray.getJSONObject(i)
-            val userJson = reviewJson.optJSONObject("user")
+    // Helper function to parse JSONArray to List<Bank>
+    private fun parseBankList(dataArray: JSONArray): List<Bank> {
+        val bankList = mutableListOf<Bank>()
 
-            val user = userJson?.let {
-                User(
-                    id = it.optString("id", ""),
-                    email = it.optString("email", ""),
-                    username = it.optString("username", ""),
-                    phoneNumber = it.optString("phone_number", ""),
-                    profilePicture = it.optString("profile_picture", ""),
-                    role = it.optString("role", ""),
-                    createdAt = it.optString("created_at", ""),
-                    updatedAt = it.optString("updated_at", "")
-                )
-            }
+        for (i in 0 until dataArray.length()) {
+            val bankJson = dataArray.getJSONObject(i)
 
-            val review = Review(
-                id = reviewJson.optInt("id", 0),
-                userId = reviewJson.optString("user_id", ""),
-                productId = reviewJson.optInt("product_id", 0),
-                rating = reviewJson.optInt("rating", 0),
-                comment = reviewJson.optString("comment", ""),
-                createdAt = reviewJson.optString("created_at", ""),
-                user = user
+            val bank = Bank(
+                id = bankJson.optInt("id", 0),
+                name = bankJson.optString("name", ""),
+                logo = bankJson.optString("logo", ""),
+                accountNumber = bankJson.optString("account_number", ""),
+                accountHolder = bankJson.optString("account_holder", ""),
+                paymentInstructions = bankJson.optString("payment_instructions", ""),
+                createdAt = bankJson.optString("created_at", ""),
+                updatedAt = bankJson.optString("updated_at", "")
             )
-            reviews.add(review)
+
+            bankList.add(bank)
         }
 
-        return Product(
-            id = productJson.optInt("id", 0),
-            name = productJson.optString("name", ""),
-            category = productJson.optString("category", ""),
-            price = productJson.optInt("price", 0),
-            description = productJson.optString("description", ""),
-            imageUrl = productJson.optString("image", ""),
-            rating = productJson.optString("average_rating", "0.0").toDouble(),
-            totalSales = productJson.optInt("total_sales", 0),
-            createdAt = productJson.optString("created_at", ""),
-            updatedAt = productJson.optString("updated_at", ""),
-            reviews = reviews // Pass daftar reviews ke produk
+        return bankList
+    }
+
+    private fun parseSingleBank(bankData: JSONObject): Bank {
+        return Bank(
+            id = bankData.optInt("id"),
+            name = bankData.optString("name"),
+            logo = bankData.optString("logo"),
+            accountNumber = bankData.optString("account_number"),
+            accountHolder = bankData.optString("account_holder"),
+            paymentInstructions = bankData.optString("payment_instructions"),
+            createdAt = bankData.optString("created_at"),
+            updatedAt = bankData.optString("updated_at")
         )
     }
 
-
-
-
-    // Admin
-    fun addNewProduct(
+    fun addNewBank(
         context: Context,
-        productName: String,
-        productPrice: Int,
-        productCategory: String,
-        productDescription: String,
-        productImageUri: Uri?,
+        name: String,
+        logoResId: Int?,
+        qrImageUri: Uri? = null,
+        accountNumber: String,
+        accountHolder: String,
+        paymentInstructions: String,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
@@ -229,36 +183,49 @@ class ProductService {
 
         if (!authToken.isNullOrEmpty()) {
             // Convert parameter to RequestBody
-            val productNamePart = productName.toRequestBody(MultipartBody.FORM)
-            val productPricePart = productPrice.toString().toRequestBody(MultipartBody.FORM)
-            val productCategoryPart = productCategory.toRequestBody(MultipartBody.FORM)
-            val productDescriptionPart = productDescription.toRequestBody(MultipartBody.FORM)
+            val namePart = name.toRequestBody(MultipartBody.FORM)
+            val accountNumberPart = accountNumber.toRequestBody(MultipartBody.FORM)
+            val accountHolderPart = accountHolder.toRequestBody(MultipartBody.FORM)
+            val paymentInstructionsPart = paymentInstructions.toRequestBody(MultipartBody.FORM)
 
-            // Menyiapkan file gambar produk
-            val productImagePart = productImageUri?.let {
-                val file = File(getRealPathFromURI(context, it))
+            val logoOrQrImagePart = if (name == "QRIS" && qrImageUri != null) {
+                val file = File(getRealPathFromURI(context, qrImageUri))
                 val requestBody = file.asRequestBody("image/*".toMediaType())
-                MultipartBody.Part.createFormData("image", file.name, requestBody)
+                MultipartBody.Part.createFormData("logo", file.name, requestBody)
+            } else {
+                logoResId?.let {
+                    val drawable = context.resources.getDrawable(it, null)
+                    val bitmap = (drawable as BitmapDrawable).bitmap
+                    val file = File(context.cacheDir, "logo_${System.currentTimeMillis()}.png")
+                    val outputStream = FileOutputStream(file)
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                    outputStream.flush()
+                    outputStream.close()
+
+                    val requestBody = file.asRequestBody("image/*".toMediaType())
+                    MultipartBody.Part.createFormData("logo", file.name, requestBody)
+                }
             }
 
             // Call the API
-            RetrofitInstance.apiService.addProduct(
+            RetrofitInstance.apiService.addBank(
                 "Bearer $authToken",
-                productNamePart,
-                productPricePart,
-                productCategoryPart,
-                productDescriptionPart,
-                productImagePart
-            ).enqueue(object : Callback<AddProductResponse> {
-                override fun onResponse(call: Call<AddProductResponse>, response: Response<AddProductResponse>) {
+                namePart,
+                logoOrQrImagePart,
+                accountNumberPart,
+                accountHolderPart,
+                paymentInstructionsPart
+            ).enqueue(object : Callback<ApiResponse> {
+                override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
                     if (response.isSuccessful && response.body()?.success == true) {
                         onSuccess()
                     } else {
-                        onError(response.body()?.message ?: "Error adding product")
+                        onError(response.body()?.message ?: "Error adding bank")
+                        Log.d("Bank Service", "Error Adding Bank: ${response.body()?.message}")
                     }
                 }
 
-                override fun onFailure(call: Call<AddProductResponse>, t: Throwable) {
+                override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
                     onError(t.message ?: "An error occurred")
                 }
             })
@@ -268,54 +235,70 @@ class ProductService {
     }
 
 
-    fun updateProduct(
+    fun updateBank(
         context: Context,
-        productId: Int,
-        productName: String? = null,
-        productPrice: Int? = null,
-        productCategory: String? = null,
-        productDescription: String? = null,
-        productImageUri: Uri? = null,
+        id: Int, // ID bank yang akan diperbarui
+        name: String? = null,
+        logoResId: Int? = null, // ID dari drawable
+        qrImageUri: Uri? = null,
+        accountNumber: String? = null,
+        accountHolder: String? = null,
+        paymentInstructions: String? = null,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
         val authToken = PreferenceManager(context).getString("auth_token")
 
         if (!authToken.isNullOrEmpty()) {
-            // Konversi parameter menjadi RequestBody jika tidak null
+            // Convert parameter to RequestBody
             val methodPart = "PUT".toRequestBody(MultipartBody.FORM)
-            val productNamePart = productName?.toRequestBody(MultipartBody.FORM)
-            val productPricePart = productPrice?.toString()?.toRequestBody(MultipartBody.FORM)
-            val productCategoryPart = productCategory?.toRequestBody(MultipartBody.FORM)
-            val productDescriptionPart = productDescription?.toRequestBody(MultipartBody.FORM)
+            val namePart = name?.toRequestBody(MultipartBody.FORM)
+            val accountNumberPart = accountNumber?.toRequestBody(MultipartBody.FORM)
+            val accountHolderPart = accountHolder?.toRequestBody(MultipartBody.FORM)
+            val paymentInstructionsPart = paymentInstructions?.toRequestBody(MultipartBody.FORM)
 
-            // Menyiapkan file gambar produk
-            val productImagePart = productImageUri?.let {
-                val file = File(getRealPathFromURI(context, it))
+            val logoOrQrImagePart = if (name == "QRIS" && qrImageUri != null) {
+                val file = File(getRealPathFromURI(context, qrImageUri))
                 val requestBody = file.asRequestBody("image/*".toMediaType())
-                MultipartBody.Part.createFormData("image", file.name, requestBody)
+                MultipartBody.Part.createFormData("logo", file.name, requestBody)
+            } else {
+                logoResId?.let {
+                    val drawable = context.resources.getDrawable(it, null)
+                    val bitmap = (drawable as BitmapDrawable).bitmap
+                    val file = File(context.cacheDir, "logo_${System.currentTimeMillis()}.png")
+                    val outputStream = FileOutputStream(file)
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                    outputStream.flush()
+                    outputStream.close()
+
+                    val requestBody = file.asRequestBody("image/*".toMediaType())
+                    MultipartBody.Part.createFormData("logo", file.name, requestBody)
+                }
             }
 
-            // Panggil API
-            RetrofitInstance.apiService.updateProduct(
+
+            // Call the API
+            RetrofitInstance.apiService.updateBank(
                 "Bearer $authToken",
-                productId,
-                methodPart,
-                productNamePart,
-                productPricePart,
-                productCategoryPart,
-                productDescriptionPart,
-                productImagePart
-            ).enqueue(object : Callback<UpdateProductResponse> {
-                override fun onResponse(call: Call<UpdateProductResponse>, response: Response<UpdateProductResponse>) {
+                id, // bankId di URL
+                methodPart, // Menambahkan _method PUT di body
+                namePart,
+                logoOrQrImagePart,
+                accountNumberPart,
+                accountHolderPart,
+                paymentInstructionsPart
+            ).enqueue(object : Callback<ApiResponse> {
+                override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
                     if (response.isSuccessful && response.body()?.success == true) {
                         onSuccess()
                     } else {
-                        onError(response.body()?.message ?: "Error updating product")
+                        onError(response.body()?.message ?: "Error updating bank")
+                        Log.d("Bank Service", "Error Update Bank: ${response.body()?.message}")
                     }
                 }
 
-                override fun onFailure(call: Call<UpdateProductResponse>, t: Throwable) {
+                override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                    Log.d("Bank Service", "Error Update Bank: ${t.message}")
                     onError(t.message ?: "An error occurred")
                 }
             })
@@ -324,13 +307,14 @@ class ProductService {
         }
     }
 
-    fun deleteProduct(
+
+    fun deleteBank(
         context: Context,
-        productId: Int,
+        bankId: Int,
         onResult: (String) -> Unit,
         onError: (String) -> Unit
     ) {
-        val url = context.getString(R.string.base_url) + "/api/admin/product/$productId"
+        val url = context.getString(R.string.base_url) + "/api/admin/banks/$bankId"
 
         val authToken = PreferenceManager(context).getString("auth_token")
 
@@ -364,7 +348,7 @@ class ProductService {
                     // Default pesan jika tidak ada respons dari server
                     "Koneksi gagal. Periksa koneksi internet Anda."
                 }
-                Log.e("ProductService", "Error deleting product: $errorMessage")
+                Log.e("BankService", "Error deleting bank: $errorMessage")
                 onError(errorMessage)
             }
         ) {

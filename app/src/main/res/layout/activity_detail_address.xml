@@ -57,14 +57,25 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/backButton"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Nama Penerima"
-                    android:textColor="@color/text_700"
-                    android:textSize="@dimen/_14ssp" />
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Nama Penerima"
+                        android:textColor="@color/text_700"
+                        android:textSize="@dimen/_14ssp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="*"
+                        android:textColor="@color/warning_300"
+                        android:textSize="@dimen/_14ssp" />
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -87,14 +98,25 @@
                         android:textColor="@color/text_700"/>
                 </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/backButton"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Nomor Telepon"
-                    android:textColor="@color/text_700"
-                    android:textSize="@dimen/_14ssp" />
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Nomor Telepon"
+                        android:textColor="@color/text_700"
+                        android:textSize="@dimen/_14ssp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="*"
+                        android:textColor="@color/warning_300"
+                        android:textSize="@dimen/_14ssp" />
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -117,14 +139,25 @@
                         android:textColor="@color/text_700"/>
                 </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/backButton"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Provinsi"
-                    android:textColor="@color/text_700"
-                    android:textSize="@dimen/_14ssp" />
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Provinsi"
+                        android:textColor="@color/text_700"
+                        android:textSize="@dimen/_14ssp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="*"
+                        android:textColor="@color/warning_300"
+                        android:textSize="@dimen/_14ssp" />
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -141,14 +174,25 @@
                         android:spinnerMode="dropdown"/>
                 </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/backButton"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Kabupaten/Kota"
-                    android:textColor="@color/text_700"
-                    android:textSize="@dimen/_14ssp" />
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Kabupaten/Kota"
+                        android:textColor="@color/text_700"
+                        android:textSize="@dimen/_14ssp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="*"
+                        android:textColor="@color/warning_300"
+                        android:textSize="@dimen/_14ssp" />
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -165,14 +209,25 @@
                         android:spinnerMode="dropdown"/>
                 </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/backButton"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Alamat Lengkap"
-                    android:textColor="@color/text_700"
-                    android:textSize="@dimen/_14ssp" />
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Alamat Lengkap"
+                        android:textColor="@color/text_700"
+                        android:textSize="@dimen/_14ssp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="*"
+                        android:textColor="@color/warning_300"
+                        android:textSize="@dimen/_14ssp" />
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

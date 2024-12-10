@@ -25,4 +25,25 @@ class Glide {
             }
             .into(imageView)
     }
+
+
+    fun loadImageFitCenter(
+        imageView: ImageView,
+        imageUrl: String,
+        placeholder: ImageView? = null // Menggunakan default parameter sebagai null
+    ) {
+        Glide
+            .with(imageView.context)
+            .load(imageUrl)
+            .fitCenter()
+            .apply {
+                // Jika placeholder tidak null, gunakan gambar dari parameter placeholder
+                if (placeholder != null) {
+                    placeholder(placeholder.drawable) // Gambar placeholder yang dipassing sebagai parameter
+                } else {
+                    placeholder(R.drawable.ic_tanaman) // Gambar default jika placeholder null
+                }
+            }
+            .into(imageView)
+    }
 }

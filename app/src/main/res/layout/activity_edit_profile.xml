@@ -233,14 +233,25 @@
                     android:orientation="vertical">
 
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/backButton"
-                        android:fontFamily="@font/poppins_medium"
-                        android:text="Nama"
-                        android:textColor="@color/text_700"
-                        android:textSize="@dimen/_14ssp" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Nama"
+                            android:textColor="@color/text_700"
+                            android:textSize="@dimen/_14ssp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="*"
+                            android:textColor="@color/warning_300"
+                            android:textSize="@dimen/_14ssp" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/layoutInputUsername"
@@ -268,14 +279,25 @@
 
 
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/backButton"
-                        android:fontFamily="@font/poppins_medium"
-                        android:text="Email"
-                        android:textColor="@color/text_700"
-                        android:textSize="@dimen/_14ssp" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Email"
+                            android:textColor="@color/text_700"
+                            android:textSize="@dimen/_14ssp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="*"
+                            android:textColor="@color/warning_300"
+                            android:textSize="@dimen/_14ssp" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/layoutInputEmail"

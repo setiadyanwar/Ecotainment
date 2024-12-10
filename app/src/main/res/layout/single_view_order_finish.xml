@@ -28,6 +28,7 @@
                 tools:itemCount="1"/>
 
             <TextView
+                android:id="@+id/orderStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_12sdp"
@@ -109,19 +110,6 @@
                 android:gravity="end"
                 android:orientation="vertical">
 
-                <!-- Rating Bar -->
-                <RatingBar
-                    android:id="@+id/ratingBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="?android:attr/ratingBarStyleSmall"
-                    android:numStars="5"
-                    android:rating="0"
-                    android:stepSize="0.5"
-                    android:progressTint="#FFC107"
-                    android:secondaryProgressTint="#FFC107"
-                    android:progressBackgroundTint="@color/text_300"/>
-
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/addReview"
                     android:layout_width="wrap_content"
@@ -130,7 +118,7 @@
                     android:text="Beri Ulasan"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_9ssp"
+                    android:textSize="@dimen/_11ssp"
                     android:fontFamily="@font/poppins_medium"
                     app:backgroundTint="@color/secondary_500"
                     app:cornerRadius="@dimen/_6sdp"

@@ -1,10 +1,13 @@
 package com.godongijo.ecotainment.adapters
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.Window
 import androidx.recyclerview.widget.RecyclerView
+import com.godongijo.ecotainment.databinding.DialogConfirmDeleteBinding
 import com.godongijo.ecotainment.databinding.SingleViewAddressBinding
 import com.godongijo.ecotainment.databinding.SingleViewSelectAddressBinding
 import com.godongijo.ecotainment.models.Address
@@ -63,12 +66,19 @@ class AddressAdapter(
                     }
 
                     deleteAddress.setOnClickListener {
-                        val authService = AuthService()
-                        authService.deleteAddress(
-                            context,
-                            address.id,
-                            onSuccess = {},
-                            onError = {}
+                        showConfirmDialog(
+                            onConfirm = {
+                                val authService = AuthService()
+                                authService.deleteAddress(
+                                    context,
+                                    address.id,
+                                    onSuccess = {},
+                                    onError = {}
+                                )
+                            },
+                            onCancel = {
+
+                            }
                         )
                     }
                 }
@@ -95,5 +105,36 @@ class AddressAdapter(
     fun updateList(newAddressList: List<Address>) {
         addressList = newAddressList
         notifyDataSetChanged()
+    }
+
+    private fun showConfirmDialog(
+        onConfirm: () -> Unit,
+        onCancel: () -> Unit
+    ) {
+        // Inflate layout menggunakan View Binding
+        val dialogBinding = DialogConfirmDeleteBinding.inflate(LayoutInflater.from(context))
+
+        // Buat dialog
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(dialogBinding.root)
+
+        dialogBinding.message.text = "Apakah Kamu yakin mau hapus alamat ini?"
+
+        // Aksi untuk tombol Cancel
+        dialogBinding.cancelButton.setOnClickListener {
+            onCancel()
+            dialog.dismiss()
+        }
+
+        // Aksi untuk tombol Confirm
+        dialogBinding.confirmButton.setOnClickListener {
+            onConfirm()
+            dialog.dismiss()
+        }
+
+        // Tampilkan dialog
+        dialog.show()
     }
 }

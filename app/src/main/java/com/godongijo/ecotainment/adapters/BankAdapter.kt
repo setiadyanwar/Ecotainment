@@ -10,10 +10,14 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.godongijo.ecotainment.R
 import com.godongijo.ecotainment.databinding.SingleViewBankBinding
 import com.godongijo.ecotainment.models.Bank
+import com.godongijo.ecotainment.utilities.Glide
 
-class BankAdapter : RecyclerView.Adapter<BankAdapter.BankViewHolder>() {
+class BankAdapter(
+    private var context: Context,
+) : RecyclerView.Adapter<BankAdapter.BankViewHolder>() {
 
     private var banks = listOf<Bank>()
     private var expandedPosition = -1
@@ -52,7 +56,7 @@ class BankAdapter : RecyclerView.Adapter<BankAdapter.BankViewHolder>() {
             binding.btnCopy.setOnClickListener {
                 val bank = banks[adapterPosition]
                 val clipboardManager = itemView.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clipData = ClipData.newPlainText("account_number", bank.bankAccount.accountNumber)
+                val clipData = ClipData.newPlainText("account_number", bank.accountNumber)
                 clipboardManager.setPrimaryClip(clipData)
                 Toast.makeText(itemView.context, "Nomor rekening berhasil disalin", Toast.LENGTH_SHORT).show()
             }
@@ -60,27 +64,17 @@ class BankAdapter : RecyclerView.Adapter<BankAdapter.BankViewHolder>() {
 
         fun bind(bank: Bank, isExpanded: Boolean) {
             binding.apply {
-                ivBankLogo.setImageResource(bank.logo)
+                val bankLogo = context.getString(R.string.base_url) + bank.logo
+                Glide().loadImageFitCenter(ivBankLogo, bankLogo)
+
                 ivChevron.rotation = if (isExpanded) 180f else 0f
                 layoutContent.visibility = if (isExpanded) View.VISIBLE else View.GONE
 
                 if (isExpanded) {
-                    tvAccountNumber.text = bank.bankAccount.accountNumber
-                    tvAccountHolder.text = "a.n ${bank.bankAccount.accountHolder}"
+                    tvAccountNumber.text = bank.accountNumber
+                    tvAccountHolder.text = "a.n ${bank.accountHolder}"
 
-                    layoutInstructions.removeAllViews()
-                    bank.bankAccount.paymentInstructions.forEachIndexed { index, instruction ->
-                        val instructionView = TextView(itemView.context).apply {
-                            text = "${index + 1}. $instruction"
-                            layoutParams = LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.MATCH_PARENT,
-                                LinearLayout.LayoutParams.WRAP_CONTENT
-                            ).apply {
-                                topMargin = 8
-                            }
-                        }
-                        layoutInstructions.addView(instructionView)
-                    }
+                    layoutInstructions.text = bank.paymentInstructions?.replace("\\n", "\n")
                 }
             }
         }

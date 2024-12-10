@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -21,17 +21,6 @@
             android:textColor="@color/primary_500"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <TextView
-            android:id="@+id/view_all_reviews"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lihat Semua"
-            android:textSize="@dimen/_14ssp"
-            android:textColor="@color/primary_500"
-            android:drawableEnd="@drawable/ic_arrow_right"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <!-- Rating dan Jumlah Ulasan -->
@@ -53,7 +42,7 @@
                 style="?android:attr/ratingBarStyleSmall"
                 android:numStars="5"
                 android:rating="0"
-                android:stepSize="1"
+                android:stepSize="0.1"
                 android:progressTint="#FFC107"
                 android:secondaryProgressTint="#FFC107"
                 android:isIndicator="true"/>
@@ -76,11 +65,12 @@
                 android:textSize="@dimen/_11ssp"
                 android:layout_marginStart="@dimen/_6sdp"
                 android:textColor="@color/text_100"/>
+
         </LinearLayout>
 
         <!-- Garis Pemisah -->
         <View
-            android:id="@+id/devider"
+            android:id="@+id/divider"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="#E0E0E0"
@@ -94,13 +84,12 @@
             android:id="@+id/recycler_view_reviews"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/devider"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintTop_toBottomOf="@id/divider"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="0dp"
             android:clipToPadding="false"
-            android:paddingBottom="16dp"/>
+            android:paddingBottom="@dimen/_48sdp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

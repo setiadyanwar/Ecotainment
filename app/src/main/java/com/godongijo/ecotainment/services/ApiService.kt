@@ -54,8 +54,36 @@ interface ApiService {
         @Part productImage: MultipartBody.Part?
     ): Call<UpdateProductResponse>
 
+    @Multipart
+    @POST("/api/admin/banks")
+    fun addBank(
+        @Header("Authorization") authToken: String,
+        @Part("name") name: RequestBody,
+        @Part logo: MultipartBody.Part?,
+        @Part("account_number") accountNumber: RequestBody,
+        @Part("account_holder") accountHolder: RequestBody,
+        @Part("payment_instructions") paymentInstructions: RequestBody
+    ): Call<ApiResponse>
+
+    @Multipart
+    @POST("/api/admin/banks/{id}")
+    fun updateBank(
+        @Header("Authorization") authToken: String,
+        @Path("id") bankId: Int, // bankId di URL
+        @Part("_method") method: RequestBody, // Menambahkan _method=PUT di body
+        @Part("name") name: RequestBody?,
+        @Part logo: MultipartBody.Part?,
+        @Part("account_number") accountNumber: RequestBody?,
+        @Part("account_holder") accountHolder: RequestBody?,
+        @Part("payment_instructions") paymentInstructions: RequestBody?
+    ): Call<ApiResponse>
 
 }
+
+data class ApiResponse(
+    val success: Boolean,
+    val message: String
+)
 
 // UpdateResponse.kt
 data class UpdateResponse(

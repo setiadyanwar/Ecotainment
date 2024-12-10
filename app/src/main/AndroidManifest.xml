@@ -21,120 +21,155 @@
         android:theme="@style/Theme.Ecotainment"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.FormBankActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity
+            android:name=".ui.activities.ManageBankActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity
             android:name=".ui.activities.DetailTransactionActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.ManageTransactionActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.FormProductActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.ManageProductActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.CustomerServiceActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.HelpCenterActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.NotificationActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.VirtualTripActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.OfflineFieldTripActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.GotoSchoolActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.ReservationActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.DetailAddressActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.AddressActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.EditProfileActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.OrderStatusActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.PaymentActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.CheckoutActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.CartActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.DetailProductActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.SearchActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.MainActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.SignUpActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".ui.activities.SignInActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Ecotainment" />
+            android:theme="@style/Theme.Ecotainment"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".Startup"
             android:exported="true"

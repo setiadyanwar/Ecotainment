@@ -117,6 +117,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/layoutTimer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -198,11 +199,10 @@
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="8dp"
-                android:background="@drawable/card_left_border"
-
-                >
+                android:background="@drawable/card_left_border">
 
                 <LinearLayout
+                    android:id="@+id/qrisLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -247,7 +247,7 @@
 
                         <!-- QR Code Image -->
                         <ImageView
-                            android:id="@+id/iv_qr_code"
+                            android:id="@+id/qrisQrCode"
                             android:layout_width="@dimen/_100sdp"
                             android:layout_height="@dimen/_100sdp"
                             android:src="@drawable/ic_qr_code"
@@ -270,6 +270,7 @@
                                 android:fontFamily="@font/poppins_bold"/>
 
                             <TextView
+                                android:id="@+id/merchantName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Ecotainment"
@@ -288,6 +289,7 @@
                                 android:layout_marginTop="8dp"/>
 
                             <TextView
+                                android:id="@+id/merchantNumber"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="XXXXXXXXXX"
@@ -423,26 +425,53 @@
                 android:textSize="@dimen/_11ssp"
                 android:fontFamily="@font/poppins_regular"/>
 
-            <!-- Other Payment Methods Section -->
-            <TextView
-                android:id="@+id/tv_other_payment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pilihan pembayaran lainnya"
-                android:textSize="@dimen/_12sdp"
-                android:textColor="@color/text_700"
-               android:fontFamily="@font/poppins_medium"
-                android:layout_marginTop="16dp"/>
-
-            <!-- Bank Options -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvBanks"
+            <LinearLayout
+                android:id="@+id/otherPaymentLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:overScrollMode="never"
-                android:nestedScrollingEnabled="false"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                android:orientation="vertical">
+
+                <!-- Other Payment Methods Section -->
+                <TextView
+                    android:id="@+id/tv_other_payment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pilihan pembayaran lainnya"
+                    android:textSize="@dimen/_12sdp"
+                    android:textColor="@color/text_700"
+                    android:fontFamily="@font/poppins_medium"
+                    android:layout_marginTop="16dp"/>
+
+                <!-- Bank Options -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvBanks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/emptyPaymentMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@drawable/bg_blue_light"
+                android:backgroundTint="@color/warning_100"
+                android:padding="@dimen/_5sdp"
+                android:drawablePadding="@dimen/_6sdp"
+                android:drawableStart="@drawable/ic_info"
+                android:drawableTint="@color/warning_300"
+                android:text="Tidak ada metode pembayaran yang ditemukan, harap hubungi admin terkait masalah ini"
+                android:textColor="@color/warning_300"
+                android:textSize="@dimen/_11ssp"
+                android:fontFamily="@font/poppins_regular"/>
 
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

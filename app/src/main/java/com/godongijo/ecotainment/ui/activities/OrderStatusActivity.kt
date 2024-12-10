@@ -28,6 +28,14 @@ class OrderStatusActivity : AppCompatActivity() {
         setListeners()
     }
 
+    // Refresh data when the activity is resumed
+    override fun onResume() {
+        super.onResume()
+        // Re-load data for the selected tab
+        val tabTitle = binding.tabLayout.getTabAt(selectedTab)?.text.toString()
+        loadDataForTab(tabTitle)
+    }
+
     private fun init() {
         // Setup TabLayout
         setupTabs()
@@ -75,7 +83,13 @@ class OrderStatusActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        orderStatusAdapter = OrderStatusAdapter(this, transactionService)
+        orderStatusAdapter = OrderStatusAdapter(
+            this,
+            transactionService,
+            onFinishAction = { tabTitle ->
+                loadDataForTab(tabTitle)
+            }
+        )
         binding.orderStatusRecyclerView.layoutManager = LinearLayoutManager(this)
     }
 
@@ -91,7 +105,7 @@ class OrderStatusActivity : AppCompatActivity() {
                 val filteredData = when (tabTitle) {
                     "Menunggu" -> transactionList.filter { it.status == "pending" || it.status == "waiting_for_confirmation" }
                     "Saat Ini" -> transactionList.filter { it.status == "processed" || it.status == "on_shipment"}
-                    "Selesai" -> transactionList.filter { it.status == "completed" }
+                    "Selesai" -> transactionList.filter { it.status == "completed" || it.status == "reviewed"}
                     "Dibatalkan" -> transactionList.filter { it.status == "canceled" }
                     else -> emptyList()
                 }
@@ -111,13 +125,5 @@ class OrderStatusActivity : AppCompatActivity() {
             },
             onError = {}
         )
-    }
-
-    // Refresh data when the activity is resumed
-    override fun onResume() {
-        super.onResume()
-        // Re-load data for the selected tab
-        val tabTitle = binding.tabLayout.getTabAt(selectedTab)?.text.toString()
-        loadDataForTab(tabTitle)
     }
 }

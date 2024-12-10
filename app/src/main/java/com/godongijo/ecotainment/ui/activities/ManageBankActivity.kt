@@ -1,6 +1,5 @@
 package com.godongijo.ecotainment.ui.activities
 
-import com.godongijo.ecotainment.adapters.ManageProductAdapter
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -10,21 +9,21 @@ import android.view.View
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.godongijo.ecotainment.adapters.SkeletonAdapter
-import com.godongijo.ecotainment.databinding.ActivityManageProductBinding
+import com.godongijo.ecotainment.adapters.ManageBankAdapter
+import com.godongijo.ecotainment.databinding.ActivityManageBankBinding
 import com.godongijo.ecotainment.databinding.DialogConfirmDeleteBinding
-import com.godongijo.ecotainment.services.product.ProductService
+import com.godongijo.ecotainment.services.bank.BankService
 
-class ManageProductActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityManageProductBinding
+class ManageBankActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityManageBankBinding
 
-    private lateinit var manageProductAdapter: ManageProductAdapter
+    private lateinit var manageBankAdapter: ManageBankAdapter
 
-    private val productService = ProductService()
+    private val bankService = BankService()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityManageProductBinding.inflate(layoutInflater)
+        binding = ActivityManageBankBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         init()
@@ -33,11 +32,11 @@ class ManageProductActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        initProductList()
+        initBankList()
     }
 
     private fun init() {
-        initProductList()
+        initBankList()
     }
 
     private fun setListeners() {
@@ -45,73 +44,74 @@ class ManageProductActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        binding.addNewProduct.setOnClickListener {
-            val intent = Intent(this, FormProductActivity::class.java).apply {
+        binding.addNewBank.setOnClickListener {
+            val intent = Intent(this, FormBankActivity::class.java).apply {
                 putExtra("isEditing", false)
             }
             startActivity(intent)
         }
     }
 
-    private fun initProductList() {
-        binding.manageProductRecyclerView.layoutManager = LinearLayoutManager(this)
-        manageProductAdapter = ManageProductAdapter(
+    private fun initBankList() {
+        binding.manageBankRecycler.layoutManager = LinearLayoutManager(this)
+        manageBankAdapter = ManageBankAdapter(
             context = this,
-            productList = emptyList(),
-            onEditClick = { product ->
+            bankList = emptyList(),
+            onEditClick = { bank ->
                 // Logika untuk tombol edit
-                editProduct(product.id)
+                editBank(bank.id)
             },
-            onDeleteClick = { product ->
+            onDeleteClick = { bank ->
                 // Logika untuk tombol delete
-                deleteProduct(product.id)
+                deleteBank(bank.id)
             }
         )
 
-        val skeletonAdapter = SkeletonAdapter(1, 1)
-        binding.manageProductRecyclerView.adapter = skeletonAdapter
 
-        productService.getProductList(
+
+        bankService.getBankList(
             context = this,
-            onResult = { productList ->
+            onResult = { bankList ->
                 // Update UI based on whether there are items in the list
-                if (productList.isEmpty()) {
-                    binding.manageProductRecyclerView.visibility = View.GONE
-                    binding.emptyProduct.visibility = View.VISIBLE
+                if (bankList.isEmpty()) {
+                    binding.manageBankRecycler.visibility = View.GONE
+                    binding.emptyBank.visibility = View.VISIBLE
                 } else {
-                    binding.manageProductRecyclerView.visibility = View.VISIBLE
-                    binding.emptyProduct.visibility = View.GONE
+                    binding.manageBankRecycler.visibility = View.VISIBLE
+                    binding.emptyBank.visibility = View.GONE
 
-                    binding.manageProductRecyclerView.adapter = manageProductAdapter
-                    manageProductAdapter.updateList(productList)
+                    binding.manageBankRecycler.adapter = manageBankAdapter
+                    manageBankAdapter.updateList(bankList)
                 }
             },
             onError = {
-                binding.manageProductRecyclerView.visibility = View.GONE
-                binding.emptyProduct.visibility = View.VISIBLE
+                binding.manageBankRecycler.visibility = View.GONE
+                binding.emptyBank.visibility = View.VISIBLE
             }
         )
     }
 
-    private fun editProduct(productId: Int) {
-        val intent = Intent(this, FormProductActivity::class.java).apply {
+
+
+    private fun editBank(bankId: Int) {
+        val intent = Intent(this, FormBankActivity::class.java).apply {
             putExtra("isEditing", true)
-            putExtra("productId", productId)
+            putExtra("bankId", bankId)
         }
         startActivity(intent)
     }
 
-    private fun deleteProduct(productId: Int) {
+    private fun deleteBank(bankId: Int) {
         showConfirmDialog(
             onConfirm = {
-                productService.deleteProduct(
+                bankService.deleteBank(
                     context = this,
-                    productId = productId,
+                    bankId = bankId,
                     onResult = {
-                        initProductList()
+                        initBankList()
                     },
                     onError = {
-                        Log.d("CartAdapter", "Failed delete product from cart")
+                        Log.d("Manage Bank", "Failed delete Bank")
                     }
                 )
             },
@@ -135,7 +135,7 @@ class ManageProductActivity : AppCompatActivity() {
         dialog.setCancelable(false)
         dialog.setContentView(dialogBinding.root)
 
-        dialogBinding.message.text = "Apakah Kamu yakin mau hapus produk ini? Produk yang sudah dihapus tidak bisa dikembalikan"
+        dialogBinding.message.text = "Apakah Kamu yakin mau hapus bank ini?"
 
         // Aksi untuk tombol Cancel
         dialogBinding.cancelButton.setOnClickListener {

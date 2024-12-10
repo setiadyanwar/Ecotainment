@@ -20,6 +20,7 @@ import com.godongijo.ecotainment.ui.activities.AddressActivity
 import com.godongijo.ecotainment.ui.activities.CustomerServiceActivity
 import com.godongijo.ecotainment.ui.activities.EditProfileActivity
 import com.godongijo.ecotainment.ui.activities.HelpCenterActivity
+import com.godongijo.ecotainment.ui.activities.ManageBankActivity
 import com.godongijo.ecotainment.ui.activities.ManageProductActivity
 import com.godongijo.ecotainment.ui.activities.ManageTransactionActivity
 import com.godongijo.ecotainment.ui.activities.NotificationActivity
@@ -113,6 +114,10 @@ class ProfileFragment : Fragment() {
 
         binding.manageTransaction.setOnClickListener {
             startActivity(Intent(requireContext(), ManageTransactionActivity::class.java))
+        }
+
+        binding.manageBank.setOnClickListener {
+            startActivity(Intent(requireContext(), ManageBankActivity::class.java))
         }
     }
 

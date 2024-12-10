@@ -11,5 +11,5 @@ data class Review(
     val rating: Int,
     val comment: String,
     val createdAt: String,
-    val user: User? = null // User juga perlu diimplementasikan Parcelable
+    val user: User? = null
 ) : Parcelable

@@ -1,6 +1,6 @@
 package com.godongijo.ecotainment.ui.activities
 
-import ManageTransactionAdapter
+import com.godongijo.ecotainment.adapters.ManageTransactionAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.view.View

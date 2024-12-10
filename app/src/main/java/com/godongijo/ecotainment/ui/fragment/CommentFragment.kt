@@ -54,7 +54,6 @@ class CommentFragment : Fragment() {
             binding.emptyReviews.visibility = View.VISIBLE
         }
 
-
         return binding.root
     }
 

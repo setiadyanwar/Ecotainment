@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activities.ManageBankActivity">
+
+    <!-- Header -->
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:padding="@dimen/_12sdp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_toEndOf="@id/backButton"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Kelola Bank"
+            android:textColor="@color/text_700"
+            android:textSize="@dimen/_14ssp" />
+
+        <TextView
+            android:id="@+id/addNewBank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_plus"
+            android:drawablePadding="@dimen/_4sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center_vertical"
+            android:text="+ Tambah"
+            android:textColor="@color/primary_500"
+            android:textSize="@dimen/_12ssp"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+    <!-- RecyclerView untuk menampilkan data sesuai tab yang dipilih -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/manageBankRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey_accent"
+        android:layout_margin="@dimen/_12sdp"
+        tools:listitem="@layout/single_view_manage_bank"
+        tools:itemCount="2"/>
+
+    <!-- Empty State -->
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/emptyBank"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_120sdp"
+                android:src="@drawable/ic_bank"
+                app:tint="@color/primary_500" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="Belum Ada Bank Yang Terdaftar"
+                android:textSize="@dimen/_16ssp"
+                android:textColor="@color/text_700"
+                android:textAlignment="center"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -20,8 +20,9 @@ class ProductDetailAdapter(fragmentActivity: FragmentActivity) : FragmentStateAd
         this.productDescription = description
     }
 
-    fun setProductReviews(reviews: List<Review>, rating: Double) {
+    fun setProductReviews(reviews: List<Review>, averageRating: Double) {
         productReviews = reviews
+        rating = averageRating
         notifyDataSetChanged()
     }
 

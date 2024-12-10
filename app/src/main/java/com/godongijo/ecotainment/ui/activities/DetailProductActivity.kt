@@ -30,7 +30,7 @@ import java.util.Locale
 
 class DetailProductActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailProductBinding
-    private lateinit var adapter: ProductDetailAdapter
+    private lateinit var productDetailAdapter: ProductDetailAdapter
 
     private val productService = ProductService()
     private val cartService = CartService()
@@ -168,7 +168,7 @@ class DetailProductActivity : AppCompatActivity() {
         binding.productDetailLayout.visibility = View.GONE
         binding.ratingSalesLayout.visibility = View.GONE
 
-        adapter = ProductDetailAdapter(this)
+        productDetailAdapter = ProductDetailAdapter(this)
 
         // Ambil id produk dari intent
         val productId = intent.getIntExtra("product_id", 0)
@@ -197,13 +197,13 @@ class DetailProductActivity : AppCompatActivity() {
 
 
                 // Set deskripsi produk ke adapter
-                adapter.setProductDescription(product.description)
+                productDetailAdapter.setProductDescription(product.description)
 
                 // Set ulasan produk ke adapter
-                product.reviews?.let { adapter.setProductReviews(it, product.rating) }
+                product.reviews?.let { productDetailAdapter.setProductReviews(it, product.rating) }
 
                 // Mengatur adapter ke ViewPager setelah set description
-                binding.vP2.adapter = adapter
+                binding.vP2.adapter = productDetailAdapter
 
                 // Connect TabLayout with ViewPager2 using TabLayoutMediator
                 TabLayoutMediator(binding.tabLayout, binding.vP2) { tab, position ->

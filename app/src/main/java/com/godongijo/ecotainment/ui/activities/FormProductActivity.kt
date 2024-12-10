@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -84,7 +85,7 @@ class FormProductActivity : AppCompatActivity() {
 
     private fun saveProduct() {
         val productName = binding.inputProductName.text.toString().trim()
-        val productPrice = binding.inputProductPrice.text.toString().toInt()
+        val productPrice = binding.inputProductPrice.text.toString().trim()
         val productCategory = binding.inputProductCategory.text.toString().trim()
         val productDescription = binding.inputProductDescription.text.toString().trim()
         val productImage = selectedUri
@@ -97,7 +98,7 @@ class FormProductActivity : AppCompatActivity() {
                 return
             }
 
-            binding.inputProductPrice.text.toString().isEmpty() -> {
+            productPrice.isEmpty() -> {
                 binding.inputProductPrice.error = "Harga tidak boleh kosong"
                 binding.inputProductPrice.requestFocus()
                 return
@@ -124,7 +125,7 @@ class FormProductActivity : AppCompatActivity() {
                         this,
                         productId,
                         productName,
-                        productPrice,
+                        productPrice.toInt(),
                         productCategory,
                         productDescription,
                         productImage,
@@ -140,7 +141,7 @@ class FormProductActivity : AppCompatActivity() {
                     productService.addNewProduct(
                         this,
                         productName,
-                        productPrice,
+                        productPrice.toInt(),
                         productCategory,
                         productDescription,
                         productImage,
@@ -160,15 +161,14 @@ class FormProductActivity : AppCompatActivity() {
     }
 
 
-
     // Launcher untuk memilih gambar dari galeri
-    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { uri ->
-                selectedUri = uri
-                // Menampilkan gambar yang dipilih
-                binding.inputProductImage.setImageURI(selectedUri)
-            }
+    private val galleryLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let { galleryUri ->
+            selectedUri = galleryUri
+            // Menampilkan gambar yang dipilih
+            binding.inputProductImage.setImageURI(selectedUri)
         }
     }
 
@@ -185,11 +185,11 @@ class FormProductActivity : AppCompatActivity() {
                 requestPermissionMediaImages.launch(Manifest.permission.READ_MEDIA_IMAGES)
             } else {
                 // Izin sudah diberikan, buka galeri
-                launchGalleryIntent()
+                galleryLauncher.launch("image/*")
             }
         } else {
             // Android 12 ke bawah
-            launchGalleryIntent()
+            galleryLauncher.launch("image/*")
         }
     }
 
@@ -208,13 +208,5 @@ class FormProductActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
         }
-    }
-
-    private fun launchGalleryIntent() {
-        val galleryIntent = Intent(
-            Intent.ACTION_PICK,
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        )
-        galleryLauncher.launch(galleryIntent)
     }
 }

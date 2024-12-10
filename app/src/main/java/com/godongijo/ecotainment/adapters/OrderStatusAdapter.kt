@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +22,7 @@ import com.godongijo.ecotainment.databinding.SingleViewOrderCurrentBinding
 import com.godongijo.ecotainment.databinding.SingleViewOrderFinishBinding
 import com.godongijo.ecotainment.databinding.SingleViewOrderWaitingBinding
 import com.godongijo.ecotainment.models.Transaction
+import com.godongijo.ecotainment.services.product.ReviewService
 import com.godongijo.ecotainment.services.transaction.TransactionService
 import com.godongijo.ecotainment.ui.activities.PaymentActivity
 import java.text.NumberFormat
@@ -27,9 +30,11 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 
+
 class OrderStatusAdapter(
     private var context: Context,
-    private val transactionService: TransactionService
+    private val transactionService: TransactionService,
+    private val onFinishAction: (tabTitle: String) -> Unit
 ) : RecyclerView.Adapter<OrderStatusAdapter.ViewHolder>() {
 
     private val items = mutableListOf<Transaction>()
@@ -56,6 +61,7 @@ class OrderStatusAdapter(
             "processed" -> VIEW_TYPE_CURRENT
             "on_shipment" -> VIEW_TYPE_CURRENT
             "completed" -> VIEW_TYPE_FINISHED
+            "reviewed" -> VIEW_TYPE_FINISHED
             "canceled" -> VIEW_TYPE_CANCELLED
             else -> VIEW_TYPE_WAITING
         }
@@ -112,7 +118,12 @@ class OrderStatusAdapter(
                                             backgroundTintList =
                                                 ContextCompat.getColorStateList(context, R.color.grey) // Ubah warna menjadi abu-abu
                                         }
-                                        updateTransactionStatus("canceled", transaction.id)
+                                        updateTransactionStatus(
+                                            "canceled",
+                                            transaction.id,
+                                            onSuccess = {},
+                                            onError = {}
+                                        )
                                     }
                                 }.start()
                             } else {
@@ -124,8 +135,12 @@ class OrderStatusAdapter(
                                 orderStatus.text = "Waktu \nHabis"
                                 orderStatus.visibility = View.VISIBLE
                                 orderStatus.setTextColor(ContextCompat.getColor(context, R.color.warning_300))
-                                updateTransactionStatus("canceled", transaction.id)
-
+                                updateTransactionStatus(
+                                    "canceled",
+                                    transaction.id,
+                                    onSuccess = {},
+                                    onError = {}
+                                )
                             }
                         } catch (e: Exception) {
                             tvTimerHours.text = "00"
@@ -180,14 +195,37 @@ class OrderStatusAdapter(
                     productItemRecycler.layoutManager = LinearLayoutManager(root.context, RecyclerView.VERTICAL, false)
 
                     finishOrder.setOnClickListener {
-                        showConfirmDialog(
-                            onConfirm = {
-                                updateTransactionStatus("completed", transaction.id)
-                            },
-                            onCancel = {
+                        // Inflate layout dialog_review.xml menggunakan binding
+                        val dialogBinding = DialogFinishOrderBinding.inflate(LayoutInflater.from(holder.itemView.context))
+
+                        // Buat AlertDialog dengan custom layout
+                        val dialog = AlertDialog.Builder(holder.itemView.context)
+                            .setView(dialogBinding.root)
+                            .create()
+
+                        // Interaksi dengan elemen di dialog menggunakan binding
+                        dialogBinding.apply {
+
+                            confirmButton.setOnClickListener {
+                                updateTransactionStatus(
+                                    "completed",
+                                    transaction.id,
+                                    onSuccess = {
+                                        dialog.dismiss()
+                                        onFinishAction("Saat Ini")
+                                    },
+                                    onError = {}
+                                )
 
                             }
-                        )
+
+                            cancelButton.setOnClickListener {
+                                dialog.dismiss()
+                            }
+                        }
+
+                        // Tampilkan dialog
+                        dialog.show()
                     }
                 }
             }
@@ -195,6 +233,16 @@ class OrderStatusAdapter(
                 holder.binding.apply {
                     totalAmount.text = "Rp${formatCurrency(transaction.totalAmount.toLong())}"
                     totalProduct.text = "Total ${transaction.items.size} produk:"
+
+                    if (transaction.status == "completed") {
+                        orderStatus.text = "Selesai"
+                        addReview.isEnabled = true
+                        addReview.backgroundTintList = ContextCompat.getColorStateList(context, R.color.secondary_500)
+                    } else if(transaction.status == "reviewed") {
+                        orderStatus.text = "Telah \nDiulas"
+                        addReview.isEnabled = false
+                        addReview.backgroundTintList = ContextCompat.getColorStateList(context, R.color.grey)
+                    }
 
                     // Setup nested RecyclerView
                     val productItemAdapter = ProductItemAdapter(context)
@@ -211,15 +259,56 @@ class OrderStatusAdapter(
                             .setView(dialogBinding.root)
                             .create()
 
+                        dialog.setOnShowListener {
+                            dialog.window!!
+                                .clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+                        }
+
                         // Interaksi dengan elemen di dialog menggunakan binding
                         dialogBinding.apply {
-                            btnSubmit.setOnClickListener {
-                                val rating = ratingBar.rating
-                                val review = etReview.text.toString()
 
-                                if(rating != 0f) {
-                                    // Tutup dialog
-                                    dialog.dismiss()
+                            val reviewProductAdapter = ReviewProductAdapter(context, transaction.items)
+                            reviewItemRecycler.layoutManager = LinearLayoutManager(holder.itemView.context)
+                            reviewItemRecycler.adapter = reviewProductAdapter
+
+                            btnSubmitReview.setOnClickListener {
+                                val reviewService = ReviewService()
+                                // Dapatkan semua review dari adapter
+                                val allReviews = reviewProductAdapter.getAllReviews()
+
+                                // Filter data dengan rating > 0 (required) dan comment opsional
+                                val reviewsForApi = allReviews.map { (productId, reviewData) ->
+                                    mapOf(
+                                        "productId" to productId,  // productId sekarang bertipe Int
+                                        "rating" to reviewData.first,  // reviewData.first bertipe Int
+                                        "comment" to (reviewData.second.takeIf { it.isNotEmpty() }
+                                            ?: "")  // Jika komentar kosong atau null, gunakan string kosong
+                                    )
+                                }.filter { it["rating"] as Int > 0 }
+
+                                if (reviewsForApi.isNotEmpty()) {
+                                    // Kirim data ke API menggunakan Service
+                                    reviewService.addProductReviews(
+                                        context,
+                                        reviewsForApi,
+                                        onSuccess = {
+                                            updateTransactionStatus(
+                                                "reviewed",
+                                                transaction.id,
+                                                onSuccess = {
+                                                    dialog.dismiss()
+                                                    onFinishAction("Selesai")
+                                                },
+                                                onError = {}
+                                            )
+
+                                        }, onError = { errorMessage ->
+                                            // Tampilkan pesan error jika diperlukan
+                                            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                                        }
+                                    )
+                                } else {
+                                    Toast.makeText(context, "Please provide at least one rating", Toast.LENGTH_SHORT).show()
                                 }
                             }
 
@@ -254,46 +343,29 @@ class OrderStatusAdapter(
     // ViewHolder class to bind the view
     class ViewHolder(val binding: androidx.viewbinding.ViewBinding) : RecyclerView.ViewHolder(binding.root)
 
-    private fun updateTransactionStatus(status: String, transactionId: Int) {
+    private fun updateTransactionStatus(
+        status: String,
+        transactionId: Int,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
         transactionService.updateTransactionStatus(
             context,
             transactionId,
             status = status,
-            onSuccess = {},
-            onError = {}
+            onSuccess = {
+                // Logika tambahan ketika berhasil
+                onSuccess() // Memanggil callback sukses
+            },
+            onError = { error ->
+                // Logika tambahan ketika gagal
+                onError(error) // Memanggil callback error dengan pesan error
+            }
         )
     }
 
+
     private fun formatCurrency(amount: Long): String {
         return NumberFormat.getInstance(Locale("id", "ID")).format(amount)
-    }
-
-    private fun showConfirmDialog(
-        onConfirm: () -> Unit,
-        onCancel: () -> Unit
-    ) {
-        // Inflate layout menggunakan View Binding
-        val dialogBinding = DialogFinishOrderBinding.inflate(LayoutInflater.from(context))
-
-        // Buat dialog
-        val dialog = Dialog(context)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(dialogBinding.root)
-
-        // Aksi untuk tombol Cancel
-        dialogBinding.cancelButton.setOnClickListener {
-            onCancel()
-            dialog.dismiss()
-        }
-
-        // Aksi untuk tombol Confirm
-        dialogBinding.confirmButton.setOnClickListener {
-            onConfirm()
-            dialog.dismiss()
-        }
-
-        // Tampilkan dialog
-        dialog.show()
     }
 }

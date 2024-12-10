@@ -14,6 +14,7 @@ import android.provider.OpenableColumns
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +27,9 @@ import com.godongijo.ecotainment.adapters.BankAdapter
 import com.godongijo.ecotainment.databinding.ActivityPaymentBinding
 import com.godongijo.ecotainment.models.Bank
 import com.godongijo.ecotainment.models.BankAccount
+import com.godongijo.ecotainment.services.bank.BankService
 import com.godongijo.ecotainment.services.transaction.TransactionService
+import com.godongijo.ecotainment.utilities.Glide
 import java.io.File
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -35,11 +38,14 @@ import java.util.TimeZone
 
 class PaymentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPaymentBinding
-    private lateinit var bankAdapter: BankAdapter
 
     private lateinit var countDownTimer: CountDownTimer
 
     private val transactionService = TransactionService()
+
+    // Bank
+    private lateinit var bankAdapter: BankAdapter
+    private val bankService = BankService()
 
     // Tambahkan variabel untuk menandai sumber activity
     private var isNewTransaction: Boolean = true
@@ -65,12 +71,12 @@ class PaymentActivity : AppCompatActivity() {
     }
 
     // Launcher untuk memilih gambar dari galeri
-    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { uri ->
-                // Proses upload gambar dari galeri
-                uploadProofImage(uri)
-            }
+    private val galleryLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let { selectedUri ->
+            // Proses upload gambar dari galeri
+            uploadProofImage(selectedUri)
         }
     }
 
@@ -95,6 +101,17 @@ class PaymentActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        // Menambahkan callback untuk tombol back
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Aksi yang akan dilakukan saat tombol back ditekan
+                val intent = Intent(this@PaymentActivity, OrderStatusActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish() // Opsional, untuk menutup Activity saat ini
+            }
+        })
+
         if (isNewTransaction) {
             initNewTransaction()
         } else {
@@ -106,13 +123,12 @@ class PaymentActivity : AppCompatActivity() {
         binding.layoutConfirmProof.visibility = View.GONE
         binding.confirmMessage.visibility = View.GONE
 
-        setupRecyclerView()
         loadBanks()
     }
 
     private fun setListeners() {
         binding.backButton.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, OrderStatusActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -177,11 +193,11 @@ class PaymentActivity : AppCompatActivity() {
                 requestPermissionMediaImages.launch(Manifest.permission.READ_MEDIA_IMAGES)
             } else {
                 // Izin sudah diberikan, buka galeri
-                launchGalleryIntent()
+                galleryLauncher.launch("image/*")
             }
         } else {
             // Android 12 ke bawah
-            launchGalleryIntent()
+            galleryLauncher.launch("image/*")
         }
     }
 
@@ -201,15 +217,6 @@ class PaymentActivity : AppCompatActivity() {
             ).show()
         }
     }
-
-    private fun launchGalleryIntent() {
-        val galleryIntent = Intent(
-            Intent.ACTION_PICK,
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        )
-        galleryLauncher.launch(galleryIntent)
-    }
-
 
     private fun checkCameraPermission(): Boolean {
         return ContextCompat.checkSelfPermission(
@@ -376,18 +383,6 @@ class PaymentActivity : AppCompatActivity() {
         countDownTimer.start()
     }
 
-    private fun setupRecyclerView() {
-        // Inisialisasi BankAdapter
-        bankAdapter = BankAdapter()
-
-        // Atur RecyclerView
-        binding.rvBanks.apply {
-            adapter = bankAdapter
-            layoutManager = LinearLayoutManager(this@PaymentActivity)
-
-        }
-    }
-
     private fun uploadTransactionProof(transactionId: Int, imageUri: Uri) {
         transactionService.uploadProof(
             context = this,
@@ -399,90 +394,75 @@ class PaymentActivity : AppCompatActivity() {
                 binding.layoutProofFile.visibility = View.VISIBLE
                 binding.layoutConfirmProof.visibility = View.GONE
                 binding.confirmMessage.visibility = View.VISIBLE
+                binding.layoutTimer.visibility = View.GONE
             },
             onError = { error ->
                 binding.confirmMessage.visibility = View.VISIBLE
                 binding.confirmMessage.text = error
                 Log.d("ERROR", error)
-                Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
             }
         )
     }
 
     private fun loadBanks() {
-        val banks = listOf(
-            // Data Bank BRI
-            Bank(
-                id = "bri",
-                name = "BANK BRI",
-                logo = R.drawable.ic_bank_bri,
-                bankAccount = BankAccount(
-                    bankLogo = R.drawable.ic_bank_bri,
-                    accountNumber = "1424566485342",
-                    accountHolder = "Ecotainment",
-                    paymentInstructions = listOf(
-                        "Copy nomor rekening di atas.",
-                        "Anda dapat pergi ke ATM BRI terdekat atau menggunakan mobile banking.",
-                        "Transfer sesuai dengan tagihan.",
-                        "Upload bukti transfer dengan foto/screenshot"
-                    )
-                )
-            ),
-            // Data Bank BCA
-            Bank(
-                id = "bca",
-                name = "BCA",
-                logo = R.drawable.ic_bank_bca,
-                bankAccount = BankAccount(
-                    bankLogo = R.drawable.ic_bank_bca,
-                    accountNumber = "728890",
-                    accountHolder = "Ecotainment",
-                    paymentInstructions = listOf(
-                        "Copy nomor rekening di atas.",
-                        "Anda dapat pergi ke ATM BCA terdekat atau menggunakan mobile banking.",
-                        "Transfer sesuai dengan tagihan.",
-                        "Upload bukti transfer dengan foto/screenshot"
-                    )
-                )
-            ),
-            // Data Bank BNI
-            Bank(
-                id = "bni",
-                name = "BNI",
-                logo = R.drawable.ic_bank_bni,
-                bankAccount = BankAccount(
-                    bankLogo = R.drawable.ic_bank_bni,
-                    accountNumber = "1464853342",
-                    accountHolder = "Ecotainment",
-                    paymentInstructions = listOf(
-                        "Copy nomor rekening di atas.",
-                        "Anda dapat pergi ke ATM BNI terdekat atau menggunakan mobile banking.",
-                        "Transfer sesuai dengan tagihan.",
-                        "Upload bukti transfer dengan foto/screenshot"
-                    )
-                )
-            ),
-            // Data Bank Mandiri
-            Bank(
-                id = "mandiri",
-                name = "mandiri",
-                logo = R.drawable.ic_bank_mandiri,
-                bankAccount = BankAccount(
-                    bankLogo = R.drawable.ic_bank_mandiri,
-                    accountNumber = "1424566485342",
-                    accountHolder = "Ecotainment",
-                    paymentInstructions = listOf(
-                        "Copy nomor rekening di atas.",
-                        "Anda dapat pergi ke ATM Mandiri terdekat atau menggunakan mobile banking.",
-                        "Transfer sesuai dengan tagihan.",
-                        "Upload bukti transfer dengan foto/screenshot"
-                    )
-                )
-            )
+        // Inisialisasi BankAdapter
+        bankAdapter = BankAdapter(this)
+
+        // Atur RecyclerView
+        binding.rvBanks.apply {
+            adapter = bankAdapter
+            layoutManager = LinearLayoutManager(this@PaymentActivity)
+
+        }
+
+        bankService.getBankList(
+            context = this,
+            onResult = { bankList ->
+                if (bankList.isNotEmpty()) {
+                    /// Filter data untuk mengecualikan bank dengan name "QRIS"
+                    val filteredBankList = bankList.filter { it.name != "QRIS" }
+
+                    // Cari data dengan name "QRIS"
+                    val qrisBank = bankList.find { it.name == "QRIS" }
+
+                    // Jika ditemukan, set data QRIS ke TextView
+                    qrisBank?.let {
+                        binding.merchantName.text = it.accountHolder
+                        binding.merchantNumber.text = it.accountNumber
+
+                        val bankLogo = this.getString(R.string.base_url) + it.logo
+                        Glide().loadImageFitCenter(binding.qrisQrCode, bankLogo)
+
+                        binding.qrisLayout.visibility = View.VISIBLE
+                    } ?: run {
+                        // Jika qrisBank null, sembunyikan layout QRIS
+                        binding.qrisLayout.visibility = View.GONE
+                    }
+
+                    if (filteredBankList.isNotEmpty()) {
+                        Log.d("Filtered Bank List", filteredBankList.toString())
+                        // Set data ke adapter
+                        bankAdapter.setData(filteredBankList)
+                    } else {
+                        Log.d("Filtered Bank List", "No banks available after filtering")
+                    }
+                } else {
+                    binding.qrisLayout.visibility = View.GONE
+                    binding.otherPaymentLayout.visibility = View.GONE
+                    binding.btnUploadProof.isEnabled = false
+                    binding.emptyPaymentMessage.visibility = View.VISIBLE
+                }
+            },
+            onError = { error ->
+                binding.qrisLayout.visibility = View.GONE
+                binding.otherPaymentLayout.visibility = View.GONE
+                binding.btnUploadProof.isEnabled = false
+                binding.emptyPaymentMessage.visibility = View.VISIBLE
+                Log.d("ERROR LOAD BANK", error)
+            }
         )
 
-        // Set data ke adapter
-        bankAdapter.setData(banks)
+
     }
 
     private fun formatCurrency(amount: Long): String {
