@@ -268,7 +268,7 @@ class DetailProductActivity : AppCompatActivity() {
         // Tutup dialog setelah beberapa detik
         Handler(Looper.getMainLooper()).postDelayed({
             dialog.dismiss()
-        }, 2000)
+        }, 1000)
 
         // Tampilkan dialog
         dialog.show()

@@ -346,7 +346,7 @@ class TransactionService {
     fun uploadProof(
         context: Context,
         transactionId: Int,
-        paymentProofImageUri: Uri,
+        paymentProofImagePath: String,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
@@ -354,7 +354,7 @@ class TransactionService {
 
         if (!authToken.isNullOrEmpty()) {
             // Konversi URI gambar menjadi file dan request body
-            val file = File(getRealPathFromURI(context, paymentProofImageUri))
+            val file = File(paymentProofImagePath)
             val requestBody = file.asRequestBody("image/*".toMediaType())
             val paymentProofPart = MultipartBody.Part.createFormData("payment_proof", file.name, requestBody)
 

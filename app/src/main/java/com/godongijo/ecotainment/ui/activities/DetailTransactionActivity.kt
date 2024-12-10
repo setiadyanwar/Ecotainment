@@ -16,6 +16,7 @@ import com.godongijo.ecotainment.databinding.ActivityDetailTransactionBinding
 import com.godongijo.ecotainment.databinding.DialogConfirmTransactionStatusBinding
 import com.godongijo.ecotainment.databinding.PopupPaymentProofBinding
 import com.godongijo.ecotainment.services.transaction.TransactionService
+import com.godongijo.ecotainment.utilities.DialogLoader
 import com.godongijo.ecotainment.utilities.Glide
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -29,6 +30,8 @@ class DetailTransactionActivity : AppCompatActivity() {
     private var selectedTransactionId = 0
 
     private var paymentProofUrl = ""
+
+    private var dialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -182,14 +185,27 @@ class DetailTransactionActivity : AppCompatActivity() {
 
     private fun updateTransactionStatus(status: String) {
         if(selectedTransactionId > 0) {
+            dialog = DialogLoader.show(context = this, message = "Mohon tunggu, proses sedang berjalan...") ?: return
+
             transactionService.adminUpdateTransactionStatus(
                 this,
                 selectedTransactionId,
                 status = status,
                 onSuccess = {
-                    initTransactionInfo()
+                    if (!isFinishing && !isDestroyed) {
+                        dialog?.let {
+                            DialogLoader.success(it, context = this, message = "Berhasil Mengubah Status")
+                            initTransactionInfo()
+                        }
+                    }
                 },
-                onError = {}
+                onError = {
+                    if (!isFinishing && !isDestroyed) {
+                        dialog?.let {
+                            DialogLoader.error(it, context = this, message = "Gagal Mengubah Status")
+                        }
+                    }
+                }
             )
         } else {
             Toast.makeText(this, "Transaksi tidak ditemukan", Toast.LENGTH_SHORT).show()

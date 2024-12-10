@@ -25,6 +25,7 @@ import com.godongijo.ecotainment.models.Transaction
 import com.godongijo.ecotainment.services.product.ReviewService
 import com.godongijo.ecotainment.services.transaction.TransactionService
 import com.godongijo.ecotainment.ui.activities.PaymentActivity
+import com.godongijo.ecotainment.utilities.DialogLoader
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -38,6 +39,8 @@ class OrderStatusAdapter(
 ) : RecyclerView.Adapter<OrderStatusAdapter.ViewHolder>() {
 
     private val items = mutableListOf<Transaction>()
+
+    private var dialog: Dialog? = null
 
     fun updateData(newData: List<Transaction>) {
         items.clear()
@@ -349,17 +352,33 @@ class OrderStatusAdapter(
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
+
+        dialog = DialogLoader.show(context = context, message = "Mohon tunggu, proses sedang berjalan...") ?: return
+
         transactionService.updateTransactionStatus(
             context,
             transactionId,
             status = status,
             onSuccess = {
-                // Logika tambahan ketika berhasil
-                onSuccess() // Memanggil callback sukses
+                dialog?.let {
+                    val successMessage = when (status) {
+                        "waiting_for_confirmation" -> "Status berhasil diubah menjadi Menunggu Konfirmasi"
+                        "processed" -> "Status berhasil diubah menjadi Diproses"
+                        "on_shipment" -> "Status berhasil diubah menjadi Sedang Dikirim"
+                        "completed" -> "Pesanan berhasil diselesaikan"
+                        "reviewed" -> "Berhasil mengirimkan ulasan"
+                        else -> "Status berhasil diubah"
+                    }
+
+                    DialogLoader.success(it, context = context, message = successMessage)
+                    onSuccess()
+                }
             },
             onError = { error ->
-                // Logika tambahan ketika gagal
-                onError(error) // Memanggil callback error dengan pesan error
+                dialog?.let {
+                    DialogLoader.error(it, context = context, message = "Gagal Mengubah Status")
+                    onError(error) // Memanggil callback error dengan pesan error
+                }
             }
         )
     }

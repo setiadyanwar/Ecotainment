@@ -2,6 +2,7 @@ package com.godongijo.ecotainment.ui.activities
 
 import android.Manifest
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -23,7 +24,9 @@ import com.godongijo.ecotainment.databinding.ActivityFormBankBinding
 import com.godongijo.ecotainment.databinding.ActivityFormProductBinding
 import com.godongijo.ecotainment.services.bank.BankService
 import com.godongijo.ecotainment.services.product.ProductService
+import com.godongijo.ecotainment.utilities.DialogLoader
 import com.godongijo.ecotainment.utilities.Glide
+import com.godongijo.ecotainment.utilities.ImagePicker
 
 class FormBankActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFormBankBinding
@@ -34,9 +37,13 @@ class FormBankActivity : AppCompatActivity() {
 
     private var selectedBank: Pair<String, Int>? = null
 
-    private var qrisImageUri: Uri? = null
+    private var qrisImagePath: String? = null
 
     private var isHasQRSelected: Boolean = false
+
+    private lateinit var imagePicker: ImagePicker
+
+    private var dialog: Dialog? = null
 
     private val banks = listOf(
         "Pilih Bank" to R.drawable.ic_bank, // Dummy item
@@ -57,6 +64,8 @@ class FormBankActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        imagePicker = ImagePicker(this)
+
         isEditing = intent.getBooleanExtra("isEditing", false)
 
         if (isEditing) {
@@ -195,6 +204,8 @@ class FormBankActivity : AppCompatActivity() {
             }
 
             else -> {
+                dialog = DialogLoader.show(context = this, message = "Mohon tunggu, proses sedang berjalan...") ?: return
+
                 if(isEditing) {
                     val bankId = intent.getIntExtra("bankId", 0)
 
@@ -203,16 +214,31 @@ class FormBankActivity : AppCompatActivity() {
                         id = bankId,
                         name = bankName,
                         logoResId = bankLogo,
-                        qrImageUri = if (bankName == "QRIS") qrisImageUri else null,
+                        qrImagePath = if (bankName == "QRIS") qrisImagePath else null,
                         accountNumber = bankAccountNumber,
                         accountHolder = bankAccountHolder,
                         paymentInstructions = bankPaymentInstruction,
                         onSuccess = {
-                            Toast.makeText(this, "Berhasil mengedit bank", Toast.LENGTH_SHORT).show()
-                            finish()
+                            if (!isFinishing && !isDestroyed) {
+                                dialog?.let {
+                                    DialogLoader.success(it, context = this, message = "Berhasil Mengedit Bank")
+
+                                    binding.root.postDelayed({
+                                        finish()
+                                    }, 1500L)
+                                }
+                            }
                         },
                         onError = {
-                            Toast.makeText(this, "Gagal mengedit bank", Toast.LENGTH_SHORT).show()
+                            if (!isFinishing && !isDestroyed) {
+                                dialog?.let {
+                                    DialogLoader.error(it, context = this, message = "Gagal Mengedit Bank")
+
+                                    binding.root.postDelayed({
+                                        finish()
+                                    }, 1500L)
+                                }
+                            }
                         }
                     )
                 } else {
@@ -220,16 +246,31 @@ class FormBankActivity : AppCompatActivity() {
                         this,
                         name = bankName,
                         logoResId = bankLogo,
-                        qrImageUri = if (bankName == "QRIS") qrisImageUri else null,
+                        qrImagePath = if (bankName == "QRIS") qrisImagePath else null,
                         accountNumber = bankAccountNumber,
                         accountHolder = bankAccountHolder,
                         paymentInstructions = bankPaymentInstruction,
                         onSuccess = {
-                            Toast.makeText(this, "Berhasil menambah bank", Toast.LENGTH_SHORT).show()
-                            finish()
+                            if (!isFinishing && !isDestroyed) {
+                                dialog?.let {
+                                    DialogLoader.success(it, context = this, message = "Berhasil Menambah Bank")
+
+                                    binding.root.postDelayed({
+                                        finish()
+                                    }, 1500L)
+                                }
+                            }
                         },
                         onError = {
-                            Toast.makeText(this, "Gagal menambah bank", Toast.LENGTH_SHORT).show()
+                            if (!isFinishing && !isDestroyed) {
+                                dialog?.let {
+                                    DialogLoader.error(it, context = this, message = "Gagal Menambah Bank")
+
+                                    binding.root.postDelayed({
+                                        finish()
+                                    }, 1500L)
+                                }
+                            }
                         }
                     )
                 }
@@ -237,54 +278,17 @@ class FormBankActivity : AppCompatActivity() {
         }
     }
 
-    // Launcher untuk memilih gambar dari galeri
-    private val galleryLauncher = registerForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        uri?.let { selectedUri ->
-            qrisImageUri = selectedUri
-            // Menampilkan gambar yang dipilih
-            binding.inputQRImage.setImageURI(qrisImageUri)
-            isHasQRSelected = true
-            binding.inputQRError.visibility = View.GONE
-        }
-    }
-
     private fun openGallery() {
-        // Cek versi Android
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // Android 13+
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.READ_MEDIA_IMAGES
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                // Minta izin membaca media gambar
-                requestPermissionMediaImages.launch(Manifest.permission.READ_MEDIA_IMAGES)
-            } else {
-                // Izin sudah diberikan, buka galeri
-                galleryLauncher.launch("image/*")
+        imagePicker.pickImage(ImagePicker.ImageSource.GALLERY) { uri ->
+            uri?.let { selectedUri ->
+
+                // Dapatkan path
+                qrisImagePath = imagePicker.getPathFromUri(this, selectedUri)
+
+            } ?: run {
+                Toast.makeText(this, "Tidak ada gambar dipilih", Toast.LENGTH_SHORT).show()
             }
-        } else {
-            // Android 12 ke bawah
-            galleryLauncher.launch("image/*")
         }
     }
 
-    // Launcher untuk meminta izin media
-    private val requestPermissionMediaImages = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            // Izin diberikan, buka galeri
-            openGallery()
-        } else {
-            // Izin ditolak, beri tahu pengguna
-            Toast.makeText(
-                this,
-                "Izin akses gambar diperlukan untuk memilih foto",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
 }

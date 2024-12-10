@@ -1,5 +1,6 @@
 package com.godongijo.ecotainment.ui.activities
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -15,6 +16,7 @@ import com.android.volley.toolbox.Volley
 import com.godongijo.ecotainment.R
 import com.godongijo.ecotainment.databinding.ActivityDetailAddressBinding
 import com.godongijo.ecotainment.services.auth.AuthService
+import com.godongijo.ecotainment.utilities.DialogLoader
 
 class DetailAddressActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailAddressBinding
@@ -22,6 +24,8 @@ class DetailAddressActivity : AppCompatActivity() {
     private val authService = AuthService()
 
     private var isEditing: Boolean = false
+
+    private var dialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +40,12 @@ class DetailAddressActivity : AppCompatActivity() {
     private fun init() {
         isEditing = intent.getBooleanExtra("isEditing", false)
 
-        if(isEditing) {
-            initAddressInfo()
+        // Muat provinsi terlebih dahulu dan panggil initAddressInfo setelah selesai
+        loadProvinces {
+            if (isEditing) {
+                initAddressInfo()
+            }
         }
-
-        loadProvinces()
     }
 
     private fun setListeners() {
@@ -133,6 +138,8 @@ class DetailAddressActivity : AppCompatActivity() {
                 return
             }
             else -> {
+                dialog = DialogLoader.show(context = this, message = "Mohon tunggu, proses sedang berjalan...") ?: return
+
                 if(isEditing) {
                     authService.editAddress(
                         this,
@@ -143,11 +150,27 @@ class DetailAddressActivity : AppCompatActivity() {
                         cityOrDistrict,
                         fullAddress,
                         onSuccess = {
-                            showSuccessMessage("Alamat berhasil diperbarui")
-                            finish() // Kembali ke aktivitas sebelumnya
+                            if (!isFinishing && !isDestroyed) {
+                                dialog?.let {
+                                    DialogLoader.success(it, context = this, message = "Berhasil Memperbarui Alamat")
+
+                                    binding.root.postDelayed({
+                                        finish()
+                                    }, 1500L)
+                                }
+                            }
+
                         },
-                        onError = { errorMessage ->
-                            showErrorMessage(errorMessage)
+                        onError = {
+                            if (!isFinishing && !isDestroyed) {
+                                dialog?.let {
+                                    DialogLoader.error(it, context = this, message = "Gagal Memperbarui Alamat")
+
+                                    binding.root.postDelayed({
+                                        finish()
+                                    }, 1500L)
+                                }
+                            }
                         }
                     )
                 } else {
@@ -159,11 +182,26 @@ class DetailAddressActivity : AppCompatActivity() {
                         cityOrDistrict,
                         fullAddress,
                         onSuccess = {
-                            showSuccessMessage("Alamat berhasil disimpan")
-                            finish() // Kembali ke aktivitas sebelumnya
+                            if (!isFinishing && !isDestroyed) {
+                                dialog?.let {
+                                    DialogLoader.success(it, context = this, message = "Berhasil Menyimpan Alamat")
+
+                                    binding.root.postDelayed({
+                                        finish()
+                                    }, 1500L)
+                                }
+                            }
                         },
-                        onError = { errorMessage ->
-                            showErrorMessage(errorMessage)
+                        onError = {
+                            if (!isFinishing && !isDestroyed) {
+                                dialog?.let {
+                                    DialogLoader.error(it, context = this, message = "Gagal Menyimpan Alamat")
+
+                                    binding.root.postDelayed({
+                                        finish()
+                                    }, 1500L)
+                                }
+                            }
                         }
                     )
                 }
@@ -177,14 +215,9 @@ class DetailAddressActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    // Fungsi untuk menampilkan pesan sukses
-    private fun showSuccessMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
 
     // Fungsi untuk load provinsi
-    private fun loadProvinces() {
+    private fun loadProvinces(onProvincesLoaded: () -> Unit) {
         val queue = Volley.newRequestQueue(this)
 
         val url = "https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json"
@@ -224,6 +257,9 @@ class DetailAddressActivity : AppCompatActivity() {
                     // Handle case where nothing is selected (optional)
                 }
             }
+
+            // Callback untuk memberi tahu bahwa provinsi sudah dimuat
+            onProvincesLoaded()
 
         }, {
             // Handle error

@@ -8,6 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.godongijo.ecotainment.databinding.ActivityManageTransactionBinding
 import com.godongijo.ecotainment.services.transaction.TransactionService
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class ManageTransactionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityManageTransactionBinding
@@ -55,8 +59,15 @@ class ManageTransactionActivity : AppCompatActivity() {
                 // Filter daftar transaksi untuk menghilangkan yang berstatus "pending"
                 val filteredTransactionList = transactionList.filter { it.status != "pending" }
 
+                // Mengurutkan berdasarkan createdAt (terbaru terlebih dahulu)
+                val sortedTransactionList = filteredTransactionList.sortedByDescending { transaction ->
+                    // Konversi string createdAt ke Date menggunakan SimpleDateFormat
+                    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+                    dateFormat.parse(transaction.createdAt)
+                }
+
                 // Update UI berdasarkan apakah daftar yang difilter kosong atau tidak
-                if (filteredTransactionList.isEmpty()) {
+                if (sortedTransactionList.isEmpty()) {
                     binding.manageTransactionRecyclerView.visibility = View.GONE
                     binding.emptyTransaction.visibility = View.VISIBLE
                 } else {
@@ -64,7 +75,7 @@ class ManageTransactionActivity : AppCompatActivity() {
                     binding.emptyTransaction.visibility = View.GONE
 
                     binding.manageTransactionRecyclerView.adapter = manageTransactionAdapter
-                    manageTransactionAdapter.updateList(filteredTransactionList)
+                    manageTransactionAdapter.updateList(sortedTransactionList)
                 }
             },
             onError = {

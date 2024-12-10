@@ -30,6 +30,7 @@ import com.godongijo.ecotainment.models.BankAccount
 import com.godongijo.ecotainment.services.bank.BankService
 import com.godongijo.ecotainment.services.transaction.TransactionService
 import com.godongijo.ecotainment.utilities.Glide
+import com.godongijo.ecotainment.utilities.ImagePicker
 import java.io.File
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -51,34 +52,7 @@ class PaymentActivity : AppCompatActivity() {
     private var isNewTransaction: Boolean = true
     private var transactionId: Int? = null
 
-    // Konstanta untuk permission
-    companion object {
-        private const val CAMERA_PERMISSION_REQUEST_CODE = 100
-        private const val GALLERY_PERMISSION_REQUEST_CODE = 101
-    }
-
-    // Uri untuk menyimpan foto dari kamera
-    private var cameraImageUri: Uri? = null
-
-    // Launcher untuk membuka kamera
-    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
-        if (isSuccess) {
-            cameraImageUri?.let { uri ->
-                // Proses upload gambar dari kamera
-                uploadProofImage(uri)
-            }
-        }
-    }
-
-    // Launcher untuk memilih gambar dari galeri
-    private val galleryLauncher = registerForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        uri?.let { selectedUri ->
-            // Proses upload gambar dari galeri
-            uploadProofImage(selectedUri)
-        }
-    }
+    private lateinit var imagePicker: ImagePicker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,6 +75,8 @@ class PaymentActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        imagePicker = ImagePicker(this)
+
         // Menambahkan callback untuk tombol back
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -134,12 +110,10 @@ class PaymentActivity : AppCompatActivity() {
         }
 
         binding.btnUploadProof.setOnClickListener {
-//            showImageSourceDialog()
             openGallery()
         }
 
         binding.editPaymentProof.setOnClickListener {
-//            showImageSourceDialog()
             openGallery()
         }
 
@@ -160,116 +134,56 @@ class PaymentActivity : AppCompatActivity() {
     }
 
     private fun openCamera() {
-        // Cek permission kamera
-        if (checkCameraPermission()) {
-            // Buat file untuk menyimpan gambar
-            val imageFile = createImageFile()
-            val uri = FileProvider.getUriForFile(
-                this,
-                "${packageName}.fileprovider",
-                imageFile
-            )
-            cameraImageUri = uri
+        imagePicker.pickImage(ImagePicker.ImageSource.CAMERA) { uri ->
+            uri?.let { selectedUri ->
 
-            // Buka kamera dengan local uri
-            uri?.let {
-                cameraLauncher.launch(it)
+                // Dapatkan path
+                val imagePath = imagePicker.getPathFromUri(this, selectedUri)
+                val fileName = imagePicker.getFileName(this, selectedUri)
+
+                if (imagePath != null && fileName != null) {
+                    // Contoh proses upload
+                    uploadProofImage(
+                        path = imagePath,
+                        filename = fileName,
+                    )
+                }
+            } ?: run {
+                Toast.makeText(this, "Gagal mengambil foto", Toast.LENGTH_SHORT).show()
             }
-        } else {
-            requestCameraPermission()
         }
     }
 
     private fun openGallery() {
-        // Cek versi Android
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // Android 13+
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.READ_MEDIA_IMAGES
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                // Minta izin membaca media gambar
-                requestPermissionMediaImages.launch(Manifest.permission.READ_MEDIA_IMAGES)
-            } else {
-                // Izin sudah diberikan, buka galeri
-                galleryLauncher.launch("image/*")
+        imagePicker.pickImage(ImagePicker.ImageSource.GALLERY) { uri ->
+            uri?.let { selectedUri ->
+
+                // Dapatkan path
+                val imagePath = imagePicker.getPathFromUri(this, selectedUri)
+                val fileName = imagePicker.getFileName(this, selectedUri)
+
+                if (imagePath != null && fileName != null) {
+                    // Contoh proses upload
+                    uploadProofImage(
+                        path = imagePath,
+                        filename = fileName,
+                    )
+                }
+            } ?: run {
+                Toast.makeText(this, "Tidak ada gambar dipilih", Toast.LENGTH_SHORT).show()
             }
-        } else {
-            // Android 12 ke bawah
-            galleryLauncher.launch("image/*")
         }
     }
 
-    // Launcher untuk meminta izin media
-    private val requestPermissionMediaImages = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            // Izin diberikan, buka galeri
-            openGallery()
-        } else {
-            // Izin ditolak, beri tahu pengguna
-            Toast.makeText(
-                this,
-                "Izin akses gambar diperlukan untuk memilih foto",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
-
-    private fun checkCameraPermission(): Boolean {
-        return ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.CAMERA
-        ) == PackageManager.PERMISSION_GRANTED
-    }
-
-    private fun requestCameraPermission() {
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ),
-            CAMERA_PERMISSION_REQUEST_CODE
-        )
-    }
-
-    private fun createImageFile(): File {
-        val storageDir = getExternalFilesDir(null)
-        return File.createTempFile(
-            "proof_${System.currentTimeMillis()}",
-            ".jpg",
-            storageDir
-        )
-    }
-
-    private fun uploadProofImage(imageUri: Uri) {
+    private fun uploadProofImage(path: String, filename: String) {
         binding.btnUploadProof.visibility = View.GONE
         binding.layoutProofFile.visibility = View.VISIBLE
         binding.layoutConfirmProof.visibility = View.VISIBLE
 
-        val fileName = getFileNameFromUri(this, imageUri)
-        binding.uploadFileName.text = fileName ?: "Bukti pembayaran"
+        binding.uploadFileName.text = filename
 
         binding.layoutConfirmProof.setOnClickListener {
-            transactionId?.let { it1 -> uploadTransactionProof(it1, imageUri) }
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openCamera()
-            } else {
-                Toast.makeText(this, "Permission ditolak", Toast.LENGTH_SHORT).show()
-            }
+            transactionId?.let { it1 -> uploadTransactionProof(it1, path) }
         }
     }
 
@@ -383,11 +297,11 @@ class PaymentActivity : AppCompatActivity() {
         countDownTimer.start()
     }
 
-    private fun uploadTransactionProof(transactionId: Int, imageUri: Uri) {
+    private fun uploadTransactionProof(transactionId: Int, imagePath: String) {
         transactionService.uploadProof(
             context = this,
             transactionId = transactionId,
-            paymentProofImageUri = imageUri,
+            paymentProofImagePath = imagePath,
             onSuccess = {
                 binding.btnUploadProof.visibility = View.GONE
                 binding.editPaymentProof.visibility = View.GONE

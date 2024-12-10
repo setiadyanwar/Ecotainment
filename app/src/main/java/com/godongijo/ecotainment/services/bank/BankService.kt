@@ -172,7 +172,7 @@ class BankService {
         context: Context,
         name: String,
         logoResId: Int?,
-        qrImageUri: Uri? = null,
+        qrImagePath: String? = null,
         accountNumber: String,
         accountHolder: String,
         paymentInstructions: String,
@@ -188,8 +188,8 @@ class BankService {
             val accountHolderPart = accountHolder.toRequestBody(MultipartBody.FORM)
             val paymentInstructionsPart = paymentInstructions.toRequestBody(MultipartBody.FORM)
 
-            val logoOrQrImagePart = if (name == "QRIS" && qrImageUri != null) {
-                val file = File(getRealPathFromURI(context, qrImageUri))
+            val logoOrQrImagePart = if (name == "QRIS" && qrImagePath != null) {
+                val file = File(qrImagePath)
                 val requestBody = file.asRequestBody("image/*".toMediaType())
                 MultipartBody.Part.createFormData("logo", file.name, requestBody)
             } else {
@@ -240,7 +240,7 @@ class BankService {
         id: Int, // ID bank yang akan diperbarui
         name: String? = null,
         logoResId: Int? = null, // ID dari drawable
-        qrImageUri: Uri? = null,
+        qrImagePath: String? = null,
         accountNumber: String? = null,
         accountHolder: String? = null,
         paymentInstructions: String? = null,
@@ -257,8 +257,8 @@ class BankService {
             val accountHolderPart = accountHolder?.toRequestBody(MultipartBody.FORM)
             val paymentInstructionsPart = paymentInstructions?.toRequestBody(MultipartBody.FORM)
 
-            val logoOrQrImagePart = if (name == "QRIS" && qrImageUri != null) {
-                val file = File(getRealPathFromURI(context, qrImageUri))
+            val logoOrQrImagePart = if (name == "QRIS" && qrImagePath != null) {
+                val file = File(qrImagePath)
                 val requestBody = file.asRequestBody("image/*".toMediaType())
                 MultipartBody.Part.createFormData("logo", file.name, requestBody)
             } else {

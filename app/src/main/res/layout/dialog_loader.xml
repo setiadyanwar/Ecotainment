@@ -1,0 +1,51 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialog_loader_root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="@dimen/_12sdp"
+    android:paddingHorizontal="@dimen/_24sdp"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center">
+
+    <ProgressBar
+        android:id="@+id/loadingIcon"
+        android:layout_width="@dimen/_26ssp"
+        android:layout_height="@dimen/_26ssp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/secondary_500"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/successIcon"
+        android:layout_width="@dimen/_26sdp"
+        android:layout_height="@dimen/_26sdp"
+        android:src="@drawable/ic_check_outline"
+        android:layout_gravity="center"
+        app:tint="@color/secondary_500" />
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/errorIcon"
+        android:layout_width="@dimen/_26sdp"
+        android:layout_height="@dimen/_26sdp"
+        android:src="@drawable/ic_close"
+        android:layout_gravity="center"
+        app:tint="@color/warning_300" />
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="Mohon Tunggu Hingga \nProses Selesai"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/primary_700"
+        android:gravity="center" />
+</LinearLayout>

@@ -386,7 +386,7 @@ class AuthService {
         password: String? = null,
         username: String? = null,
         phoneNumber: String? = null,
-        profilePictureUri: Uri? = null,
+        profilePicturePath: String? = null,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
@@ -400,8 +400,8 @@ class AuthService {
             val phoneNumberPart = phoneNumber?.toRequestBody(MultipartBody.FORM)
 
             // Menyiapkan file profile picture jika ada
-            val profilePicturePart = profilePictureUri?.let {
-                val file = File(getRealPathFromURI(context, it))
+            val profilePicturePart = profilePicturePath?.let {
+                val file = File(profilePicturePath)
                 val requestBody = file.asRequestBody("image/*".toMediaType())
                 MultipartBody.Part.createFormData("profile_picture", file.name, requestBody)
             }

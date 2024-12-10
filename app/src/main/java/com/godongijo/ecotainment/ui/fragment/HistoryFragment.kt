@@ -58,7 +58,7 @@ class HistoryFragment : Fragment() {
             context = requireContext(),
             onResult = { transactionList ->
                 // Fetch data based on selected tab
-                val filteredData = transactionList.filter { it.status == "completed" }
+                val filteredData = transactionList.filter { it.status == "completed" || it.status == "reviewed" }
 
                 if (filteredData.isEmpty()) {
                     binding.historyRecycler.visibility = View.GONE

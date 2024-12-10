@@ -1,5 +1,7 @@
 package com.godongijo.ecotainment.ui.activities
 
+import android.app.Dialog
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -11,14 +13,20 @@ import androidx.appcompat.app.AppCompatActivity
 import com.godongijo.ecotainment.R
 import com.godongijo.ecotainment.databinding.ActivityEditProfileBinding
 import com.godongijo.ecotainment.services.auth.AuthService
+import com.godongijo.ecotainment.utilities.DialogLoader
 import com.godongijo.ecotainment.utilities.Glide
+import com.godongijo.ecotainment.utilities.ImagePicker
 
 class EditProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditProfileBinding
 
     private val authService = AuthService()
 
-    private var selectedUri: Uri? = null
+    private var selectedImagePath: String? = null
+
+    private lateinit var imagePicker: ImagePicker
+
+    private var dialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +38,8 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        imagePicker = ImagePicker(this)
+
         initProfileInfo()
     }
 
@@ -47,21 +57,20 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
-    // Launcher untuk memilih gambar dari galeri
-    private val galleryLauncher = registerForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        uri?.let { selectedImageUri ->
-            selectedUri = selectedImageUri
-            // Menampilkan gambar yang dipilih
-            binding.profilePicture.setImageURI(selectedImageUri)
-        }
-    }
 
     // Fungsi untuk membuka galeri
     private fun openGallery() {
-        // Memilih tipe konten gambar
-        galleryLauncher.launch("image/*")
+        imagePicker.pickImage(ImagePicker.ImageSource.GALLERY) { uri ->
+            uri?.let { selectedUri ->
+                // Dapatkan path
+                selectedImagePath = imagePicker.getPathFromUri(this, selectedUri)
+                val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(selectedUri))
+                binding.profilePicture.setImageBitmap(bitmap)
+
+            } ?: run {
+                Toast.makeText(this, "Tidak ada gambar dipilih", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun initProfileInfo() {
@@ -121,20 +130,35 @@ class EditProfileActivity : AppCompatActivity() {
                 return
             }
             else -> {
+                dialog = DialogLoader.show(context = this, message = "Mohon tunggu, proses sedang berjalan...") ?: return
 
                 authService.editUserProfile(
                     this,
                     username = username,
                     email = email,
                     phoneNumber = phoneNumber,
-                    profilePictureUri = selectedUri,
+                    profilePicturePath = selectedImagePath,
                     onSuccess = {
-                        Toast.makeText(this, "Berhasil update Profile", Toast.LENGTH_SHORT).show()
-                        onBackPressedDispatcher.onBackPressed()
+                        if (!isFinishing && !isDestroyed) {
+                            dialog?.let {
+                                DialogLoader.success(it, context = this, message = "Berhasil Mengedit Profile")
+
+                                binding.root.postDelayed({
+                                    onBackPressedDispatcher.onBackPressed()
+                                }, 1500L)
+                            }
+                        }
                     },
-                    onError = { error ->
-                        Toast.makeText(this, "Gagal edit Profile", Toast.LENGTH_SHORT).show()
-                        Log.d("ERROR Edit ACCOUNT", error)
+                    onError = {
+                        if (!isFinishing && !isDestroyed) {
+                            dialog?.let {
+                                DialogLoader.success(it, context = this, message = "Gagal Mengedit Profile")
+
+                                binding.root.postDelayed({
+                                    onBackPressedDispatcher.onBackPressed()
+                                }, 1500L)
+                            }
+                        }
                     }
                 )
 

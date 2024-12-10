@@ -221,7 +221,7 @@ class ProductService {
         productPrice: Int,
         productCategory: String,
         productDescription: String,
-        productImageUri: Uri?,
+        productImagePath: String?,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
@@ -235,8 +235,8 @@ class ProductService {
             val productDescriptionPart = productDescription.toRequestBody(MultipartBody.FORM)
 
             // Menyiapkan file gambar produk
-            val productImagePart = productImageUri?.let {
-                val file = File(getRealPathFromURI(context, it))
+            val productImagePart = productImagePath?.let {
+                val file = File(productImagePath)
                 val requestBody = file.asRequestBody("image/*".toMediaType())
                 MultipartBody.Part.createFormData("image", file.name, requestBody)
             }
@@ -252,13 +252,16 @@ class ProductService {
             ).enqueue(object : Callback<AddProductResponse> {
                 override fun onResponse(call: Call<AddProductResponse>, response: Response<AddProductResponse>) {
                     if (response.isSuccessful && response.body()?.success == true) {
+                        Log.d("Product Service", "Success add product")
                         onSuccess()
                     } else {
+                        Log.d("Product Service", "Error add product")
                         onError(response.body()?.message ?: "Error adding product")
                     }
                 }
 
                 override fun onFailure(call: Call<AddProductResponse>, t: Throwable) {
+                    Log.d("Product Service", "error add product: ${t.message}")
                     onError(t.message ?: "An error occurred")
                 }
             })
@@ -275,7 +278,7 @@ class ProductService {
         productPrice: Int? = null,
         productCategory: String? = null,
         productDescription: String? = null,
-        productImageUri: Uri? = null,
+        productImagePath: String? = null,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
@@ -290,8 +293,8 @@ class ProductService {
             val productDescriptionPart = productDescription?.toRequestBody(MultipartBody.FORM)
 
             // Menyiapkan file gambar produk
-            val productImagePart = productImageUri?.let {
-                val file = File(getRealPathFromURI(context, it))
+            val productImagePart = productImagePath?.let {
+                val file = File(productImagePath)
                 val requestBody = file.asRequestBody("image/*".toMediaType())
                 MultipartBody.Part.createFormData("image", file.name, requestBody)
             }

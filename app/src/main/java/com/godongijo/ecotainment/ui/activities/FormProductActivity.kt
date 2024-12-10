@@ -2,8 +2,10 @@ package com.godongijo.ecotainment.ui.activities
 
 import android.Manifest
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -17,7 +19,9 @@ import androidx.core.content.ContextCompat
 import com.godongijo.ecotainment.R
 import com.godongijo.ecotainment.databinding.ActivityFormProductBinding
 import com.godongijo.ecotainment.services.product.ProductService
+import com.godongijo.ecotainment.utilities.DialogLoader
 import com.godongijo.ecotainment.utilities.Glide
+import com.godongijo.ecotainment.utilities.ImagePicker
 
 class FormProductActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFormProductBinding
@@ -26,7 +30,11 @@ class FormProductActivity : AppCompatActivity() {
 
     private val productService = ProductService()
 
-    private var selectedUri: Uri? = null
+    private var imagePath: String? = null
+
+    private lateinit var imagePicker: ImagePicker
+
+    private var dialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +45,15 @@ class FormProductActivity : AppCompatActivity() {
         setListeners()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        dialog?.dismiss()
+        dialog = null
+    }
+
     private fun init() {
+        imagePicker = ImagePicker(this)
+
         isEditing = intent.getBooleanExtra("isEditing", false)
 
         if (isEditing) {
@@ -88,7 +104,7 @@ class FormProductActivity : AppCompatActivity() {
         val productPrice = binding.inputProductPrice.text.toString().trim()
         val productCategory = binding.inputProductCategory.text.toString().trim()
         val productDescription = binding.inputProductDescription.text.toString().trim()
-        val productImage = selectedUri
+        val productImage = imagePath
 
         // Validasi data input
         when {
@@ -117,6 +133,7 @@ class FormProductActivity : AppCompatActivity() {
             }
 
             else -> {
+                dialog = DialogLoader.show(context = this, message = "Mohon tunggu, proses sedang berjalan...") ?: return
 
                 if(isEditing) {
                     val productId = intent.getIntExtra("productId", 0)
@@ -130,11 +147,26 @@ class FormProductActivity : AppCompatActivity() {
                         productDescription,
                         productImage,
                         onSuccess = {
-                            Toast.makeText(this, "Berhasil mengedit produk", Toast.LENGTH_SHORT).show()
-                            finish()
+                            if (!isFinishing && !isDestroyed) {
+                                dialog?.let {
+                                    DialogLoader.success(it, context = this, message = "Berhasil Mengedit Produk")
+
+                                    binding.root.postDelayed({
+                                        finish()
+                                    }, 1500L)
+                                }
+                            }
                         },
                         onError = { errorMessage ->
-                            Toast.makeText(this, "Gagal mengedit produk: $errorMessage", Toast.LENGTH_SHORT).show()
+                            if (!isFinishing && !isDestroyed) {
+                                dialog?.let {
+                                    DialogLoader.error(it, context = this, message = "Gagal Mengedit Produk")
+
+                                    binding.root.postDelayed({
+                                        Toast.makeText(this, "Gagal mengedit produk: $errorMessage", Toast.LENGTH_SHORT).show()
+                                    }, 1500L)
+                                }
+                            }
                         }
                     )
                 } else {
@@ -146,11 +178,26 @@ class FormProductActivity : AppCompatActivity() {
                         productDescription,
                         productImage,
                         onSuccess = {
-                            Toast.makeText(this, "Berhasil menambah produk", Toast.LENGTH_SHORT).show()
-                            finish()
+                            if (!isFinishing && !isDestroyed) {
+                                dialog?.let {
+                                    DialogLoader.success(it, context = this, message = "Berhasil Menambah Produk")
+
+                                    binding.root.postDelayed({
+                                        finish()
+                                    }, 1500L)
+                                }
+                            }
                         },
                         onError = { errorMessage ->
-                            Toast.makeText(this, "Gagal menambah produk: $errorMessage", Toast.LENGTH_SHORT).show()
+                            if (!isFinishing && !isDestroyed) {
+                                dialog?.let {
+                                    DialogLoader.error(it, context = this, message = "Gagal Menambah Produk")
+
+                                    binding.root.postDelayed({
+                                        Toast.makeText(this, "Gagal menambah produk: $errorMessage", Toast.LENGTH_SHORT).show()
+                                    }, 1500L)
+                                }
+                            }
                         }
                     )
                 }
@@ -161,52 +208,17 @@ class FormProductActivity : AppCompatActivity() {
     }
 
 
-    // Launcher untuk memilih gambar dari galeri
-    private val galleryLauncher = registerForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        uri?.let { galleryUri ->
-            selectedUri = galleryUri
-            // Menampilkan gambar yang dipilih
-            binding.inputProductImage.setImageURI(selectedUri)
-        }
-    }
-
     private fun openGallery() {
-        // Cek versi Android
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // Android 13+
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.READ_MEDIA_IMAGES
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                // Minta izin membaca media gambar
-                requestPermissionMediaImages.launch(Manifest.permission.READ_MEDIA_IMAGES)
-            } else {
-                // Izin sudah diberikan, buka galeri
-                galleryLauncher.launch("image/*")
-            }
-        } else {
-            // Android 12 ke bawah
-            galleryLauncher.launch("image/*")
-        }
-    }
+        imagePicker.pickImage(ImagePicker.ImageSource.GALLERY) { uri ->
+            uri?.let { selectedUri ->
+                // Dapatkan path
+                imagePath = imagePicker.getPathFromUri(this, selectedUri)
+                val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(selectedUri))
+                binding.inputProductImage.setImageBitmap(bitmap)
 
-    // Launcher untuk meminta izin media
-    private val requestPermissionMediaImages = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            // Izin diberikan, buka galeri
-            openGallery()
-        } else {
-            // Izin ditolak, beri tahu pengguna
-            Toast.makeText(
-                this,
-                "Izin akses gambar diperlukan untuk memilih foto",
-                Toast.LENGTH_SHORT
-            ).show()
+            } ?: run {
+                Toast.makeText(this, "Tidak ada gambar dipilih", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
