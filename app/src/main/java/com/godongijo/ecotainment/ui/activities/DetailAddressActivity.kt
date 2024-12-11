@@ -40,11 +40,15 @@ class DetailAddressActivity : AppCompatActivity() {
     private fun init() {
         isEditing = intent.getBooleanExtra("isEditing", false)
 
-        // Muat provinsi terlebih dahulu dan panggil initAddressInfo setelah selesai
+        binding.shimmerLayout.visibility = View.VISIBLE
+        binding.mainLayout.visibility = View.GONE
         loadProvinces {
             if (isEditing) {
                 initAddressInfo()
             }
+
+            binding.shimmerLayout.visibility = View.GONE
+            binding.mainLayout.visibility = View.VISIBLE
         }
     }
 

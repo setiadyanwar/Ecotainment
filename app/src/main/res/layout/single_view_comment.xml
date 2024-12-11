@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2 min ago"
-            android:textColor="#999999"
+            android:textColor="@color/text_100"
             android:textSize="@dimen/_9ssp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"/>
@@ -52,8 +52,8 @@
                 android:id="@+id/textViewUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Freya Jayawardana"
-                android:textColor="#000000"
+                android:text="Nama"
+                android:textColor="@color/text_700"
                 android:textSize="@dimen/_11ssp"
                 android:textStyle="bold"/>
 
@@ -77,8 +77,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_2sdp"
-                android:text="Pesanan selama langganan &amp; datang sesuai jadwal, terima kasih."
-                android:textColor="#666666"
+                android:text="Ulasan"
+                android:textColor="@color/text_300"
                 android:textSize="@dimen/_10ssp"/>
         </LinearLayout>
     </RelativeLayout>

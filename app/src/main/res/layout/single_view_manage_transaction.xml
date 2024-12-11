@@ -27,7 +27,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="12/12/2024 08:30"
+                android:text="dd/MM/yyyy hh:mm"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="@dimen/_12ssp"
                 android:textColor="@color/text_700" />
@@ -160,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:layout_weight="1"
-                    android:text="Rp 200.000"
+                    android:text="Rp0"
                     android:textAlignment="textStart"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/_12ssp"

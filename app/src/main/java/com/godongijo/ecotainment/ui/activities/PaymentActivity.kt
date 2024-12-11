@@ -1,7 +1,9 @@
 package com.godongijo.ecotainment.ui.activities
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -21,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.godongijo.ecotainment.R
 import com.godongijo.ecotainment.adapters.BankAdapter
@@ -29,6 +32,7 @@ import com.godongijo.ecotainment.models.Bank
 import com.godongijo.ecotainment.models.BankAccount
 import com.godongijo.ecotainment.services.bank.BankService
 import com.godongijo.ecotainment.services.transaction.TransactionService
+import com.godongijo.ecotainment.utilities.DialogLoader
 import com.godongijo.ecotainment.utilities.Glide
 import com.godongijo.ecotainment.utilities.ImagePicker
 import java.io.File
@@ -53,6 +57,8 @@ class PaymentActivity : AppCompatActivity() {
     private var transactionId: Int? = null
 
     private lateinit var imagePicker: ImagePicker
+
+    private var dialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -298,22 +304,41 @@ class PaymentActivity : AppCompatActivity() {
     }
 
     private fun uploadTransactionProof(transactionId: Int, imagePath: String) {
+        dialog = DialogLoader.show(context = this, message = "Mohon tunggu, proses sedang berjalan...") ?: return
+
         transactionService.uploadProof(
             context = this,
             transactionId = transactionId,
             paymentProofImagePath = imagePath,
             onSuccess = {
-                binding.btnUploadProof.visibility = View.GONE
-                binding.editPaymentProof.visibility = View.GONE
-                binding.layoutProofFile.visibility = View.VISIBLE
-                binding.layoutConfirmProof.visibility = View.GONE
-                binding.confirmMessage.visibility = View.VISIBLE
-                binding.layoutTimer.visibility = View.GONE
+                if (!isFinishing && !isDestroyed) {
+                    dialog?.let {
+                        DialogLoader.success(it, context = this, message = "Berhasil Mengedit Bank")
+
+                        binding.btnUploadProof.visibility = View.GONE
+                        binding.editPaymentProof.visibility = View.GONE
+                        binding.layoutProofFile.visibility = View.VISIBLE
+                        binding.layoutConfirmProof.visibility = View.GONE
+                        binding.confirmMessage.visibility = View.VISIBLE
+                        binding.layoutTimer.visibility = View.GONE
+                    }
+                }
             },
             onError = { error ->
-                binding.confirmMessage.visibility = View.VISIBLE
-                binding.confirmMessage.text = error
-                Log.d("ERROR", error)
+                if (!isFinishing && !isDestroyed) {
+                    dialog?.let {
+                        DialogLoader.success(it, context = this, message = "Berhasil Mengedit Bank")
+
+                        binding.confirmMessage.visibility = View.VISIBLE
+
+                        binding.confirmMessage.apply {
+                            text = error
+                            backgroundTintList = ContextCompat.getColorStateList(context, R.color.warning_100)
+                            setTextColor(ContextCompat.getColor(context, R.color.warning_300))
+                            TextViewCompat.setCompoundDrawableTintList(this, ContextCompat.getColorStateList(context, R.color.warning_300))
+                        }
+                    }
+                }
             }
         )
     }

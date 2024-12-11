@@ -104,16 +104,13 @@
                             android:background="@drawable/bg_outline_grey"
                             android:orientation="horizontal">
 
-                            <EditText
-                                android:layout_width="0dp"
+                            <TextView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
                                 android:background="@drawable/bg_rounded_grey"
-                                android:hint="cth: ecotainment"
-                                android:textColorHint="@color/grey"
-                                android:inputType="text"
+                                android:text="Lorem ipsum dolor sit amet"
                                 android:textSize="@dimen/_14ssp"
-                                android:textColor="@color/text_700"/>
+                                android:textColor="@color/grey"/>
 
                         </LinearLayout>
 
@@ -137,16 +134,13 @@
                             android:background="@drawable/bg_outline_grey"
                             android:orientation="horizontal">
 
-                            <EditText
-                                android:layout_width="0dp"
+                            <TextView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
                                 android:background="@drawable/bg_rounded_grey"
-                                android:hint="contoh@gmail.com"
-                                android:textColorHint="@color/grey"
-                                android:inputType="textEmailAddress"
+                                android:text="Lorem ipsum dolor sit amet"
                                 android:textSize="@dimen/_14ssp"
-                                android:textColor="@color/text_700"/>
+                                android:textColor="@color/grey"/>
 
                         </LinearLayout>
 
@@ -170,16 +164,13 @@
                             android:background="@drawable/bg_outline_grey"
                             android:orientation="horizontal">
 
-                            <EditText
-                                android:layout_width="0dp"
+                            <TextView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
                                 android:background="@drawable/bg_rounded_grey"
-                                android:hint="089XXXXXXXXXXX"
-                                android:textColorHint="@color/grey"
-                                android:inputType="number"
+                                android:text="Lorem ipsum dolor sit amet"
                                 android:textSize="@dimen/_14ssp"
-                                android:textColor="@color/text_700"/>
+                                android:textColor="@color/grey"/>
 
                         </LinearLayout>
 

@@ -28,7 +28,7 @@
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_30sdp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/ic_bank_bri" />
+                android:src="@drawable/bg_rounded_grey" />
 
             <TextView
                 android:id="@+id/tvBankName"
@@ -70,7 +70,7 @@
                     android:id="@+id/tvAccountNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="14245664853342"
+                    android:text="no. Rekening"
                     android:gravity="center"
                     android:textSize="@dimen/_16ssp"
                     android:textStyle="bold"
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:layout_gravity="center"
-                android:text="a.n Ecotainment"
+                android:text="a.n Penerima"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="@dimen/_12ssp" />
 

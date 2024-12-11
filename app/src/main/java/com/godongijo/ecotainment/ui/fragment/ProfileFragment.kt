@@ -26,6 +26,7 @@ import com.godongijo.ecotainment.ui.activities.ManageTransactionActivity
 import com.godongijo.ecotainment.ui.activities.NotificationActivity
 import com.godongijo.ecotainment.ui.activities.OrderStatusActivity
 import com.godongijo.ecotainment.ui.activities.SignInActivity
+import com.godongijo.ecotainment.ui.activities.UpdatePasswordActivity
 import com.godongijo.ecotainment.utilities.Glide
 import com.godongijo.ecotainment.utilities.PreferenceManager
 import kotlinx.coroutines.launch
@@ -38,8 +39,6 @@ class ProfileFragment : Fragment() {
 
     // Instance of AuthService for handling authentication
     private val authService = AuthService()
-
-    private val transactionService = TransactionService()
 
     private lateinit var role: String
 
@@ -97,6 +96,11 @@ class ProfileFragment : Fragment() {
 
         binding.myAddress.setOnClickListener {
             val intent = Intent(requireContext(), AddressActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.changePassword.setOnClickListener {
+            val intent = Intent(requireContext(), UpdatePasswordActivity::class.java)
             startActivity(intent)
         }
 

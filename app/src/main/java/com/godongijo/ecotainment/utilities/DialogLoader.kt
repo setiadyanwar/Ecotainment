@@ -77,6 +77,6 @@ object DialogLoader {
             if (dialog.isShowing) {
                 dialog.dismiss()
             }
-        }, 1500L)
+        }, 2000L)
     }
 }

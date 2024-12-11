@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:text="Hiasan Tanaman Lidah Mertua"
+                android:text="Produk"
                 android:textColor="@color/text_700"
                 android:textSize="@dimen/_12ssp"
                 android:gravity="bottom"
@@ -75,7 +75,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:text="Rp 200.000"
+                android:text="Rp0"
                 android:textColor="@color/text_700"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
@@ -104,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_2sdp"
-                    android:text="4.9"
+                    android:text="0.0"
                     android:textColor="@color/text_700"
                     android:textSize="@dimen/_10ssp" />
 
@@ -123,7 +123,7 @@
                     android:layout_marginHorizontal="@dimen/_2sdp"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:text="20 terjual"
+                    android:text="0 terjual"
                     android:textColor="@color/text_100"
                     android:textSize="@dimen/_10ssp" />
             </LinearLayout>

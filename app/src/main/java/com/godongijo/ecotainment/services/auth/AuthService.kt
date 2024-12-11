@@ -434,6 +434,66 @@ class AuthService {
     }
 
 
+    fun updatePassword(
+        context: Context,
+        currentPassword: String,
+        newPassword: String,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
+        val url = context.getString(R.string.base_url) + "/api/auth/update-password"
+
+        val authToken = PreferenceManager(context).getString("auth_token")
+
+        // Body request
+        val requestBody = JSONObject().apply {
+            put("current_password", currentPassword)
+            put("new_password", newPassword)
+        }
+
+        val request = object : JsonObjectRequest(
+            Request.Method.PUT, url, requestBody,
+            { response ->
+                try {
+                    // Ambil status dan pesan dari response
+                    val success = response.getBoolean("success")
+                    val message = response.getString("message")
+
+                    if (success) {
+                        onSuccess()
+                    } else {
+                        onError(message)
+                    }
+                } catch (e: Exception) {
+                    onError("Terjadi kesalahan saat memproses data: ${e.message}")
+                }
+            },
+            { error ->
+                val networkResponse = error.networkResponse
+                val errorMessage = if (networkResponse?.data != null) {
+                    // Parsing respons error dari server
+                    val errorJson = JSONObject(String(networkResponse.data))
+                    errorJson.optString("message", "Terjadi kesalahan")
+                } else {
+                    // Default pesan jika tidak ada respons dari server
+                    "Koneksi gagal. Periksa koneksi internet Anda."
+                }
+                Log.e("Auth Service", "Error updating password: $errorMessage")
+                onError(errorMessage)
+            }
+        ) {
+            // Menambahkan header Authorization dengan Bearer token
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Authorization"] = "Bearer $authToken"
+                return headers
+            }
+        }
+
+        // Add request to the request queue
+        val requestQueue = Volley.newRequestQueue(context)
+        requestQueue.add(request)
+    }
 
     fun getUserAddress(
         context: Context,

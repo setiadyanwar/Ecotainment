@@ -20,7 +20,7 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_gravity="center_vertical"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_bank_bca"
+            android:background="@drawable/bg_rounded_grey"
             android:scaleType="fitCenter"/>
 
         <LinearLayout
@@ -35,7 +35,7 @@
                 android:id="@+id/accountNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="12345"
+                android:text="No. Rek"
                 android:textColor="@color/text_700"
                 android:fontFamily="@font/poppins_bold"
                 android:maxLines="2"
@@ -46,7 +46,7 @@
                 android:id="@+id/accountHolder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="a.n Ecotainment"
+                android:text="a.n Penerima"
                 android:textColor="@color/text_300"
                 android:maxLines="2"
                 android:ellipsize="end"

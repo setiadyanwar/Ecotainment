@@ -137,7 +137,7 @@
                     android:id="@+id/totalProduct"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total 1 produk:"
+                    android:text="Total 0 produk:"
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/text_500" />
@@ -147,7 +147,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Rp 200.000"
+                    android:text="Rp0"
                     android:textAlignment="textEnd"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/_12ssp"
